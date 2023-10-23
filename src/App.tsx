@@ -1,13 +1,10 @@
-import { ProductsManager } from './components/ProductsManager'
 import './App.css'
+import Index from './api'
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Vite + React + Toolkit + Tailwind</h1>
-      <ProductsManager />
-    </div>
-  )
+  return <div className="App">
+    <Index />
+  </div>
 }
 
 export default App
