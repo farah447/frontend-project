@@ -30,17 +30,19 @@ const Home = () => {
         <h2>searching and sorting</h2>
         <h2>all products here</h2>
       </div>
-      <section>
+      <section className="products-list">
         {products.length > 0 &&
           products.map((product: Product) => {
             return (
-              <article key={product.id} className='product'>
-                <img src={product.image} alt={product.name} />
-                <h2>{product.name}</h2>
-                <h2>{product.description}</h2>
-                <button>Add To Cart</button>
-                <button>Show Details</button>
-              </article>
+              <div className="product-card">
+                <article key={product.id} className='product'>
+                  <img src={product.image} alt={product.name} />
+                  <h2>{product.name}</h2>
+                  <h2>{product.description}</h2>
+                  <button>Add To Cart</button>
+                  <button>Show Details</button>
+                </article>
+              </div>
             )
           })}
       </section>

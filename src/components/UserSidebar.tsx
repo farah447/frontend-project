@@ -9,7 +9,7 @@ const UserSidebar = () => {
                 <p>farah@gmail.com</p>
             </div>
 
-            <ul>
+            <ul className='horizontal-nav'>
                 <li> <Link to="/dashboard/User/profile">Profile</Link></li>
                 <li> <Link to="/dashboard/User/orders">Orders</Link></li>
             </ul>

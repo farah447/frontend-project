@@ -27,17 +27,19 @@ const Products = () => {
       <div className='main-content'>
         <h2>Create a product and form goes here</h2>
         <h2>List of all products</h2>
-        <section>
+        <section className="products-list">
           {products.length > 0 &&
             products.map((product) => {
               return (
-                <article key={product.id} className='product'>
-                  <img src={product.image} alt={product.name} />
-                  <h2>{product.name}</h2>
-                  <h2>{product.description}</h2>
-                  <button>Edite</button>
-                  <button>Delete</button>
-                </article>
+                <div className="product-card">
+                  <article key={product.id} className='product'>
+                    <img src={product.image} alt={product.name} />
+                    <h2>{product.name}</h2>
+                    <h2>{product.description}</h2>
+                    <button>Edite</button>
+                    <button>Delete</button>
+                  </article>
+                </div>
               )
             })}
         </section>

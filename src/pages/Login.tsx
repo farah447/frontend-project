@@ -49,7 +49,7 @@ export const Login = ({ pathName }: { pathName: string }) => {
   }
 
   return (
-    <div className="container">
+    <div className="login-container">
       <h2>User login</h2>
       <div className="card">
         <form className="registeation-form" onSubmit={handleSubmit}>
@@ -63,7 +63,7 @@ export const Login = ({ pathName }: { pathName: string }) => {
           </div>
 
           <div className="form-control">
-            <button type="submit" className="btn"> Login </button>
+            <button type="submit" className="btn-login"> Login </button>
           </div>
         </form>
       </div>

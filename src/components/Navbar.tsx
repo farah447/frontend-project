@@ -18,7 +18,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <ul >
+            <ul className="horizontal-nav">
                 <li>
                     <Link to="/">Home</Link>
                 </li>
