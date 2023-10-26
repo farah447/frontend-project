@@ -58,3 +58,35 @@
   flex: 2;
   padding: 1rem;
 }
+
+img{
+  width: 100%;
+}
+
+@media screen and (max-width: 99px) {
+  .sider{
+    background-color: antiquewhite;
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .main-content{
+    background-color: aqua;
+    flex: 2;
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sider{
+    background-color: antiquewhite;
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .main-content{
+    background-color: aqua;
+    flex: 2;
+    padding: 1rem;
+  }
+}

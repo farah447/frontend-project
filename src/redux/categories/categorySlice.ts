@@ -1,49 +1,48 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../../../api/index'
+import api from '../../api/index'
 
-export const fetchProducts = createAsyncThunk('users/fetchProducts', async () => {
-  const respons = await api.get('/mock/e-commerce/products.json')
-  return respons.data
-}
-)
+export const fetchCategory = createAsyncThunk('users/fetchCategory', async () => {
+  try {
+    const response = await api.get('/mock/e-commerce/categories.json');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+});
 
-export type Product = {
+
+export type Category = {
   id: number
   name: string
-  image: string
-  description: string
-  categories: number[]
-  variants: string[]
-  sizes: string[]
 }
 
-export type ProductState = {
-  products: Product[]
+export type CategoryState = {
+  Categories: Category[]
   error: null | string
   isLoading: boolean
 }
 
-const initialState: ProductState = {
-  products: [],
+const initialState: CategoryState = {
+  Categories: [],
   error: null,
   isLoading: false
 }
 
-export const productSlice = createSlice({
-  name: 'user',
+export const CategorySlice = createSlice({
+  name: 'Categories',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.pending, (state) => {
+    builder.addCase(fetchCategory.pending, (state) => {
       state.isLoading = true
       state.error = null
     })
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload
+    builder.addCase(fetchCategory.fulfilled, (state, action) => {
+      state.Categories = action.payload
       state.isLoading = false
     })
-    builder.addCase(fetchProducts.rejected, (state, action) => {
-      state.error = action.error.message || 'an error occuered'
+    builder.addCase(fetchCategory.rejected, (state, action) => {
+      state.error = action.error.message || 'An error occurred while fetching categories.'
       state.isLoading = false
     })
     {/*
@@ -69,4 +68,4 @@ export const productSlice = createSlice({
 })
 
 
-export default productSlice.reducer
+export default CategorySlice.reducer

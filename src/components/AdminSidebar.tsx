@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 const AdminSidebar = () => {
@@ -13,8 +12,7 @@ const AdminSidebar = () => {
             <ul>
                 <li> <Link to="/dashboard/Admin/category">Category</Link></li>
                 <li>  <Link to="/dashboard/Admin/products">Products</Link></li>
-                <li>  <Link to="/dashboard/Admin/orders">Orders</Link></li>
-
+                <li>  <Link to="/dashboard/Admin/users">Users</Link></li>
             </ul>
         </aside>
     )

@@ -1,13 +1,12 @@
-import React from 'react'
 import UserSidebar from '../components/UserSidebar'
 
 const UserDashboared = () => {
   return (
     <div className='container'>
-      <h2>Admin profile gose here</h2>
       <UserSidebar />
       <div className='main-content'>
-        main content goes here
+        <h2>User profile gose here</h2>
+        <p>main content goes here</p>
       </div>
     </div>
   )
