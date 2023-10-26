@@ -50,8 +50,8 @@ export const Login = ({ pathName }: { pathName: string }) => {
 
   return (
     <div className="login-container">
-      <h2>User login</h2>
       <div className="card">
+        <h2>User login</h2>
         <form className="registeation-form" onSubmit={handleSubmit}>
           <div className="form-control">
             <label htmlFor="email">Email: </label>

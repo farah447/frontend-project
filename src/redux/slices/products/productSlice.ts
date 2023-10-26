@@ -15,24 +15,50 @@ export type Product = {
   categories: number[]
   variants: string[]
   sizes: string[]
+  price: number
 }
 
 export type ProductState = {
   products: Product[]
   error: null | string
   isLoading: boolean
+  singleProduct: Product
+  searchTerm: string
 }
 
 const initialState: ProductState = {
   products: [],
   error: null,
-  isLoading: false
+  isLoading: false,
+  singleProduct: {} as Product,
+  searchTerm: ''
 }
 
 export const productSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    searchProduct: (state, action) => {
+      state.searchTerm = action.payload
+    },
+    findProductById: (state, action) => {
+      const id = action.payload
+      const foundProduct = state.products.find((product) => product.id === id);
+      if (foundProduct) {
+        state.singleProduct = foundProduct
+      }
+    },
+    sortProducts: (state, action) => {
+      const sortCriteria = action.payload;
+      if (sortCriteria === 'name') {
+        state.products.sort((a, b) => a.name.localeCompare(b.name))
+      }
+      else if (sortCriteria === 'price') {
+        state.products.sort((a, b) => a.price - b.price)
+
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
       state.isLoading = true
@@ -68,5 +94,5 @@ export const productSlice = createSlice({
   }
 })
 
-
+export const { findProductById, searchProduct, sortProducts } = productSlice.actions
 export default productSlice.reducer
