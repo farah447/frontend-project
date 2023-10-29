@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import api from '../../api/index'
 
 export const fetchCategory = createAsyncThunk('users/fetchCategory', async () => {
-  try {
-    const response = await api.get('/mock/e-commerce/categories.json');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await api.get('/mock/e-commerce/categories.json');
+  return response.data;
 });
 
 
@@ -17,13 +14,13 @@ export type Category = {
 }
 
 export type CategoryState = {
-  Categories: Category[]
+  categories: Category[]
   error: null | string
   isLoading: boolean
 }
 
 const initialState: CategoryState = {
-  Categories: [],
+  categories: [],
   error: null,
   isLoading: false
 }
@@ -38,7 +35,7 @@ export const CategorySlice = createSlice({
       state.error = null
     })
     builder.addCase(fetchCategory.fulfilled, (state, action) => {
-      state.Categories = action.payload
+      state.categories = action.payload
       state.isLoading = false
     })
     builder.addCase(fetchCategory.rejected, (state, action) => {

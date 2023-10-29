@@ -25,12 +25,6 @@ const Navbar = () => {
                 <li>
                     <Link to="/contact">Contact</Link>
                 </li>
-                <li>
-                    <Link to="/register">Register</Link>
-                </li>
-                <li>
-                    <Link to="/login">Login</Link>
-                </li>
                 {/*
 
                  <li>
@@ -49,6 +43,17 @@ const Navbar = () => {
 
                         <li>
                             <Link to={`/dashboard/${userData?.role}`}> {userData?.role} Dashboared</Link>
+                        </li>
+                    </>
+                )
+                }
+                {!isLoggedIn && (
+                    <>
+                        <li>
+                            <Link to="/register">Register</Link>
+                        </li>
+                        <li>
+                            <Link to="/login">Login</Link>
                         </li>
                     </>
                 )}

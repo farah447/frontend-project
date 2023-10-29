@@ -4,7 +4,10 @@ import { useDispatch } from "react-redux";
 import { ChangeEvent, useEffect } from "react";
 import { Product, fetchProducts, searchProduct } from "../redux/slices/products/productSlice";
 import { Link } from "react-router-dom";
+
 import SortProducts from "../components/SortProducts";
+import SearchInput from "../components/SearchInput";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productR);
@@ -31,12 +34,10 @@ const Home = () => {
   return (
     <div className="container">
       <div className="sidebar">
-        <h2>filter by price</h2>
-        <h2>filter by category</h2>
       </div>
       <div className="home-content">
         <div className="search-sort">
-          <input type="text" placeholder="Search by product name" value={searchTerm} onChange={handleSearch} />
+          <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
           <SortProducts />
         </div>
         <h2>all products here</h2>
@@ -61,6 +62,7 @@ const Home = () => {
           })}
       </section>
     </div>
+
   )
 }
 

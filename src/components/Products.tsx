@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
-import AdminSidebar from './AdminSidebar'
 import { AppDispatch, RootState } from '../redux/store'
 import { useEffect } from 'react'
 import { fetchProducts } from '../redux/slices/products/productSlice'
+
+import AdminSidebar from './AdminSidebar'
 
 const Products = () => {
 

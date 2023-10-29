@@ -28,17 +28,29 @@ export const Login = ({ pathName }: { pathName: string }) => {
     })
   }
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
+    console.log("Users in Redux store:", users);
     try {
-      console.log(user)
-      const foundUser = users.find(userData => userData.email === user.email)
-      if (foundUser && foundUser.password === user.password) {
-        dispatch(login(foundUser))
-        navigate(pathName ? pathName : `/dashboard/${foundUser.role}`)
-      } else {
-        console.log("something wrong with email or password!")
+      const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
+
+      if (!foundUser) {
+        console.log("user not found with this email!")
+        return
       }
+
+      if (foundUser.password !== user.password) {
+        console.log("user password did not match!")
+        return
+      }
+
+      if (foundUser.ban) {
+        console.log("user account is banned!")
+        return
+      }
+
+      dispatch(login(foundUser))
+      navigate(pathName ? pathName : `/dashboard/${foundUser.role}`)
     } catch (error) {
       console.log(error)
     }

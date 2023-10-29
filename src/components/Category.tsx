@@ -8,7 +8,7 @@ import AdminSidebar from './AdminSidebar'
 const Category = () => {
 
 
-  const { Categories, isLoading, error } = useSelector((state: RootState) => state.categoriesR);
+  const { categories, isLoading, error } = useSelector((state: RootState) => state.categoriesR);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -29,8 +29,8 @@ const Category = () => {
       <div className='main-content'>
         <h2>List of all Categories</h2>
         <section>
-          {Categories.length > 0 &&
-            Categories.map((category) => {
+          {categories.length > 0 &&
+            categories.map((category) => {
               return (
                 <article key={category.id} className='product'>
                   <h2>{category.name}</h2>

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import api from '../../api/index'
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
@@ -14,6 +15,7 @@ export type Users = {
     email: string
     password: string
     role: string
+    ban: boolean
 }
 
 export type UsersState = {
@@ -21,7 +23,9 @@ export type UsersState = {
     error: null | string
     isLoading: boolean
     isLoggedIn: boolean
-    userData: Users | null
+    userData: Users | null,
+    searchTerm: string,
+    ban: boolean
 }
 
 const data =
@@ -32,7 +36,9 @@ const initialState: UsersState = {
     error: null,
     isLoading: false,
     isLoggedIn: data.isLoggedIn,
-    userData: data.userData
+    userData: data.userData,
+    searchTerm: '',
+    ban: false
 }
 
 export const UsersSlice = createSlice({
@@ -54,6 +60,38 @@ export const UsersSlice = createSlice({
                 isLoggedIn: state.isLoggedIn,
                 userData: state.userData
             }))
+        },
+        searchUser: (state, action) => {
+            state.searchTerm = action.payload
+        },
+        deleteUser: (state, action) => {
+            const filterUsers = state.users.filter((user) => user.id !== action.payload)
+            state.users = filterUsers
+        },
+        banUser: (state, action) => {
+            const id = action.payload
+            const foundUser = state.users.find((user) => user.id === id)
+            if (foundUser) {
+                foundUser.ban = !foundUser.ban
+            }
+        },
+        addUser: (state, action) => {
+            state.users.push(action.payload);
+        },
+        updateUser: (state, action) => {
+            //console.log("Reducer: Updating user data", action.payload);
+            const { id, firstName, lastName } = action.payload
+            const foundUser = state.users.find((user) => user.id === id)
+            if (foundUser) {
+                foundUser.firstName = firstName
+                foundUser.lastName = lastName
+                state.userData = foundUser
+                localStorage.setItem('loginData', JSON.stringify({
+                    isLoggedIn: state.isLoggedIn,
+                    userData: state.userData
+                })
+                )
+            }
         }
     },
     extraReducers: (builder) => {
@@ -91,5 +129,5 @@ export const UsersSlice = createSlice({
     }
 })
 
-export const { login, logout } = UsersSlice.actions
+export const { login, logout, searchUser, deleteUser, banUser, addUser, updateUser } = UsersSlice.actions
 export default UsersSlice.reducer

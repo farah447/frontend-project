@@ -32,6 +32,7 @@ const Index = () => {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login pathName="/" />} />
+        <Route path="/logout" element={<Home />} />
         <Route path="/products" element={<ProductsDetailes />} />
 
         <Route path="/dashboard" element={<ProtectRouting />}>
@@ -39,6 +40,7 @@ const Index = () => {
           <Route path="/dashboard/User/profile" element={<UserProfile />} />
           <Route path="/dashboard/User/orders" element={<UserOrders />} />
         </Route>
+
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="/dashboard/Admin" element={<AdminDashboared />} />
           <Route path="/dashboard/Admin/category" element={<Category />} />
