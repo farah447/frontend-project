@@ -11,11 +11,6 @@ export const Login = ({ pathName }: { pathName: string }) => {
 
   const dispatch: AppDispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchUsers())
-  }, [])
-
-
   const navigate = useNavigate()
   const [user, setUser] = useState({
     email: '',
