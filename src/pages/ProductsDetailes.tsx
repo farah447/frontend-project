@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts, findProductById } from "../redux/slices/products/productSlice";
 import { fetchCategory } from "../redux/categories/categorySlice";
+import { ThemeProvider } from '@mui/material/styles';
+import { Button } from "@mui/material";
+
+import themes from '../Theme/Themes';
 
 const ProductsDetailes = () => {
   const { id } = useParams();
@@ -37,21 +41,32 @@ const ProductsDetailes = () => {
 
 
   return (
-    <div>
-      <h2> Product Details </h2>
-      {singleProduct && <>
-        <img src={singleProduct.image} alt={singleProduct.name} />
-        <h3>Name:{singleProduct.name}</h3>
-        <p>Description:{singleProduct.description}</p>
-        <p>Price: {singleProduct.price} EUR</p>
-        <p>Categories: {singleProduct.categories && singleProduct.categories.map((CategoryId) => getCategoryNameById(CategoryId))}</p>
-        <p>Sizes: {singleProduct.sizes && singleProduct.sizes.join(`, `)}</p>
-        <button onClick={() => {
-          navigate("/")
-        }}>Back To Home</button>
-        <button>Add To Cart</button>
-      </>}
-    </div>
+    <ThemeProvider theme={themes} >
+      <div>
+        <h2> Product Details </h2>
+        {singleProduct && <>
+          <img src={singleProduct.image} alt={singleProduct.name} />
+          <h3>Name:{singleProduct.name}</h3>
+          <p>Description:{singleProduct.description}</p>
+          <p>Price: {singleProduct.price} EUR</p>
+          <p>Categories: {singleProduct.categories && singleProduct.categories.map((CategoryId) => getCategoryNameById(CategoryId))}</p>
+          <p>Sizes: {singleProduct.sizes && singleProduct.sizes.join(`, `)}</p>
+          <Button
+            className="btn-back"
+            variant="outlined"
+            onClick={() => {
+              navigate("/")
+            }}
+            color="secondary">
+            Back To Home</Button>
+          <Button
+            className="btn-add"
+            variant="outlined"
+            color="secondary">
+            Add To Cart</Button>
+        </>}
+      </div>
+    </ThemeProvider>
   )
 }
 

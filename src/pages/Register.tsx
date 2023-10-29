@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch } from 'react-redux'
 import { addUser, fetchUsers } from '../redux/users/UsersSlice'
+import { ThemeProvider } from '@mui/material/styles';
+import { Button } from "@mui/material";
+
+import themes from '../Theme/Themes';
 
 export const Register = () => {
 
@@ -39,27 +43,34 @@ export const Register = () => {
     };
 
     return (
-        <div>
-            <h2>User Registeration</h2>
-            <form onSubmit={handleSubmit}>
-                <div className='form-field'>
-                    <label htmlFor='firstName'>first name: </label>
-                    <input type='text' name='firstName' value={user.firstName} onChange={handleChange} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='lastName'>last name: </label>
-                    <input type='text' name='lastName' value={user.lastName} onChange={handleChange} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='email'>Email: </label>
-                    <input type='text' name='email' value={user.email} onChange={handleChange} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='password'>Password: </label>
-                    <input type='text' name='password' value={user.password} onChange={handleChange} />
-                </div>
-                <button type='submit'>Register</button>
-            </form>
-        </div>
+        <ThemeProvider theme={themes} >
+            <div>
+                <h2>User Registeration</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className='form-field'>
+                        <label htmlFor='firstName'>first name: </label>
+                        <input type='text' name='firstName' value={user.firstName} onChange={handleChange} />
+                    </div>
+                    <div className='form-field'>
+                        <label htmlFor='lastName'>last name: </label>
+                        <input type='text' name='lastName' value={user.lastName} onChange={handleChange} />
+                    </div>
+                    <div className='form-field'>
+                        <label htmlFor='email'>Email: </label>
+                        <input type='text' name='email' value={user.email} onChange={handleChange} />
+                    </div>
+                    <div className='form-field'>
+                        <label htmlFor='password'>Password: </label>
+                        <input type='text' name='password' value={user.password} onChange={handleChange} />
+                    </div>
+                    <Button
+                        className="show-btn"
+                        variant="outlined"
+                        type='submit'
+                        color="secondary">
+                        Register</Button>
+                </form>
+            </div>
+        </ThemeProvider>
     )
 }

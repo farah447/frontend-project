@@ -2,7 +2,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
-import { fetchUsers, login } from "../redux/users/UsersSlice"
+import { login } from "../redux/users/UsersSlice"
+import { ThemeProvider } from '@mui/material/styles';
+import { Button } from "@mui/material";
+
+import themes from '../Theme/Themes';
 
 export const Login = ({ pathName }: { pathName: string }) => {
 
@@ -56,25 +60,32 @@ export const Login = ({ pathName }: { pathName: string }) => {
   }
 
   return (
-    <div className="login-container">
-      <div className="card">
-        <h2>User login</h2>
-        <form className="registeation-form" onSubmit={handleSubmit}>
-          <div className="form-control">
-            <label htmlFor="email">Email: </label>
-            <input type="email" name="email" id="email" value={user.email} onChange={handleInputChange} />
-          </div>
-          <div className="form-control">
-            <label htmlFor="password">Password: </label>
-            <input type="password" name="password" id="password" placeholder="password" value={user.password} onChange={handleInputChange} />
-          </div>
+    <ThemeProvider theme={themes} >
+      <div className="login-container">
+        <div className="card">
+          <h2>User login</h2>
+          <form className="registeation-form" onSubmit={handleSubmit}>
+            <div className="form-control">
+              <label htmlFor="email">Email: </label>
+              <input type="email" name="email" id="email" value={user.email} onChange={handleInputChange} />
+            </div>
+            <div className="form-control">
+              <label htmlFor="password">Password: </label>
+              <input type="password" name="password" id="password" placeholder="password" value={user.password} onChange={handleInputChange} />
+            </div>
 
-          <div className="form-control">
-            <button type="submit" className="btn-login"> Login </button>
-          </div>
-        </form>
+            <div className="form-control">
+              <Button
+                className="btn-login"
+                variant="outlined"
+                type='submit'
+                color="secondary">
+                Login</Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   )
 }
 

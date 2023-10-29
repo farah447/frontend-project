@@ -2,7 +2,10 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "../redux/store"
 import { fetchUsers, updateUser } from "../redux/users/UsersSlice"
+import { ThemeProvider } from '@mui/material/styles';
+import { Button } from "@mui/material";
 
+import themes from '../Theme/Themes';
 import UserSidebar from "./UserSidebar"
 import UseUserState from "../hooks/UseUserState"
 
@@ -15,14 +18,6 @@ const UserProfile = () => {
     firstName: userData?.firstName,
     lastName: userData?.lastName
   })
-  //console.log(users)
-
-  {/*useEffect(() => {
-    setUser({
-      firstName: userData?.firstName,
-      lastName: userData?.lastName,
-    });
-  }, [userData]);*/}
 
   useEffect(() => {
     dispatch(fetchUsers())
@@ -45,30 +40,42 @@ const UserProfile = () => {
   }
 
   return (
-    <div className='container'>
-      <UserSidebar />
-      <div className='main-content'>
-        {userData && (
-          <div>
+    <ThemeProvider theme={themes} >
+      <div className='container'>
+        <UserSidebar />
+        <div className='main-content'>
+          {userData && (
             <div>
-              <p>Id: {userData.id}</p>
-              <p>Name: {`${userData?.firstName} ${userData?.lastName}`}</p>
-              <p>Email: {userData.email}</p>
-              <p>Role: {userData.role}</p>
-              <button className="btn" onClick={handleFormOpen}>Edit profile</button>
-            </div>
+              <div>
+                <p>Id: {userData.id}</p>
+                <p>Name: {`${userData?.firstName} ${userData?.lastName}`}</p>
+                <p>Email: {userData.email}</p>
+                <p>Role: {userData.role}</p>
+                <Button
+                  className="btn"
+                  variant="outlined"
+                  onClick={handleFormOpen}
+                  color="secondary">Edit profile
+                </Button>
+              </div>
 
-            {isFormOpen && (
-              <form action="" onSubmit={handleSubmit}>
-                <input type="text" name="firstName" value={user.firstName} onChange={handleChange} />
-                <input type="text" name="lastName" value={user.lastName} onChange={handleChange} />
-                <button type="submit">Update the Profile</button>
-              </form>
-            )}
-          </div>
-        )}
+              {isFormOpen && (
+                <form action="" onSubmit={handleSubmit}>
+                  <input type="text" name="firstName" value={user.firstName} onChange={handleChange} />
+                  <input type="text" name="lastName" value={user.lastName} onChange={handleChange} />
+                  <Button
+                    className="btn"
+                    variant="outlined"
+                    type="submit"
+                    color="secondary">Update the Profile
+                  </Button>
+                </form>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 

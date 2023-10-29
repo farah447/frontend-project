@@ -1,4 +1,7 @@
 import { ChangeEvent } from "react"
+import { ThemeProvider } from '@mui/material/styles';
+
+import themes from '../Theme/Themes';
 
 type SearchInputProps = {
     searchTerm: string,
@@ -6,7 +9,12 @@ type SearchInputProps = {
 }
 
 const SearchInput = ({ searchTerm, handleSearch }: SearchInputProps) => {
-    return <input type="text" placeholder="Search by product name" value={searchTerm} onChange={handleSearch} />
+
+    return (
+        <ThemeProvider theme={themes} >
+            <input type="text" placeholder="Search by product name" value={searchTerm} onChange={handleSearch} />
+        </ThemeProvider>)
+
 }
 
 export default SearchInput
