@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategory } from '../redux/categories/categorySlice';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 import themes from '../Theme/Themes';
 import AdminSidebar from './AdminSidebar'
@@ -38,16 +38,20 @@ const Category = () => {
                 return (
                   <article key={category.id} className='product'>
                     <h2>{category.name}</h2>
-                    <Button
-                      className="btn"
-                      variant="outlined"
-                      color="secondary">
-                      Edit </Button>
-                    <Button
-                      className="btn"
-                      variant="outlined"
-                      color="secondary">
-                      Delete </Button>
+                    <Stack direction="row" spacing={2}>
+                      <Button
+                        className="btn"
+                        variant="outlined"
+                        color="secondary"
+                        size='small'>
+                        Edit </Button>
+                      <Button
+                        className="btn"
+                        variant="outlined"
+                        color="secondary"
+                        size='small'>
+                        Delete </Button>
+                    </Stack>
                   </article>
                 )
               })}

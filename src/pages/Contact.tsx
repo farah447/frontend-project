@@ -35,7 +35,8 @@ const Contact = () => {
                                     className="send-btn"
                                     variant="outlined"
                                     type="submit"
-                                    color="secondary">
+                                    color="secondary"
+                                    size="small">
                                     Send Message</Button>
                             </Stack>
                         </form>

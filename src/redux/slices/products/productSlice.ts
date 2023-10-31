@@ -54,9 +54,11 @@ export const productSlice = createSlice({
       if (sortCriteria === 'name') {
         state.products.sort((a, b) => a.name.localeCompare(b.name))
       }
-      else if (sortCriteria === 'price') {
+      else if (sortCriteria === 'Low to hight price') {
         state.products.sort((a, b) => a.price - b.price)
 
+      } else if (sortCriteria === 'hight to Low price') {
+        state.products.sort((a, b) => a.price - b.price).reverse();
       }
     }
   },

@@ -44,32 +44,36 @@ export const Register = () => {
 
     return (
         <ThemeProvider theme={themes} >
-            <div>
-                <h2>User Registeration</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className='form-field'>
-                        <label htmlFor='firstName'>first name: </label>
-                        <input type='text' name='firstName' value={user.firstName} onChange={handleChange} />
-                    </div>
-                    <div className='form-field'>
-                        <label htmlFor='lastName'>last name: </label>
-                        <input type='text' name='lastName' value={user.lastName} onChange={handleChange} />
-                    </div>
-                    <div className='form-field'>
-                        <label htmlFor='email'>Email: </label>
-                        <input type='text' name='email' value={user.email} onChange={handleChange} />
-                    </div>
-                    <div className='form-field'>
-                        <label htmlFor='password'>Password: </label>
-                        <input type='text' name='password' value={user.password} onChange={handleChange} />
-                    </div>
-                    <Button
-                        className="show-btn"
-                        variant="outlined"
-                        type='submit'
-                        color="secondary">
-                        Register</Button>
-                </form>
+            <div className='Register-container'>
+                <div className="Register-card">
+
+                    <h2>User Registeration</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className='form-field'>
+                            <label htmlFor='firstName'>first name: </label>
+                            <input type='text' name='firstName' value={user.firstName} onChange={handleChange} />
+                        </div>
+                        <div className='form-field'>
+                            <label htmlFor='lastName'>last name: </label>
+                            <input type='text' name='lastName' value={user.lastName} onChange={handleChange} />
+                        </div>
+                        <div className='form-field'>
+                            <label htmlFor='email'>Email: </label>
+                            <input type='text' name='email' value={user.email} onChange={handleChange} />
+                        </div>
+                        <div className='form-field'>
+                            <label htmlFor='password'>Password: </label>
+                            <input type='text' name='password' value={user.password} onChange={handleChange} />
+                        </div>
+                        <Button
+                            className="show-btn"
+                            variant="outlined"
+                            type='submit'
+                            color="secondary"
+                            size="small">
+                            Register</Button>
+                    </form>
+                </div>
             </div>
         </ThemeProvider>
     )

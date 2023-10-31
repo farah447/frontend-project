@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
-import { login } from "../redux/users/UsersSlice"
+import { fetchUsers, login } from "../redux/users/UsersSlice"
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
@@ -20,6 +20,7 @@ export const Login = ({ pathName }: { pathName: string }) => {
     email: '',
     password: ''
   })
+
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUser((prevState) => {
@@ -79,7 +80,8 @@ export const Login = ({ pathName }: { pathName: string }) => {
                 className="btn-login"
                 variant="outlined"
                 type='submit'
-                color="secondary">
+                color="secondary"
+                size="small">
                 Login</Button>
             </div>
           </form>

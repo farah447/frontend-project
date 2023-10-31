@@ -20,7 +20,7 @@ const Footer = () => {
                             123 Main Street<br />
                             City, Country<br />
                             Phone: (123) 456-7890<br />
-                            Email: info@example.com
+                            Email: FutureTech@gmail.com
                         </address>
                     </div>
                     <div className="footer-section">
@@ -33,7 +33,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} Your Website Name. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Future Tech. All rights reserved.</p>
                 </div>
             </footer>
         </ThemeProvider>

@@ -18,18 +18,21 @@ const Navbar = () => {
         navigate('/login')
     }
 
-
     return (
         <ThemeProvider theme={themes} >
-            <nav>
-                <ul className="horizontal-nav">
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/contact">Contact</Link>
-                    </li>
-                    {/*
+            <div className="navbar">
+                <div className="nav-logo">
+                    <img src="./src/Tech-logo-nav.png" height="100%" width="100%" alt="Future Tech Logo" />
+                </div>
+                <nav>
+                    <ul className="horizontal-nav">
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="/contact">Contact</Link>
+                        </li>
+                        {/*
 
                  <li>
                     <Link to="/dashboard/Admin">Admin Dashboared</Link>
@@ -39,30 +42,31 @@ const Navbar = () => {
                     <Link to="/dashboard/User">User Dashboared</Link>
                 </li>
                 */}
-                    {isLoggedIn && (
-                        <>
-                            <li>
-                                <Link to="/logout" onClick={handleLogout}>Logout</Link>
-                            </li>
+                        {isLoggedIn && (
+                            <>
+                                <li>
+                                    <Link to="/logout" onClick={handleLogout}>Logout</Link>
+                                </li>
 
-                            <li>
-                                <Link to={`/dashboard/${userData?.role}`}> {userData?.role} Dashboared</Link>
-                            </li>
-                        </>
-                    )
-                    }
-                    {!isLoggedIn && (
-                        <>
-                            <li>
-                                <Link to="/register">Register</Link>
-                            </li>
-                            <li>
-                                <Link to="/login">Login</Link>
-                            </li>
-                        </>
-                    )}
-                </ul>
-            </nav>
+                                <li>
+                                    <Link to={`/dashboard/${userData?.role}`}> {userData?.role} Dashboared</Link>
+                                </li>
+                            </>
+                        )
+                        }
+                        {!isLoggedIn && (
+                            <>
+                                <li>
+                                    <Link to="/register">Register</Link>
+                                </li>
+                                <li>
+                                    <Link to="/login">Login</Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </nav>
+            </div>
         </ThemeProvider>
     )
 }
