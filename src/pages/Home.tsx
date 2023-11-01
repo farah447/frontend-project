@@ -14,13 +14,16 @@ import SearchInput from "../components/SearchInput";
 import themes from '../Theme/Themes';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import useCategoryState from "../hooks/useCategoryState";
+import { prices } from "../price";
 
 const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productR);
 
   const { categories } = useCategoryState()
 
-  const [checkedCategories, setCheckedCategories] = useState<string[]>([])
+  const [checkedCategories, setCheckedCategories] = useState<number[]>([])
+
+  const [priceRange, setPriceRange] = useState<number[]>([])
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -32,7 +35,16 @@ const Home = () => {
     dispatch(searchProduct(event.target.value))
   }
 
-  const searchProducts = searchTerm ? products.filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase())) : products
+  //const searchProducts = searchTerm ? products.filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase())) : products
+
+  const filerProducts = products.filter((product) => {
+    const categoryMatch = checkedCategories.length > 0 ? checkedCategories.some((id) => product.categories.includes(Number(id))) : product
+
+    const pricehMatch = priceRange.length > 0 ? product.price >= priceRange[0] && product.price <= priceRange[1] : product
+
+    const searchMatch = searchTerm !== '' ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : product
+    return categoryMatch && searchMatch && pricehMatch
+  })
 
   if (isLoading) {
     return <p>Loading...</p>
@@ -41,18 +53,23 @@ const Home = () => {
     return <p>{error}</p>
   }
 
-  const handleCheckedCategory = (CategoryName: string) => {
-    if (checkedCategories.includes(CategoryName)) {
-      const filteredCategory = checkedCategories.filter((c) => c !== CategoryName)
+  const handleCheckedCategory = (CategoryId: number) => {
+    if (checkedCategories.includes(CategoryId)) {
+      const filteredCategory = checkedCategories.filter((c) => c !== CategoryId)
       setCheckedCategories(filteredCategory)
     } else {
       setCheckedCategories((prevState) => {
-        return [...prevState, CategoryName]
+        return [...prevState, CategoryId]
       })
     }
   }
 
-  console.log(checkedCategories)
+  const handlePriceChange = (priceId: number) => {
+    const selectPriceObj = prices.find((price) => price.id === priceId);
+    if (selectPriceObj) {
+      setPriceRange(selectPriceObj.range)
+    }
+  }
 
   return (
     <ThemeProvider theme={themes}>
@@ -77,18 +94,29 @@ const Home = () => {
             </div>
           </section>
         </div>
-        <div className="content-container">
+        <div className="content-container" style={{ overflow: 'scroll' }}>
           <div className="sidebar">
             <Box sx={{ width: '100%', maxWidth: 360 }}>
               <nav aria-label="main mailbox folders">
                 <List>
+                  <div>
+                    {prices.length > 0 && prices.map((price) => {
+                      return (
+                        <div key={price.id}>
+                          <label htmlFor="price" >
+                            <input type="radio" name="price" value={price.id} onChange={() => { handlePriceChange(price.id) }} />
+                            {price.name}
+                          </label>
+                        </div>)
+                    })}
+                  </div>
                   <div>
                     {categories.length > 0 &&
                       categories.map((category) => {
                         return (
                           <div key={category.id}>
                             <label htmlFor="category" >
-                              <input type="checkbox" name="category" value={category.name} onChange={() => { handleCheckedCategory(category.name) }} />
+                              <input type="checkbox" name="category" value={category.name} onChange={() => { handleCheckedCategory(category.id) }} />
                               {category.name}
                             </label>
                           </div>
@@ -134,8 +162,8 @@ const Home = () => {
             <h2>Shop Products</h2>
           </div>
           <section className="products-list">
-            {searchProducts.length > 0 &&
-              searchProducts.map((product: Product) => {
+            {filerProducts.length > 0 &&
+              filerProducts.map((product: Product) => {
                 return (
                   <div className="product-card">
                     <article key={product.id} className='product'>

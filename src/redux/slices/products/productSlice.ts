@@ -36,7 +36,7 @@ const initialState: ProductState = {
 }
 
 export const productSlice = createSlice({
-  name: 'user',
+  name: 'product',
   initialState,
   reducers: {
     searchProduct: (state, action) => {
@@ -59,6 +59,20 @@ export const productSlice = createSlice({
 
       } else if (sortCriteria === 'hight to Low price') {
         state.products.sort((a, b) => b.price - a.price)
+      }
+    },
+    deleteProduct: (state, action) => {
+      const filterProducts = state.products.filter((product) => product.id !== action.payload)
+      state.products = filterProducts
+    },
+    addProduct: (state, action) => {
+      state.products.push(action.payload);
+    },
+    updateProduct: (state, action) => {
+      const { id, name } = action.payload
+      const foundProduct = state.products.find((product) => product.id === id)
+      if (foundProduct) {
+        foundProduct.name = name
       }
     }
   },
@@ -97,5 +111,5 @@ export const productSlice = createSlice({
   }
 })
 
-export const { findProductById, searchProduct, sortProducts } = productSlice.actions
+export const { findProductById, searchProduct, sortProducts, deleteProduct, addProduct, updateProduct } = productSlice.actions
 export default productSlice.reducer

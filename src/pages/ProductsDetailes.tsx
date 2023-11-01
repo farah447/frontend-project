@@ -11,13 +11,14 @@ import { Button, Stack } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import themes from '../Theme/Themes';
+import useProductState from "../hooks/useProductState";
 
 const ProductsDetailes = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const { singleProduct, isLoading, error } = useSelector((state: RootState) => state.productR);
+  const { singleProduct, isLoading, error } = useProductState();
 
   const { categories } = useSelector((state: RootState) => state.categoriesR);
 

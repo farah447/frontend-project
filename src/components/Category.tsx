@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { AppDispatch } from '../redux/store';
 import { useDispatch } from 'react-redux';
 import { addCategory, deleteCategory, fetchCategory, updateCategory } from '../redux/categories/categorySlice';
