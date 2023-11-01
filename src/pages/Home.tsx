@@ -5,8 +5,10 @@ import { ChangeEvent, useEffect } from "react";
 import { Product, fetchProducts, searchProduct } from "../redux/slices/products/productSlice";
 import { Link } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, IconButton, Stack } from "@mui/material";
+import { Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
 
+import DraftsIcon from '@mui/icons-material/Drafts';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import SortProducts from "../components/SortProducts";
 import SearchInput from "../components/SearchInput";
 import themes from '../Theme/Themes';
@@ -37,36 +39,60 @@ const Home = () => {
   return (
     <ThemeProvider theme={themes}>
       <div className="Home-container">
-        <section className="hero">
-          <div>
-            <h1> Future Tech </h1>
-            <p>A day full of Excellence! <br />
-              Discover amazing products at great prices.</p>
-            <Link to={"./products/11"}>
-              <Button
-                className="Shop-button"
-                variant="outlined"
-                size="large"
-                color="primary">
-                Shop Now</Button>
-            </Link>
-          </div>
-          <div className="Hero-logo">
-            <img src="./src/Headphones-hero.png" height="50%" width="50%" alt="Future Tech Logo" />
-          </div>
-        </section>
-        <div className="container">
+        <div className="hero-container">
+          <section className="hero">
+            <div>
+              <h1> Future Tech </h1>
+              <p>A day full of Excellence! <br />
+                Discover amazing products at great prices.</p>
+              <Link to={"./products/11"}>
+                <Button
+                  className="Shop-button"
+                  variant="outlined"
+                  size="large"
+                  color="primary">
+                  Shop Now</Button>
+              </Link>
+            </div>
+            <div className="Hero-logo">
+              <img src="./src/Headphones-hero.png" height="50%" width="50%" alt="Future Tech Logo" />
+            </div>
+          </section>
+        </div>
+        <div className="content-container">
           <div className="sidebar">
+            <Box sx={{ width: '100%', maxWidth: 360 }}>
+              <nav aria-label="main mailbox folders">
+                <List>
+                  <ListItem disablePadding >
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <FilterListIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="filtring" />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <DraftsIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Drafts" />
+                    </ListItemButton>
+                  </ListItem>
+                </List>
+              </nav>
+              <Divider />
+            </Box>
           </div>
           <div className="home-content">
             <div className="search-sort">
-              <Stack direction="row" spacing={90} sx={{ width: 1000 }}>
+              <Stack direction="row" spacing={70} sx={{ width: 100 }}>
                 <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
                 <SortProducts />
               </Stack>
             </div>
             <div>
-              <h2>filtring</h2>
             </div>
           </div>
           <div className="products-h2">
@@ -106,7 +132,7 @@ const Home = () => {
           </section>
         </div>
       </div>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 

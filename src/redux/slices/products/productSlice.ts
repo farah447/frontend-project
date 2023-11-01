@@ -58,7 +58,7 @@ export const productSlice = createSlice({
         state.products.sort((a, b) => a.price - b.price)
 
       } else if (sortCriteria === 'hight to Low price') {
-        state.products.sort((a, b) => a.price - b.price).reverse();
+        state.products.sort((a, b) => b.price - a.price)
       }
     }
   },

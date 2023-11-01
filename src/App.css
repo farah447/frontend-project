@@ -6,8 +6,10 @@
 }
 
 .Home-container{
-  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  box-sizing: border-box;
 }
+
 .card {
   padding: 2em;
 }
@@ -21,6 +23,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+
 }
 
 .sider{
@@ -143,18 +147,19 @@ img{
   justify-content: space-around;
 }
 
-/* Add this CSS for styling the Home component with search and sort above the cards */
 .container {
   display: flex;
-  flex-direction: column; /* Change to column layout */
-  align-items: center; /* Center content vertically */
+  flex-direction: column; 
+  align-items: center; 
   padding: 1rem;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+
 }
 
 .home-content {
-  flex: 2;
-  padding: 2rem;
-  width: 100%;
+  float: left;
+  width: 60%;
+  padding: 0 20px;
 }
 
 .search-and-sort select{
@@ -172,20 +177,26 @@ img{
   padding: 10px;
   font-size: 16px;
   flex: 1;
-  margin-right: 1rem;
 }
 
 .products-list {
-  display: flex;
-  flex-wrap: wrap; /* Display products in a row */
-  gap: 1rem;
-  justify-content: space-between; /* Add space between product cards */
-  width: 100%; /* Expand to full width */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;  
+  width: 80%; 
+  margin-left: 250px;
+}
+
+.products-listing{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;  
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
 }
 
 .product-card {
-  flex: 0 0 calc(33.333% - 1rem); /* Display three products per row with some gap */
-  background-color: #fff; /* White card background */
+  flex: 0.5rem;
+  background-color: #fff; 
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -201,6 +212,7 @@ img{
 .product img {
   width: 100%;
   max-height: 100%;
+  height: 250px;
 }
 
 .product h2 {
@@ -280,6 +292,7 @@ img{
   width: 100%;
   margin: 0 auto;
   padding: 20px;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
 }
 
 .contact-container h2 {
@@ -291,27 +304,21 @@ img{
 .contact-details {
   display: flex;
   flex-wrap: wrap;
-}
-
-.contact-info {
-  flex: 1;
-  padding: 10px;
-  background-color: #f4f4f4;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-right: 20px; /* Added margin to separate from the form */
+  
 }
 
 .contact-form {
   flex: 1;
   padding: 10px;
-  background-color: #f4f4f4;
   border: 1px solid #ddd;
   border-radius: 5px;
+  margin-left: 250px;
+  margin-right: 250px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  width: 300px;
+  height: 90px;
 }
 
 .form-group label {
@@ -321,7 +328,7 @@ img{
 
 .form-group input,
 .form-group textarea {
-  width: 100%;
+  width: 300px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -329,6 +336,13 @@ img{
 
 .form-group textarea {
   resize: none;
+  height: 50px;
+}
+
+.send-btn{
+  width: 200px;
+  height: 50px;
+  
 }
 
 button[type="submit"]:hover {
@@ -405,10 +419,11 @@ button[type="submit"]:hover {
 }
 
 .products-h2{
-  font-size: 4rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   margin-top: 0rem;
   font-family: 'Ubuntu', sans-serif;
+  margin-right: 160px;
 }
 
 .navbar {
@@ -449,6 +464,19 @@ button[type="submit"]:hover {
   color: #b3d9fc; 
 }
 
+.sidebar{
+  float: left;
+  width: 20%;
+  text-align: center;
+}
+.sidebar nav{
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+  padding: 8px;
+  margin-top: 0px;
+  display: block;
+  width: 100%;
+  color: black;
+}
 
 @media screen and (max-width: 768px) {
   .sider{

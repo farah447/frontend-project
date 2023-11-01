@@ -29,10 +29,10 @@ const Products = () => {
     <ThemeProvider theme={themes} >
       <div className='container'>
         <AdminSidebar />
-        <div className='main-content'>
+        <div>
           <h2>Create a product and form goes here</h2>
           <h2>List of all products</h2>
-          <section className="products-list">
+          <section className="products-listing">
             {products.length > 0 &&
               products.map((product) => {
                 return (

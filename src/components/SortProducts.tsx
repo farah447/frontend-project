@@ -18,13 +18,13 @@ const SortProducts = () => {
                 <FormControl sx={{ m: 1, minWidth: 100 }}>
                     <InputLabel id="demo-simple-select-helper-label">Sort</InputLabel>
                     <Select
-                        name="sort"
+                        name="Sort"
                         onChange={handleOptiononChange}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="Sort"
                         sx={{ color: (theme) => theme.palette.primary.contrastText }}>
-                        <MenuItem value="">
+                        <MenuItem value=''>
                             <em>None</em>
                         </MenuItem>
                         <MenuItem value='Low to hight price' defaultValue='price'>Low to hight price</MenuItem>

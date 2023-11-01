@@ -46,6 +46,7 @@ const Index = () => {
           <Route path="/dashboard/Admin/category" element={<Category />} />
           <Route path="/dashboard/Admin/products" element={<Products />} />
           <Route path="/dashboard/Admin/users" element={<UserList />} />
+          <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />
         </Route>
 
         <Route path="*" element={<Error />} />

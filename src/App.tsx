@@ -7,14 +7,16 @@ import { fetchCategory } from './redux/categories/categorySlice'
 
 import './App.css'
 import Index from './routes/Index'
+import { fetchOrders } from './redux/orders/ordersSlice'
 
 function App() {
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchProducts)
-    dispatch(fetchUsers)
-    dispatch(fetchCategory)
+    dispatch(fetchProducts())
+    dispatch(fetchUsers())
+    dispatch(fetchCategory())
+    dispatch(fetchOrders())
   }, [])
   return <div className="App">
     <Index />

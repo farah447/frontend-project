@@ -9,14 +9,7 @@ const Contact = () => {
                 <h2>Contact Us</h2>
                 <p>If you have any questions or inquiries, please feel free to get in touch with us.</p>
                 <div className="contact-details">
-                    <div className="contact-info">
-                        <h3>Contact Information</h3>
-                        <p>Email: contact@example.com</p>
-                        <p>Phone: (123) 456-7890</p>
-                        <p>Address: 123 Main Street, City, Country</p>
-                    </div>
                     <div className="contact-form">
-                        <h3>Contact Form</h3>
                         <form>
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
