@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Product, fetchProducts, searchProduct } from "../redux/slices/products/productSlice";
 import { Link } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
@@ -13,9 +13,14 @@ import SortProducts from "../components/SortProducts";
 import SearchInput from "../components/SearchInput";
 import themes from '../Theme/Themes';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import useCategoryState from "../hooks/useCategoryState";
 
 const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productR);
+
+  const { categories } = useCategoryState()
+
+  const [checkedCategories, setCheckedCategories] = useState<string[]>([])
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -35,6 +40,19 @@ const Home = () => {
   if (error) {
     return <p>{error}</p>
   }
+
+  const handleCheckedCategory = (CategoryName: string) => {
+    if (checkedCategories.includes(CategoryName)) {
+      const filteredCategory = checkedCategories.filter((c) => c !== CategoryName)
+      setCheckedCategories(filteredCategory)
+    } else {
+      setCheckedCategories((prevState) => {
+        return [...prevState, CategoryName]
+      })
+    }
+  }
+
+  console.log(checkedCategories)
 
   return (
     <ThemeProvider theme={themes}>
@@ -64,22 +82,39 @@ const Home = () => {
             <Box sx={{ width: '100%', maxWidth: 360 }}>
               <nav aria-label="main mailbox folders">
                 <List>
-                  <ListItem disablePadding >
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <FilterListIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="filtring" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <DraftsIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Drafts" />
-                    </ListItemButton>
-                  </ListItem>
+                  <div>
+                    {categories.length > 0 &&
+                      categories.map((category) => {
+                        return (
+                          <div key={category.id}>
+                            <label htmlFor="category" >
+                              <input type="checkbox" name="category" value={category.name} onChange={() => { handleCheckedCategory(category.name) }} />
+                              {category.name}
+                            </label>
+                          </div>
+                        )
+                      })}
+                  </div>
+                  <div>
+                    <ListItem disablePadding >
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <FilterListIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="filtring" />
+                      </ListItemButton>
+                    </ListItem>
+                  </div>
+                  <div>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <DraftsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Drafts" />
+                      </ListItemButton>
+                    </ListItem>
+                  </div>
                 </List>
               </nav>
               <Divider />
