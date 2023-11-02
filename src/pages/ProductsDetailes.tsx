@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchProducts, findProductById } from "../redux/slices/products/productSlice";
+import { Product, fetchProducts, findProductById } from "../redux/slices/products/productSlice";
 import { fetchCategory } from "../redux/categories/categorySlice";
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, Stack } from "@mui/material";
@@ -12,6 +12,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import themes from '../Theme/Themes';
 import useProductState from "../hooks/useProductState";
+import { addToCart } from "../redux/cart/cartSlice";
 
 const ProductsDetailes = () => {
   const { id } = useParams();
@@ -42,6 +43,9 @@ const ProductsDetailes = () => {
     return category ? category.name + ", " : 'Category not found!'
   }
 
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product))
+  }
 
   return (
     <div className="product-details">
@@ -66,12 +70,11 @@ const ProductsDetailes = () => {
                 size="small">
                 Back To Home</Button>
               <Button
-                className="btn-add"
+                className="Add-btn"
                 variant="outlined"
-                color="secondary"
                 size="small"
-                aria-label="add to shopping cart">
-                <IconButton color="primary" aria-label="add to shopping cart">
+                onClick={() => { handleAddToCart(singleProduct) }}>
+                <IconButton color="primary" aria-label="add to shopping cart" size="small">
                   <AddShoppingCartIcon />
                 </IconButton>
                 Add To Cart</Button>
