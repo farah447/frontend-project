@@ -8,51 +8,36 @@ import { addOrders, deleteOrders, updateOrders } from "../redux/orders/ordersSli
 import themes from '../Theme/Themes';
 import AdminSidebar from './AdminSidebar'
 import useOrdersState from "../hooks/useOrdersState";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
 
 const UserOrders = () => {
     const { orders, isLoading, error } = useOrdersState()
     const [orderPurchasedAt, setOrderPurchasedAt] = useState('')
     const [isEdit, setIsEdit] = useState(false)
     const [orderId, setOrderId] = useState(0)
-
-
     const dispatch: AppDispatch = useDispatch()
-
     //useEffect(() => {
     //dispatch(fetchCategory())
     //}, [])
-
     if (isLoading) {
         return <p>Loading...</p>
     }
     if (error) {
         return <p>{error}</p>
     }
-
     const handleEdit = (id: number, purchasedAt: string) => {
         setOrderId(id)
         setIsEdit(!isEdit)
         setOrderPurchasedAt(purchasedAt)
     }
-
     const handleDelete = (id: number) => {
         dispatch(deleteOrders(id))
     }
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setOrderPurchasedAt(event.target.value)
     }
-
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault()
-
         if (!isEdit) {
             const newOrder = { id: new Date().getTime(), purchasedAt: orderPurchasedAt }
             dispatch(addOrders(newOrder))
@@ -62,6 +47,7 @@ const UserOrders = () => {
         }
         setOrderPurchasedAt('')
     }
+
 
     return (
         <ThemeProvider theme={themes} >

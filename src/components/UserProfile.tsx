@@ -9,13 +9,15 @@ import themes from '../Theme/Themes';
 import UserSidebar from './UserSidebar';
 import UseUserState from '../hooks/UseUserState';
 
+// ...
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch();
   const { userData } = UseUserState();
   const [isFormOpen, setIsFormOpen] = useState(false);
+
   const [user, setUser] = useState({
-    firstName: userData?.firstName,
-    lastName: userData?.lastName,
+    firstName: userData?.firstName || '',
+    lastName: userData?.lastName || '',
   });
 
   useEffect(() => {
@@ -27,9 +29,12 @@ const UserProfile = () => {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUser((prevUser) => {
-      return { ...prevUser, [event.target.name]: event.target.value };
-    });
+    const { name, value } = event.target;
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (event: FormEvent) => {
@@ -47,7 +52,7 @@ const UserProfile = () => {
             <div>
               <div className="user-profile-data">
                 <p>Id: {userData.id}</p>
-                <p>Name: {`${userData?.firstName} ${userData?.lastName}`}</p>
+                <p>Name: {`${user.firstName} ${user.lastName}`}</p>
                 <p>Email: {userData.email}</p>
                 <p>Role: {userData.role}</p>
                 <Button
@@ -61,28 +66,30 @@ const UserProfile = () => {
               </div>
 
               {isFormOpen && (
-                <form action="" onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={user.firstName}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={user.lastName}
-                    onChange={handleChange}
-                  />
-                  <Button
-                    className="btn"
-                    variant="outlined"
-                    type="submit"
-                    color="secondary"
-                  >
-                    Update the Profile
-                  </Button>
-                </form>
+                <div className='user-profile-data-input'>
+                  <form action="" onSubmit={handleSubmit}>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={user.firstName}
+                      onChange={handleChange}
+                    />
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={user.lastName}
+                      onChange={handleChange}
+                    />
+                    <Button
+                      className="btn"
+                      variant="outlined"
+                      type="submit"
+                      color="secondary"
+                    >
+                      Update the Profile
+                    </Button>
+                  </form>
+                </div>
               )}
             </div>
           )}

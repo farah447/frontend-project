@@ -51,9 +51,11 @@ const Cart = () => {
                                     <img src={cartItem.image} alt={cartItem.name} className="cart-img" />
                                 </div>
                                 <div className="cart-right">
-                                    <h3> Name: {cartItem.name} </h3>
-                                    <h4> Price: {cartItem.price} </h4>
-                                    <p> Description: {cartItem.description.substring(0, 50)}... </p>
+                                    <div className="cart-description">
+                                        <h3> Name: {cartItem.name} </h3>
+                                        <h4> Price: {cartItem.price} </h4>
+                                        <p> Description: {cartItem.description.substring(0, 50)}... </p>
+                                    </div>
                                     <Button
                                         className="Delete"
                                         variant="outlined"

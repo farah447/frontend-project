@@ -8,10 +8,7 @@ const UserDashboared = () => {
     <ThemeProvider theme={themes}>
       <div className='container-user'>
         <UserSidebar />
-        <div className='main-content'>
-          <h2>User profile goes here</h2>
-          <p>Main content goes here</p>
-        </div>
+
       </div>
     </ThemeProvider>
   );

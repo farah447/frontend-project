@@ -9,7 +9,7 @@
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   box-sizing: border-box;
   padding-left: 50px;
-  width: 215vh;
+  width: 212vh;
   height: 100%;
 }
 
@@ -480,9 +480,10 @@ button[type="submit"]:hover {
 
 .sidebar{
   float: left;
-  text-align: center;
+  text-align: left;
   width: 20%;
 }
+
 .sidebar nav{
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   padding: 8px;
@@ -495,15 +496,39 @@ button[type="submit"]:hover {
 .cart-container{
   padding-left: 50px;
   width: 215vh;
-  height: 60vh; 
+  height: 100%; 
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
-
+line-height: 40px;
 }
 .cart-main{
-  width: 215vh;
-  height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  width: 200vh;
+  height: 400vh;
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   font-weight: bold;
+}
+
+.cart-items{
+  font-weight: bold;
+  font-size: 30px;
+}
+   
+.cart-description {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.cart-items img{
+  width: 250px;
+  display: block;
+  margin: 0 auto 20px;
+}
+    
+.details-btn{
+  width: 300px;
+  display: block;
+  margin: 20px auto;
 }
 
 .container-Admin{
@@ -515,7 +540,7 @@ button[type="submit"]:hover {
 
 .product-details{
   width: 215vh;
-  height: 100vh;
+  height: 130vh;
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   font-weight: bold;
 }
@@ -599,6 +624,22 @@ font-size: 30px;
   font-weight: bold;
 }
 
+
+.user-profile-data-input input{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+.user-profile-data-input Button{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-left: 50px;
+}
+
 @media (max-width: 768px) {
   .sider{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
@@ -606,11 +647,14 @@ font-size: 30px;
     padding: 1rem;
   }
   
+  .products-list, 
+  .Home-container,
   .main-content{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
     padding: 1rem;
   }
+
 }
 
 @media screen and (max-width: 99px) {
@@ -620,11 +664,15 @@ font-size: 30px;
     padding: 1rem;
   }
   
+  .products-list, 
+  .Home-container,
   .main-content{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
     padding: 1rem;
   }
+
+ 
 }
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {

@@ -68,11 +68,11 @@ export const Login = ({ pathName }: { pathName: string }) => {
           <form className="registeation-form" onSubmit={handleSubmit}>
             <div className="form-control">
               <label htmlFor="email">Email: </label>
-              <input type="email" name="email" id="email" value={user.email} onChange={handleInputChange} />
+              <input type="email" name="email" id="email" value={user.email} onChange={handleInputChange} required />
             </div>
             <div className="form-control">
               <label htmlFor="password">Password: </label>
-              <input type="password" name="password" id="password" placeholder="password" value={user.password} onChange={handleInputChange} />
+              <input type="password" name="password" id="password" placeholder="password" value={user.password} onChange={handleInputChange} required />
             </div>
 
             <div className="form-control">

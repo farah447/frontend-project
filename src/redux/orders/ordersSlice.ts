@@ -40,10 +40,11 @@ export const ordersSlice = createSlice({
       state.orders.push(action.payload);
     },
     updateOrders: (state, action) => {
-      const { id, name } = action.payload
+      const { id, purchasedAt } = action.payload
       const foundOrders = state.orders.find((order) => order.id === id)
       if (foundOrders) {
-        // foundOrders.name = name
+        foundOrders.purchasedAt = purchasedAt
+
       }
     }
   },

@@ -51,19 +51,19 @@ export const Register = () => {
                     <form onSubmit={handleSubmit}>
                         <div className='form-field'>
                             <label htmlFor='firstName'>first name: </label>
-                            <input type='text' name='firstName' value={user.firstName} onChange={handleChange} />
+                            <input type='text' name='firstName' value={user.firstName} onChange={handleChange} required />
                         </div>
                         <div className='form-field'>
                             <label htmlFor='lastName'>last name: </label>
-                            <input type='text' name='lastName' value={user.lastName} onChange={handleChange} />
+                            <input type='text' name='lastName' value={user.lastName} onChange={handleChange} required />
                         </div>
                         <div className='form-field'>
                             <label htmlFor='email'>Email: </label>
-                            <input type='text' name='email' value={user.email} onChange={handleChange} />
+                            <input type='text' name='email' value={user.email} onChange={handleChange} required />
                         </div>
                         <div className='form-field'>
                             <label htmlFor='password'>Password: </label>
-                            <input type='text' name='password' value={user.password} onChange={handleChange} />
+                            <input type='text' name='password' value={user.password} onChange={handleChange} required />
                         </div>
                         <Button
                             className="show-btn"
