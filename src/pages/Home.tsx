@@ -181,22 +181,24 @@ const Home = () => {
                         <h2>{product.description}</h2>
                         <h2>{product.price} EUR</h2>
                         <Stack direction="row" spacing={1}>
-                          <Button
-                            className="Add-btn"
-                            variant="outlined"
-                            size="small"
-                            onClick={() => { handleAddToCart(product) }}>
-                            <IconButton color="primary" aria-label="add to shopping cart" size="small">
-                              <AddShoppingCartIcon />
-                            </IconButton>
-                            Add To Cart</Button>
-                          <Link to={`/products/${product.id}`}>
+                          <div className="product-card-btn">
                             <Button
-                              className="show-btn"
+                              className="Add-btn"
                               variant="outlined"
-                              size="small">
-                              Show Details</Button>
-                          </Link>
+                              size="small"
+                              onClick={() => { handleAddToCart(product) }}>
+                              <IconButton color="primary" aria-label="add to shopping cart" size="small">
+                                <AddShoppingCartIcon />
+                              </IconButton>
+                              Add To Cart</Button>
+                            <Link to={`/products/${product.id}`}>
+                              <Button
+                                className="show-btn"
+                                variant="outlined"
+                                size="small">
+                                Show Details</Button>
+                            </Link>
+                          </div>
                         </Stack>
                       </article>
                     </div>

@@ -9,7 +9,7 @@
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   box-sizing: border-box;
   padding-left: 50px;
-  width: 212vh;
+  width: 100%;
   height: 100%;
 }
 
@@ -75,7 +75,7 @@ img{
 .products-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px; 
+  gap: 10px; 
   padding: 0px 10px 0px 5px;
 }
 
@@ -88,11 +88,14 @@ img{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: 65%;
+  width: 95%;
 }
 
 .product {
   text-align: center;
+  width: 90%;
+  height: 70%;
 }
 
 .product img {
@@ -165,7 +168,7 @@ img{
 
 .home-content {
   float: left;
-  width: 60%;
+  width: 50%;
   padding: 0 20px;
 }
 
@@ -187,7 +190,7 @@ img{
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;  
   width: 80%; 
-  margin-left: 250px;
+  margin-left: 20%;
 }
 /*admin dashboared*/
 .products-listing{
@@ -206,6 +209,8 @@ img{
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  height: 95%;
+  width: 95%;
 }
 
 .product {
@@ -429,11 +434,11 @@ button[type="submit"]:hover {
 }
 
 .products-h2{
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   margin-bottom: 1rem;
   margin-top: 0rem;
   font-family: 'Ubuntu', sans-serif;
-  margin-right: 190px;
+  margin-right: 28%;
 }
 
 .navbar {
@@ -637,7 +642,7 @@ font-size: 30px;
 
 .pagination{
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Create a 1x3 grid */
+  grid-template-columns: repeat(3, 1fr);
   padding: 10px;
   border-radius: 3px;
   height: 20%;
@@ -655,20 +660,44 @@ font-size: 30px;
   width:100%;
 }
 
+.product-card-btn Button{
+  flex: content;
+  flex-wrap: repeat(2, 1fr);
+  padding: 10px;
+  border-radius: 3px;
+  height: 50%;
+  width: 90%;
+  margin-left: 10px;
+  text-align: center;
+  margin-top: 5%;
+}
+
 @media (max-width: 768px) {
   .sider{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 1;
-    padding: 1rem;
   }
   
   .products-list, 
   .all-main-content{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
-    padding: 1rem;
+  }
+  .Home-container {
+    width: 100%; 
   }
 
+  .sidebar {
+    width: 100%;
+  }
+
+  .home-content {
+    width: 100%;
+  }
+
+  .products-list {
+    grid-template-columns: repeat(2, 1fr); 
+  }
 }
 
 @media screen and (max-width: 99px) {
@@ -682,7 +711,13 @@ font-size: 30px;
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
   }
+  .Home-container {
+    width: 100%; /* Full width for smaller screens */
+  }
 
+  .products-list {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for mobile screens */
+  }
  
 }
 @media (prefers-reduced-motion: no-preference) {
