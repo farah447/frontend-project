@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
 
-import DraftsIcon from '@mui/icons-material/Drafts';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SortProducts from "../components/SortProducts";
 import SearchInput from "../components/SearchInput";
@@ -15,6 +14,8 @@ import themes from '../Theme/Themes';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import useCategoryState from "../hooks/useCategoryState";
 import { prices } from "../price";
+import { addToCart } from "../redux/cart/cartSlice";
+
 
 const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productR);
@@ -71,6 +72,10 @@ const Home = () => {
     }
   }
 
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product))
+  }
+
   return (
     <ThemeProvider theme={themes}>
       <div className="Home-container">
@@ -94,59 +99,36 @@ const Home = () => {
             </div>
           </section>
         </div>
-        <div className="content-container" style={{ overflow: 'scroll' }}>
+        <div className="content-container" >
           <div className="sidebar">
-            <Box sx={{ width: '100%', maxWidth: 360 }}>
-              <nav aria-label="main mailbox folders">
-                <List>
-                  <div>
-                    {prices.length > 0 && prices.map((price) => {
-                      return (
-                        <div key={price.id}>
-                          <label htmlFor="price" >
-                            <input type="radio" name="price" value={price.id} onChange={() => { handlePriceChange(price.id) }} />
-                            {price.name}
-                          </label>
-                        </div>)
-                    })}
-                  </div>
-                  <div>
-                    {categories.length > 0 &&
-                      categories.map((category) => {
-                        return (
-                          <div key={category.id}>
-                            <label htmlFor="category" >
-                              <input type="checkbox" name="category" value={category.name} onChange={() => { handleCheckedCategory(category.id) }} />
-                              {category.name}
-                            </label>
-                          </div>
-                        )
-                      })}
-                  </div>
-                  <div>
-                    <ListItem disablePadding >
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <FilterListIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="filtring" />
-                      </ListItemButton>
-                    </ListItem>
-                  </div>
-                  <div>
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Drafts" />
-                      </ListItemButton>
-                    </ListItem>
-                  </div>
-                </List>
-              </nav>
-              <Divider />
-            </Box>
+            <nav aria-label="main mailbox folders">
+              <div>
+                <h2>Filter price:</h2><br />
+                {prices.length > 0 && prices.map((price) => {
+                  return (
+                    <div key={price.id}>
+                      <label htmlFor="price" >
+                        <input type="radio" name="price" value={price.id} onChange={() => { handlePriceChange(price.id) }} />
+                        {price.name}
+                      </label>
+                    </div>)
+                })}
+              </div>
+              <div>
+                <br /> <h2>Filter category:</h2><br />
+                {categories.length > 0 &&
+                  categories.map((category) => {
+                    return (
+                      <div key={category.id}>
+                        <label htmlFor="category" >
+                          <input type="checkbox" name="category" value={category.name} onChange={() => { handleCheckedCategory(category.id) }} />
+                          {category.name}
+                        </label>
+                      </div>
+                    )
+                  })}
+              </div>
+            </nav>
           </div>
           <div className="home-content">
             <div className="search-sort">
@@ -161,7 +143,7 @@ const Home = () => {
           <div className="products-h2">
             <h2>Shop Products</h2>
           </div>
-          <section className="products-list">
+          <section className="products-list" style={{ height: '100vh', overflow: 'auto' }}>
             {filerProducts.length > 0 &&
               filerProducts.map((product: Product) => {
                 return (
@@ -175,7 +157,8 @@ const Home = () => {
                         <Button
                           className="Add-btn"
                           variant="outlined"
-                          size="small">
+                          size="small"
+                          onClick={() => { handleAddToCart(product) }}>
                           <IconButton color="primary" aria-label="add to shopping cart" size="small">
                             <AddShoppingCartIcon />
                           </IconButton>

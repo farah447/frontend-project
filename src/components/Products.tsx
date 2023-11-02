@@ -73,7 +73,7 @@ const Products = () => {
 
   return (
     <ThemeProvider theme={themes}>
-      <div className="container">
+      <div className="container-product">
         <AdminSidebar />
         <div>
           <h2>Create a product and form goes here</h2>

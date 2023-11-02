@@ -19,6 +19,7 @@ import UserList from "../components/UserList";
 
 import ProtectRouting from "./ProtectRouting";
 import AdminRoute from "./AdminRoute";
+import Cart from "../pages/Cart";
 
 
 const Index = () => {
@@ -33,6 +34,7 @@ const Index = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login pathName="/" />} />
         <Route path="/logout" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/products" element={<ProductsDetailes />} />
 
         <Route path="/dashboard" element={<ProtectRouting />}>

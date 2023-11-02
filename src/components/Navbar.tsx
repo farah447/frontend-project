@@ -4,12 +4,17 @@ import { logout } from '../redux/users/UsersSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { ThemeProvider } from '@mui/material/styles';
+import { Button, IconButton } from '@mui/material'
 
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import themes from '../Theme/Themes';
 
 const Navbar = () => {
 
     const { isLoggedIn, userData } = useSelector((state: RootState) => state.UsersR)
+
+    const { cartItems } = useSelector((state: RootState) => state.cartR)
+    console.log(cartItems)
 
     const dispatch: AppDispatch = useDispatch()
     const navigate = useNavigate();
@@ -64,6 +69,18 @@ const Navbar = () => {
                                 </li>
                             </>
                         )}
+                        <li>
+                            <Link to="/cart">
+                                <Button
+                                    className="Add-btn"
+                                    size="small"
+                                    value={cartItems.length > 0 ? cartItems.length : 0}>
+                                    <IconButton color="primary" aria-label="add to shopping cart" size="small">
+                                        <AddShoppingCartIcon />
+                                    </IconButton>
+                                </Button>
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
             </div>

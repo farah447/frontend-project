@@ -44,40 +44,42 @@ const ProductsDetailes = () => {
 
 
   return (
-    <ThemeProvider theme={themes} >
-      <div>
+    <div className="product-details">
+      <ThemeProvider theme={themes} >
         <h2> Product Details </h2>
         {singleProduct && <>
           <img src={singleProduct.image} alt={singleProduct.name} />
-          <h3>Name:{singleProduct.name}</h3>
-          <p>Description:{singleProduct.description}</p>
+          <h3>Name: {singleProduct.name}</h3>
+          <p>Description: {singleProduct.description}</p>
           <p>Price: {singleProduct.price} EUR</p>
           <p>Categories: {singleProduct.categories && singleProduct.categories.map((CategoryId) => getCategoryNameById(CategoryId))}</p>
           <p>Sizes: {singleProduct.sizes && singleProduct.sizes.join(`, `)}</p>
-          <Stack direction="row" spacing={2}>
-            <Button
-              className="btn-back"
-              variant="outlined"
-              onClick={() => {
-                navigate("/")
-              }}
-              color="secondary"
-              size="small">
-              Back To Home</Button>
-            <Button
-              className="btn-add"
-              variant="outlined"
-              color="secondary"
-              size="small"
-              aria-label="add to shopping cart">
-              <IconButton color="primary" aria-label="add to shopping cart">
-                <AddShoppingCartIcon />
-              </IconButton>
-              Add To Cart</Button>
-          </Stack>
+          <div className="details-btn">
+            <Stack direction="row" spacing={2}>
+              <Button
+                className="btn-back"
+                variant="outlined"
+                onClick={() => {
+                  navigate("/")
+                }}
+                color="secondary"
+                size="small">
+                Back To Home</Button>
+              <Button
+                className="btn-add"
+                variant="outlined"
+                color="secondary"
+                size="small"
+                aria-label="add to shopping cart">
+                <IconButton color="primary" aria-label="add to shopping cart">
+                  <AddShoppingCartIcon />
+                </IconButton>
+                Add To Cart</Button>
+            </Stack>
+          </div>
         </>}
-      </div>
-    </ThemeProvider>
+      </ThemeProvider >
+    </div >
   )
 }
 

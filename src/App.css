@@ -8,6 +8,9 @@
 .Home-container{
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   box-sizing: border-box;
+  padding-left: 50px;
+  width: 215vh;
+  height: 100%;
 }
 
 .card {
@@ -23,7 +26,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+  padding-left: 50px;
+  width: 215vh;
+  height: 100%;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
 
 }
 
@@ -34,9 +40,8 @@
 }
 
 .main-content{
-  background-color: rgb(255, 255, 255);
+  background: white;
   flex: 2;
-  padding: 1rem 50px;
 }
 
 img{
@@ -103,7 +108,10 @@ img{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  padding-left: 50px;
+  width: 215vh;
+  height: 100%;
 }
 
 .card {
@@ -122,7 +130,6 @@ img{
 }
 
 .Register-card{
-  background: #fff;
   margin: 0px 150px 0px 150px;
   border-radius: 5px;
 }
@@ -186,14 +193,15 @@ img{
   width: 80%; 
   margin-left: 250px;
 }
-
+/*admin dashboared*/
 .products-listing{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;  
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
-  width: 100%;
+  width: 90%;
   justify-content: center;
+  padding-left: 10%;
 }
 
 .product-card {
@@ -271,7 +279,7 @@ img{
 }
 
 .footer ul li a:hover {
-  color: #4682A9; /* Change to your preferred link hover color */
+  color: #4682A9; 
 }
 
 .footer address {
@@ -291,7 +299,9 @@ img{
 
 /* Contact.css */
 .contact-container {
-  width: 100%;
+  padding-left: 50px;
+  width: 215vh;
+  height: 100%;
   margin: 0 auto;
   padding: 20px;
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
@@ -314,8 +324,8 @@ img{
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-left: 250px;
-  margin-right: 250px;
+  margin-left: 400px;
+  margin-right: 400px;
 }
 
 .form-group {
@@ -344,7 +354,6 @@ img{
 .send-btn{
   width: 200px;
   height: 50px;
-  
 }
 
 button[type="submit"]:hover {
@@ -353,10 +362,13 @@ button[type="submit"]:hover {
 
 /* Register.css */
 .Register-container{
-  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  padding-left: 50px;
+  width: 215vh;
+  height: 100%;
 }
 .form-field {
-  max-width: 100%;
+  width: 300px;
   margin: 0 auto;
   padding: 10px;
   border-radius: 5px;
@@ -468,11 +480,11 @@ button[type="submit"]:hover {
 
 .sidebar{
   float: left;
-  width: 20%;
   text-align: center;
+  width: 20%;
 }
 .sidebar nav{
-  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
   padding: 8px;
   margin-top: 0px;
   display: block;
@@ -480,15 +492,114 @@ button[type="submit"]:hover {
   color: black;
 }
 
-@media screen and (max-width: 768px) {
+.cart-container{
+  padding-left: 50px;
+  width: 215vh;
+  height: 60vh;  
+}
+
+.container-Admin{
+  padding-left: 500px;
+  width: 215vh;
+  height: 60vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
+
+.product-details{
+  width: 215vh;
+  height: 100vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  font-weight: bold;
+}
+
+.product-details h2{
+font-weight: bold;
+font-size: 30px;
+}
+
+.product-details img{
+  width: 300px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.details-btn{
+  width: 300px;
+  display: block;
+  margin: 20px auto;
+}
+
+.Profile-container{
+  padding-left: 250px;
+  width: 215vh;
+  height: 60vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+
+}
+.container-order {
+  display: flex;
+  flex-direction: column; 
+  width: 215vh;
+  height: 200vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
+
+.Admin-container{
+  padding-left: 500px;
+}
+
+.container-ctegory{
+  display: flex;
+  flex-direction: column; 
+  width: 215vh;
+  height: 130vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
+
+.container-admin{
+  display: flex;
+  flex-direction: column; 
+  width: 215vh;
+  height: 130vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
+
+.container-product{
+  display: flex;
+  flex-direction: column; 
+  width: 215vh;
+  height: 130vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+}
+.container-user{
+  display: flex;
+  flex-direction: column; 
+  padding-left: 500px;
+  width: 215vh;
+  height: 100vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  line-height: 30px;
+}
+.main-content-user{
+  display: flex;
+  flex-direction: column; 
+  width: 35vh;
+  height: 100vh;
+}
+
+.Home-container h2{
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
   .sider{
-    background-color: rgb(254, 250, 244);
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 1;
     padding: 1rem;
   }
   
   .main-content{
-    background-color: rgb(255, 255, 255);
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
     padding: 1rem;
   }
@@ -496,13 +607,13 @@ button[type="submit"]:hover {
 
 @media screen and (max-width: 99px) {
   .sider{
-    background-color: antiquewhite;
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 1;
     padding: 1rem;
   }
   
   .main-content{
-    background-color: rgb(255, 255, 255);
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
     padding: 1rem;
   }

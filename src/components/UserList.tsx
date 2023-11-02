@@ -42,10 +42,10 @@ const UserList = () => {
   }
 
   return (
-    <ThemeProvider theme={themes} >
-      <div className='container'>
+    <div className='container-user'>
+      <ThemeProvider theme={themes} >
         <UserSidebar />
-        <div className='main-content'>
+        <div className='main-content-user'>
           <h2>List of all users</h2>
           <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
           <section className="users">
@@ -57,28 +57,31 @@ const UserList = () => {
                       <h2>{`${user.firstName} ${user.lastName}`}</h2>
                       <h2>{user.email}</h2>
                       <h2>{user.role}</h2>
-                      <Stack direction="row" spacing={2}>
-                        <Button
-                          className="Delete-btn"
-                          variant="outlined"
-                          startIcon={<DeleteIcon />}
-                          onClick={() => { handleDelete(user.id) }}> Delete</Button>
+                      <div className='main-content-user-btn'>
+                        <Stack direction="row" spacing={2}>
+                          <Button
+                            className="Delete-btn"
+                            variant="outlined"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => { handleDelete(user.id) }}> Delete</Button>
 
-                        <Button
-                          className="ban-btn"
-                          variant="outlined"
-                          onClick={() => { handleBan(user.id) }}
-                          color="secondary">{user.ban ? 'unban' : 'ban'}
-                        </Button>
-                      </Stack>
+                          <Button
+                            className="ban-btn"
+                            variant="outlined"
+                            onClick={() => { handleBan(user.id) }}
+                            color="secondary">{user.ban ? 'unban' : 'ban'}
+                          </Button>
+                        </Stack>
+                      </div>
                     </article>
                   )
                 }
               })}
           </section>
         </div>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </div>
+
   )
 }
 

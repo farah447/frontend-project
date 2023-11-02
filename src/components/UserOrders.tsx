@@ -3,12 +3,18 @@ import { AppDispatch } from '../redux/store';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, Stack, FormControl, TextField } from "@mui/material";
+import { addOrders, deleteOrders, updateOrders } from "../redux/orders/ordersSlice";
 
 import themes from '../Theme/Themes';
 import AdminSidebar from './AdminSidebar'
 import useOrdersState from "../hooks/useOrdersState";
-import { addOrders, deleteOrders, updateOrders } from "../redux/orders/ordersSlice";
-
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const UserOrders = () => {
     const { orders, isLoading, error } = useOrdersState()
@@ -59,57 +65,55 @@ const UserOrders = () => {
 
     return (
         <ThemeProvider theme={themes} >
-            <div className='container'>
+            <div className='container-order'>
                 <AdminSidebar />
-                <div className='main-content'>
-                    <h2>Create a Category</h2>
-                    <form onSubmit={handleSubmit}>
-                        <FormControl sx={{ m: 1, minWidth: 100 }}>
-                            <Stack direction="row" spacing={2}>
-                                <TextField label="add order" type='text' name='order' value={orderPurchasedAt} placeholder='Enter order name' onChange={handleChange} />
-                                <Button
-                                    className="create-button"
-                                    variant="outlined"
-                                    color="secondary"
-                                    size='small'
-                                    type="submit">
-                                    {isEdit ? 'Update' : 'Create'} </Button>
-                            </Stack>
-                        </FormControl>
-                    </form>
-                    <br />
-                    <section className='products'>
-                        {orders.length > 0 &&
-                            orders.map((order) => {
-                                return (
-                                    <article key={order.id} className='product'>
-                                        <h2>Order id: {order.id}</h2>
-                                        <p>Order product id: {order.productId}</p>
-                                        <p>Order purchased At: {order.purchasedAt}</p>
-                                        <p>Order user id: {order.userId}</p>
-                                        <Stack direction="row" spacing={2}>
-                                            <Button
-                                                className="Update"
-                                                variant="outlined"
-                                                color="secondary"
-                                                size='small'
-                                                onClick={() => { handleEdit(order.id, order.purchasedAt) }}>
-                                                Edit </Button>
-                                            <Button
-                                                className="Delete"
-                                                variant="outlined"
-                                                color="secondary"
-                                                size='small'
-                                                onClick={() => {
-                                                    handleDelete(order.id)
-                                                }}>
-                                                Delete </Button>
-                                        </Stack>
-                                    </article>
-                                )
-                            })}
-                    </section>
-                </div>
+                <h2>Create a Category</h2>
+                <form onSubmit={handleSubmit}>
+                    <FormControl sx={{ m: 1, minWidth: 100 }}>
+                        <Stack direction="row" spacing={2}>
+                            <TextField label="add order" type='text' name='order' value={orderPurchasedAt} placeholder='Enter order name' onChange={handleChange} />
+                            <Button
+                                className="create-button"
+                                variant="outlined"
+                                color="secondary"
+                                size='small'
+                                type="submit">
+                                {isEdit ? 'Update' : 'Create'} </Button>
+                        </Stack>
+                    </FormControl>
+                </form>
+                <br />
+                <section className='products'>
+                    {orders.length > 0 &&
+                        orders.map((order) => {
+                            return (
+                                <article key={order.id} className='product'>
+                                    <h2>Order id: {order.id}</h2>
+                                    <p>Order product id: {order.productId}</p>
+                                    <p>Order purchased At: {order.purchasedAt}</p>
+                                    <p>Order user id: {order.userId}</p>
+                                    <Stack direction="row" spacing={2}>
+                                        <Button
+                                            className="Update"
+                                            variant="outlined"
+                                            color="secondary"
+                                            size='small'
+                                            onClick={() => { handleEdit(order.id, order.purchasedAt) }}>
+                                            Edit </Button>
+                                        <Button
+                                            className="Delete"
+                                            variant="outlined"
+                                            color="secondary"
+                                            size='small'
+                                            onClick={() => {
+                                                handleDelete(order.id)
+                                            }}>
+                                            Delete </Button>
+                                    </Stack>
+                                </article>
+                            )
+                        })}
+                </section>
             </div>
         </ThemeProvider>
     )

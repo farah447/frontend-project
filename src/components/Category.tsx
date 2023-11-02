@@ -59,57 +59,56 @@ const Category = () => {
   }
 
   return (
-    <ThemeProvider theme={themes} >
-      <div className='container'>
+    <div className='container-ctegory'>
+      <ThemeProvider theme={themes} >
         <AdminSidebar />
-        <div className='main-content'>
-          <h2>Create a Category</h2>
-          <form onSubmit={handleSubmit}>
-            <FormControl sx={{ m: 1, minWidth: 100 }}>
-              <Stack direction="row" spacing={2}>
-                <TextField label="add category" type='text' name='category' value={categoryName} placeholder='Enter category name' onChange={handleChange} />
-                <Button
-                  className="create-button"
-                  variant="outlined"
-                  color="secondary"
-                  size='small'
-                  type="submit">
-                  {isEdit ? 'Update' : 'Create'} </Button>
-              </Stack>
-            </FormControl>
-          </form>
-          <br />
-          <section className='products'>
-            {categories &&
-              categories.map((category) => {
-                return (
-                  <article key={category.id} className='product'>
-                    <h2>{category.name}</h2>
-                    <Stack direction="row" spacing={2}>
-                      <Button
-                        className="Update"
-                        variant="outlined"
-                        color="secondary"
-                        size='small'
-                        onClick={() => { handleEdit(category.id, category.name) }}>
-                        Edit </Button>
-                      <Button
-                        className="Delete"
-                        variant="outlined"
-                        color="secondary"
-                        size='small'
-                        onClick={() => {
-                          handleDelete(category.id)
-                        }}>
-                        Delete </Button>
-                    </Stack>
-                  </article>
-                )
-              })}
-          </section>
-        </div>
-      </div>
-    </ThemeProvider>
+        <h2>Create a Category</h2>
+        <form onSubmit={handleSubmit}>
+          <FormControl sx={{ m: 1, minWidth: 100 }}>
+            <Stack direction="row" spacing={2}>
+              <TextField label="add category" type='text' name='category' value={categoryName} placeholder='Enter category name' onChange={handleChange} />
+              <Button
+                className="create-button"
+                variant="outlined"
+                color="secondary"
+                size='small'
+                type="submit">
+                {isEdit ? 'Update' : 'Create'} </Button>
+            </Stack>
+          </FormControl>
+        </form>
+        <br />
+        <section className='products'>
+          {categories &&
+            categories.map((category) => {
+              return (
+                <article key={category.id} className='product'>
+                  <h2>{category.name}</h2>
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      className="Update"
+                      variant="outlined"
+                      color="secondary"
+                      size='small'
+                      onClick={() => { handleEdit(category.id, category.name) }}>
+                      Edit </Button>
+                    <Button
+                      className="Delete"
+                      variant="outlined"
+                      color="secondary"
+                      size='small'
+                      onClick={() => {
+                        handleDelete(category.id)
+                      }}>
+                      Delete </Button>
+                  </Stack>
+                </article>
+              )
+            })}
+        </section>
+      </ThemeProvider>
+    </div>
+
   )
 }
 
