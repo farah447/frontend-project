@@ -1,6 +1,9 @@
 import { ThemeProvider } from '@mui/material/styles';
 
 import themes from '../Theme/Themes';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const Footer = () => {
     return (
@@ -26,9 +29,9 @@ const Footer = () => {
                     <div className="footer-section">
                         <h3>Follow Us</h3>
                         <ul>
-                            <li><a href="https://twitter.com">Twitter</a></li>
-                            <li><a href="https://facebook.com">Facebook</a></li>
-                            <li><a href="https://youtube.com">youtube</a></li>
+                            <li><a href="https://twitter.com"><TwitterIcon /></a></li>
+                            <li><a href="https://facebook.com"><FacebookIcon /></a></li>
+                            <li><a href="https://youtube.com"><YouTubeIcon /></a></li>
                         </ul>
                     </div>
                 </div>
