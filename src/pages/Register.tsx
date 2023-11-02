@@ -21,6 +21,11 @@ export const Register = () => {
         ban: false
     })
 
+    const [firstNameError, setfirstNameError] = useState('')
+    const [lastNameError, setLastNameError] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setpasswordError] = useState('')
+
     useEffect(() => {
         dispatch(fetchUsers())
     }, [])
@@ -34,6 +39,22 @@ export const Register = () => {
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         const newUser = { id: new Date().getTime(), ...user };
+        if (user.firstName.length < 2) {
+            setfirstNameError('first name must be atleast 2 characters')
+            return
+        }
+        else if (user.lastName.length < 2) {
+            setLastNameError('last name must be atleast 2 characters')
+            return
+        }
+        else if (user.email.length < 2) {
+            setEmailError('last name must be atleast 2 characters')
+            return
+        }
+        else if (user.password.length < 5) {
+            setpasswordError('last name must be atleast 5 characters')
+            return
+        }
         dispatch(fetchUsers()).then(() => {
             dispatch(addUser(newUser));
             console.log("User added:", newUser);
@@ -52,18 +73,22 @@ export const Register = () => {
                         <div className='form-field'>
                             <label htmlFor='firstName'>first name: </label>
                             <input type='text' name='firstName' value={user.firstName} onChange={handleChange} required />
+                            <p>{firstNameError}</p>
                         </div>
                         <div className='form-field'>
                             <label htmlFor='lastName'>last name: </label>
                             <input type='text' name='lastName' value={user.lastName} onChange={handleChange} required />
+                            <p>{lastNameError}</p>
                         </div>
                         <div className='form-field'>
                             <label htmlFor='email'>Email: </label>
                             <input type='text' name='email' value={user.email} onChange={handleChange} required />
+                            <p>{emailError}</p>
                         </div>
                         <div className='form-field'>
                             <label htmlFor='password'>Password: </label>
                             <input type='text' name='password' value={user.password} onChange={handleChange} required />
+                            <p>{passwordError}</p>
                         </div>
                         <Button
                             className="show-btn"
