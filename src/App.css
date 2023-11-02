@@ -495,7 +495,15 @@ button[type="submit"]:hover {
 .cart-container{
   padding-left: 50px;
   width: 215vh;
-  height: 60vh;  
+  height: 60vh; 
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+
+}
+.cart-main{
+  width: 215vh;
+  height: 100vh;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  font-weight: bold;
 }
 
 .container-Admin{
