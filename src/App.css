@@ -174,10 +174,6 @@ img{
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-  width: 100%; 
-  border: 6px solid;
-  border-radius: 3px;
-  border-color: #000000;
 }
 
 .search-and-sort input[type="text"] {
@@ -437,7 +433,7 @@ button[type="submit"]:hover {
   margin-bottom: 1rem;
   margin-top: 0rem;
   font-family: 'Ubuntu', sans-serif;
-  margin-right: 160px;
+  margin-right: 190px;
 }
 
 .navbar {
@@ -597,11 +593,10 @@ font-size: 30px;
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
 }
 
-.container-product{
-  display: flex;
+.container-product-admin{  display: flex;
   flex-direction: column; 
   width: 215vh;
-  height: 130vh;
+  height: 400vh;
   background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
 }
 .container-user{
@@ -640,6 +635,26 @@ font-size: 30px;
   margin-left: 50px;
 }
 
+.pagination{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create a 1x3 grid */
+  padding: 10px;
+  border-radius: 3px;
+  height: 20%;
+  width: 20%;
+  margin-left: 500px;
+}
+
+.pagination button{
+  border: 5px;
+  border-color: #000000;
+  background-color: white;
+}
+
+.all-main-content{
+  width:100%;
+}
+
 @media (max-width: 768px) {
   .sider{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
@@ -648,8 +663,7 @@ font-size: 30px;
   }
   
   .products-list, 
-  .Home-container,
-  .main-content{
+  .all-main-content{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
     padding: 1rem;
@@ -661,15 +675,12 @@ font-size: 30px;
   .sider{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 1;
-    padding: 1rem;
   }
   
   .products-list, 
-  .Home-container,
-  .main-content{
+  .all-main-content{
     background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
     flex: 2;
-    padding: 1rem;
   }
 
  

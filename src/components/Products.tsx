@@ -73,10 +73,10 @@ const Products = () => {
 
   return (
     <ThemeProvider theme={themes}>
-      <div className="container-product">
+      <div className="container-product-admin">
         <AdminSidebar />
         <div>
-          <h2>Create a product and form goes here</h2>
+          <h2>Create a product: </h2>
           <form action="" onSubmit={handleSubmit}>
             <FormControl sx={{ m: 1, minWidth: 100 }}>
               <Stack direction="row" spacing={2}>
@@ -124,7 +124,7 @@ const Products = () => {
               </Stack>
             </FormControl>
           </form>
-          <h2>List of all products</h2>
+          <h2> All products</h2>
           <section className="products-listing">
             {products.length > 0 &&
               products.map((product) => (
