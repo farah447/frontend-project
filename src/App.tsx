@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { fetchProducts } from './redux/slices/products/productSlice'
 import { fetchUsers } from './redux/users/UsersSlice'
 import { fetchCategory } from './redux/categories/categorySlice'
+import { fetchOrders } from './redux/orders/ordersSlice'
 
 import './App.css'
 import Index from './routes/Index'
-import { fetchOrders } from './redux/orders/ordersSlice'
 
 function App() {
   const dispatch: AppDispatch = useDispatch()

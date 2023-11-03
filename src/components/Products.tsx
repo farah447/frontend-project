@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { ChangeEvent, FormEvent } from 'react';
@@ -60,7 +60,6 @@ const Products = () => {
       dispatch(updateProduct(productData));
     }
 
-    // Clear the form fields after submission
     setProductData({
       id: 0,
       name: '',

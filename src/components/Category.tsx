@@ -20,9 +20,6 @@ const Category = () => {
 
   const dispatch: AppDispatch = useDispatch()
 
-  //useEffect(() => {
-  //dispatch(fetchCategory())
-  //}, [])
 
   if (isLoading) {
     return <p>Loading...</p>

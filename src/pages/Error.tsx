@@ -2,7 +2,7 @@
 const Error = () => {
   return (
     <div>
-      <h2>Error page</h2>
+      <h2>404 Error page</h2>
     </div>
   )
 }

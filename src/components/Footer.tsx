@@ -17,6 +17,18 @@ const Footer = () => {
                             <li><a href="/contact">Contact Us</a></li>
                         </ul>
                     </div>
+                    <div className='footer-section'>
+                        <section className="newsletter">
+                            <h3>Subscribe to Our Newsletter</h3>
+                            <form className="post">
+                                <div className="news-container">
+                                    <p>Enter your email to receive the offers!</p><br /><br />
+                                    <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+                                    <button type="submit">Subscribe</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
                     <div className="footer-section">
                         <h3>Contact Information</h3>
                         <address>

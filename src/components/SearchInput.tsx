@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react"
 import { ThemeProvider } from '@mui/material/styles';
+import { FormControl, TextField } from "@mui/material";
 
 import themes from '../Theme/Themes';
-import { FormControl, TextField } from "@mui/material";
 
 type SearchInputProps = {
     searchTerm: string,
@@ -22,7 +22,6 @@ const SearchInput = ({ searchTerm, handleSearch }: SearchInputProps) => {
                     onChange={handleSearch}
                 />
             </FormControl>
-            {/*<input type="text" placeholder="Search by product name" value={searchTerm} onChange={handleSearch} />*/}
         </ThemeProvider>)
 
 }

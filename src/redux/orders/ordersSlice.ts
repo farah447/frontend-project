@@ -61,25 +61,6 @@ export const ordersSlice = createSlice({
       state.error = action.error.message || 'An error occurred while fetching Orders.'
       state.isLoading = false
     })
-    {/*
-    productsRequest: (state) => {
-      state.isLoading = true
-    },
-    productsSuccess: (state, action) => {
-      state.isLoading = false
-      state.products = action.payload
-    },
-    addProduct: (state, action: { payload: { product: Product } }) => {
-      // let's append the new product to the beginning of the array
-      state.products = [action.payload.product, ...state.products]
-    },
-    removeProduct: (state, action: { payload: { productId: number } }) => {
-      const filteredItems = state.products.filter((product) => product.id !== action.payload.productId)
-      state.products = filteredItems
-
-
-      export const { removeProduct, addProduct, productsRequest, productsSuccess } = productSlice.actions
-    */}
   }
 })
 

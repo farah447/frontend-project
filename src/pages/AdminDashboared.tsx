@@ -2,6 +2,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import AdminSidebar from '../components/AdminSidebar'
 import themes from '../Theme/Themes';
+
 const AdminDashboared = () => {
   return (
     <div className='container-admin'>

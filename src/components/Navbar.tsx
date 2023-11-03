@@ -37,16 +37,6 @@ const Navbar = () => {
                         <li>
                             <Link to="/contact">Contact</Link>
                         </li>
-                        {/*
-
-                 <li>
-                    <Link to="/dashboard/Admin">Admin Dashboared</Link>
-                </li>
-
-                <li>
-                    <Link to="/dashboard/User">User Dashboared</Link>
-                </li>
-                */}
                         {isLoggedIn && (
                             <>
                                 <li>

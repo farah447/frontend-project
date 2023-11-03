@@ -1,6 +1,6 @@
-import UserSidebar from '../components/UserSidebar'
 import { ThemeProvider } from '@mui/material/styles';
 
+import UserSidebar from '../components/UserSidebar'
 import themes from '../Theme/Themes';
 
 const UserDashboared = () => {

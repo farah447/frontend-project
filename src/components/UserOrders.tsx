@@ -16,15 +16,8 @@ const UserOrders = () => {
     const [isEdit, setIsEdit] = useState(false)
     const [orderId, setOrderId] = useState(0)
     const dispatch: AppDispatch = useDispatch()
-    //useEffect(() => {
-    //dispatch(fetchCategory())
-    //}, [])
-    if (isLoading) {
-        return <p>Loading...</p>
-    }
-    if (error) {
-        return <p>{error}</p>
-    }
+
+
     const handleEdit = (id: number, purchasedAt: string) => {
         setOrderId(id)
         setIsEdit(!isEdit)
@@ -48,6 +41,12 @@ const UserOrders = () => {
         setOrderPurchasedAt('')
     }
 
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
+    if (error) {
+        return <p>{error}</p>
+    }
 
     return (
         <ThemeProvider theme={themes} >

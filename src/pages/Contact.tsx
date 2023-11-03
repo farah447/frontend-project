@@ -1,6 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
-import themes from '../Theme/Themes';
 import { ThemeProvider } from "@emotion/react";
+
+import themes from '../Theme/Themes';
 
 const Contact = () => {
     return (

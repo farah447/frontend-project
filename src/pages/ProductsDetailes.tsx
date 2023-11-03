@@ -7,12 +7,12 @@ import { Product, fetchProducts, findProductById } from "../redux/slices/product
 import { fetchCategory } from "../redux/categories/categorySlice";
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, Stack } from "@mui/material";
+import { addToCart } from "../redux/cart/cartSlice";
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import themes from '../Theme/Themes';
 import useProductState from "../hooks/useProductState";
-import { addToCart } from "../redux/cart/cartSlice";
 
 const ProductsDetailes = () => {
   const { id } = useParams();

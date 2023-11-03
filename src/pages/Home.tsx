@@ -1,20 +1,20 @@
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { ChangeEvent, useEffect, useState } from "react";
-import { Product, fetchProducts, searchProduct } from "../redux/slices/products/productSlice";
+import { ChangeEvent, useState } from "react";
+import { Product, searchProduct } from "../redux/slices/products/productSlice";
 import { Link } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
-import { Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
+import { Button, IconButton, Stack } from "@mui/material";
+import { prices } from "../price";
+import { addToCart } from "../redux/cart/cartSlice";
 
-import FilterListIcon from '@mui/icons-material/FilterList';
-import SortProducts from "../components/SortProducts";
-import SearchInput from "../components/SearchInput";
 import themes from '../Theme/Themes';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import useCategoryState from "../hooks/useCategoryState";
-import { prices } from "../price";
-import { addToCart } from "../redux/cart/cartSlice";
+
+import SortProducts from "../components/SortProducts";
+import SearchInput from "../components/SearchInput";
 
 
 const Home = () => {
@@ -30,17 +30,12 @@ const Home = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState(4);
-
-
-  //useEffect(() => {
-  //dispatch(fetchProducts())
-  //}, [])
+  const [selectedPrice, setSelectedPrice] = useState<string>('');
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchProduct(event.target.value))
   }
 
-  //const searchProducts = searchTerm ? products.filter((product) => product.name.toLowerCase().includes(searchTerm.toLowerCase())) : products
 
   const filerProducts = products.filter((product) => {
     const categoryMatch = checkedCategories.length > 0 ? checkedCategories.some((id) => product.categories.includes(Number(id))) : product
@@ -212,8 +207,8 @@ const Home = () => {
 
               <button onClick={handleNextPage} disabled={currentPage === totalPages}>next</button>
             </div>
-          </div>
-        </div>
+          </div >
+        </div >
       </ThemeProvider >
     </div>
   )
