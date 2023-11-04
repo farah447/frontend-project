@@ -20,7 +20,7 @@ import SearchInput from "../components/SearchInput";
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productR);
+  const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productReducer);
 
   const { categories } = useCategoryState()
 

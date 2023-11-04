@@ -21,7 +21,7 @@ const ProductsDetailes = () => {
 
   const { singleProduct, isLoading, error } = useProductState();
 
-  const { categories } = useSelector((state: RootState) => state.categoriesR);
+  const { categories } = useSelector((state: RootState) => state.categoriesReducer);
 
   const dispatch: AppDispatch = useDispatch();
 

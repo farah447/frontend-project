@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
-import { fetchUsers, login } from "../redux/users/UsersSlice"
+import { fetchUsers, login } from "../redux/users/usersSlice"
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
@@ -11,7 +11,7 @@ import themes from '../Theme/Themes';
 export const Login = ({ pathName }: { pathName: string }) => {
 
 
-  const { users } = useSelector((state: RootState) => state.UsersR)
+  const { users } = useSelector((state: RootState) => state.usersReducer)
 
   const dispatch: AppDispatch = useDispatch();
 

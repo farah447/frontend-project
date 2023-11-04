@@ -1,17 +1,17 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import { fetchUsers, updateUser } from '../redux/users/UsersSlice';
+import { fetchUsers, updateUser } from '../redux/users/usersSlice';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
 
 import themes from '../Theme/Themes';
 import UserSidebar from './UserSidebar';
-import UseUserState from '../hooks/UseUserState';
+import useUserState from '../hooks/useUserState';
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { userData } = UseUserState();
+  const { userData } = useUserState();
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const [user, setUser] = useState({

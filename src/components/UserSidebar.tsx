@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 
 import themes from '../Theme/Themes';
-import UseUserState from '../hooks/UseUserState';
+import useUserState from '../hooks/useUserState';
 
 const UserSidebar = () => {
-    const { userData } = UseUserState();
+    const { userData } = useUserState();
 
     return (
         <ThemeProvider theme={themes}>

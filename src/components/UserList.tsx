@@ -1,18 +1,18 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { banUser, deleteUser, fetchUsers, searchUser } from "../redux/users/UsersSlice";
+import { banUser, deleteUser, fetchUsers, searchUser } from "../redux/users/usersSlice";
 import { Button, Stack } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
 import UserSidebar from "./UserSidebar";
 import SearchInput from "./SearchInput";
-import UseUserState from "../hooks/UseUserState";
+import useUserState from "../hooks/useUserState";
 import DeleteIcon from '@mui/icons-material/Delete';
 import themes from '../Theme/Themes';
 
 const UserList = () => {
-  const { users, isLoading, error, searchTerm } = UseUserState();
+  const { users, isLoading, error, searchTerm } = useUserState();
 
   const dispatch: AppDispatch = useDispatch();
 

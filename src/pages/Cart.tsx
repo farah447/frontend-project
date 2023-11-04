@@ -9,7 +9,7 @@ import themes from "../Theme/Themes";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart = () => {
-    const { cartItems } = useSelector((state: RootState) => state.cartR)
+    const { cartItems } = useSelector((state: RootState) => state.cartReducer)
 
     const dispatch: AppDispatch = useDispatch()
 

@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from './redux/store'
 import { useEffect } from 'react'
 import { fetchProducts } from './redux/slices/products/productSlice'
-import { fetchUsers } from './redux/users/UsersSlice'
+import { fetchUsers } from './redux/users/usersSlice'
 import { fetchCategory } from './redux/categories/categorySlice'
 import { fetchOrders } from './redux/orders/ordersSlice'
 

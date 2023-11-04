@@ -7,7 +7,7 @@ const ProtectRouting = () => {
 
   const location = useLocation()
 
-  const { isLoggedIn } = useSelector((state: RootState) => state.UsersR)
+  const { isLoggedIn } = useSelector((state: RootState) => state.usersReducer)
 
   return isLoggedIn ? <Outlet /> : <Login pathName={location.pathname} />
 }

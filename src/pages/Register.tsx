@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch } from 'react-redux'
-import { addUser, fetchUsers } from '../redux/users/UsersSlice'
+import { addUser, fetchUsers } from '../redux/users/usersSlice'
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 

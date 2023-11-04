@@ -41,7 +41,7 @@ const initialState: UsersState = {
     ban: false
 }
 
-export const UsersSlice = createSlice({
+export const usersSlice = createSlice({
     name: 'Users',
     initialState,
     reducers: {
@@ -109,5 +109,5 @@ export const UsersSlice = createSlice({
     }
 })
 
-export const { login, logout, searchUser, deleteUser, banUser, addUser, updateUser } = UsersSlice.actions
-export default UsersSlice.reducer
+export const { login, logout, searchUser, deleteUser, banUser, addUser, updateUser } = usersSlice.actions
+export default usersSlice.reducer
