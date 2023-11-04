@@ -43,8 +43,9 @@ const UserProfile = () => {
   };
 
   return (
-    <div className='Profile-container'>
-      <ThemeProvider theme={themes}>
+    <ThemeProvider theme={themes}>
+      <div className='Profile-container'>
+
         <UserSidebar />
         <div className='profile-main-content'>
           {userData && (
@@ -93,8 +94,8 @@ const UserProfile = () => {
             </div>
           )}
         </div>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 

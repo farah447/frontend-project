@@ -42,8 +42,8 @@ const UserList = () => {
   }
 
   return (
-    <div className='container-user'>
-      <ThemeProvider theme={themes} >
+    <ThemeProvider theme={themes} >
+      <div className='container-user'>
         <UserSidebar />
         <div className='main-content-user'>
           <h2>List of all users</h2>
@@ -79,9 +79,8 @@ const UserList = () => {
               })}
           </section>
         </div>
-      </ThemeProvider>
-    </div>
-
+      </div>
+    </ThemeProvider>
   )
 }
 

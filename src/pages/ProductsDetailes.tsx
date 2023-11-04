@@ -48,8 +48,8 @@ const ProductsDetailes = () => {
   }
 
   return (
-    <div className="product-details">
-      <ThemeProvider theme={themes} >
+    <ThemeProvider theme={themes} >
+      <div className="product-details">
         <h2> Product Details </h2>
         {singleProduct && <>
           <img src={singleProduct.image} alt={singleProduct.name} />
@@ -81,8 +81,8 @@ const ProductsDetailes = () => {
             </Stack>
           </div>
         </>}
-      </ThemeProvider >
-    </div >
+      </div >
+    </ThemeProvider >
   )
 }
 

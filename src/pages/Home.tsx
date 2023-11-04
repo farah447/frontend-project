@@ -98,8 +98,8 @@ const Home = () => {
   }
 
   return (
-    <div className="all-main-content">
-      <ThemeProvider theme={themes}>
+    <ThemeProvider theme={themes}>
+      <div className="all-main-content">
         <div className="Home-container">
           <div className="hero-container">
             <section className="hero">
@@ -209,8 +209,8 @@ const Home = () => {
             </div>
           </div >
         </div >
-      </ThemeProvider >
-    </div>
+      </div>
+    </ThemeProvider >
   )
 }
 

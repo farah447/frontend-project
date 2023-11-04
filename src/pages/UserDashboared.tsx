@@ -8,7 +8,6 @@ const UserDashboared = () => {
     <ThemeProvider theme={themes}>
       <div className='container-user'>
         <UserSidebar />
-
       </div>
     </ThemeProvider>
   );

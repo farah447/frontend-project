@@ -20,41 +20,45 @@ import UserList from "../components/UserList";
 import ProtectRouting from "./ProtectRouting";
 import AdminRoute from "./AdminRoute";
 import Cart from "../pages/Cart";
+import { ThemeProvider } from "@mui/material";
+import themes from "../Theme/Themes";
 
 
 const Index = () => {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products/:id" element={<ProductsDetailes />} />
+    <ThemeProvider theme={themes}>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products/:id" element={<ProductsDetailes />} />
 
-        <Route path="/Contact" element={<Contact />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login pathName="/" />} />
-        <Route path="/logout" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/products" element={<ProductsDetailes />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login pathName="/" />} />
+          <Route path="/logout" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/products" element={<ProductsDetailes />} />
 
-        <Route path="/dashboard" element={<ProtectRouting />}>
-          <Route path="/dashboard/User" element={<UserDashboared />} />
-          <Route path="/dashboard/User/profile" element={<UserProfile />} />
-          <Route path="/dashboard/User/orders" element={<UserOrders />} />
-        </Route>
+          <Route path="/dashboard" element={<ProtectRouting />}>
+            <Route path="/dashboard/User" element={<UserDashboared />} />
+            <Route path="/dashboard/User/profile" element={<UserProfile />} />
+            <Route path="/dashboard/User/orders" element={<UserOrders />} />
+          </Route>
 
-        <Route path="/dashboard" element={<AdminRoute />}>
-          <Route path="/dashboard/Admin" element={<AdminDashboared />} />
-          <Route path="/dashboard/Admin/category" element={<Category />} />
-          <Route path="/dashboard/Admin/products" element={<Products />} />
-          <Route path="/dashboard/Admin/users" element={<UserList />} />
-          <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />
-        </Route>
+          <Route path="/dashboard" element={<AdminRoute />}>
+            <Route path="/dashboard/Admin" element={<AdminDashboared />} />
+            <Route path="/dashboard/Admin/category" element={<Category />} />
+            <Route path="/dashboard/Admin/products" element={<Products />} />
+            <Route path="/dashboard/Admin/users" element={<UserList />} />
+            <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />
+          </Route>
 
-        <Route path="*" element={<Error />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+          <Route path="*" element={<Error />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

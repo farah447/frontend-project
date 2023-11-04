@@ -5,9 +5,11 @@ import { fetchProducts } from './redux/slices/products/productSlice'
 import { fetchUsers } from './redux/users/usersSlice'
 import { fetchCategory } from './redux/categories/categorySlice'
 import { fetchOrders } from './redux/orders/ordersSlice'
+import { ThemeProvider } from '@emotion/react'
 
 import './App.css'
 import Index from './routes/Index'
+import themes from './Theme/Themes';
 
 function App() {
   const dispatch: AppDispatch = useDispatch()
@@ -18,9 +20,12 @@ function App() {
     dispatch(fetchCategory())
     dispatch(fetchOrders())
   }, [])
-  return <div className="App">
-    <Index />
-  </div>
+  return (<ThemeProvider theme={themes}>
+    <div className="App">
+      <Index />
+    </div>
+  </ThemeProvider>
+  )
 }
 
 export default App

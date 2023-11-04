@@ -5,11 +5,11 @@ import themes from '../Theme/Themes';
 
 const AdminDashboared = () => {
   return (
-    <div className='container-admin'>
-      <ThemeProvider theme={themes} >
+    <ThemeProvider theme={themes} >
+      <div className='container-admin'>
         <AdminSidebar />
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   )
 }
 

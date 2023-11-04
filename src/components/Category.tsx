@@ -56,8 +56,8 @@ const Category = () => {
   }
 
   return (
-    <div className='container-ctegory'>
-      <ThemeProvider theme={themes} >
+    <ThemeProvider theme={themes} >
+      <div className='container-ctegory'>
         <AdminSidebar />
         <h2>Create a Category</h2>
         <form onSubmit={handleSubmit}>
@@ -103,9 +103,8 @@ const Category = () => {
               )
             })}
         </section>
-      </ThemeProvider>
-    </div>
-
+      </div>
+    </ThemeProvider>
   )
 }
 
