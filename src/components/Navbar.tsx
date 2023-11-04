@@ -17,7 +17,9 @@ const Navbar = () => {
     console.log(cartItems)
 
     const dispatch: AppDispatch = useDispatch()
+
     const navigate = useNavigate();
+
     const handleLogout = () => {
         dispatch(logout())
         navigate('/login')
