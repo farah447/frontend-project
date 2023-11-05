@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 import themes from '../Theme/Themes';
+
 const SortProducts = () => {
     const dispatch: AppDispatch = useDispatch();
 
