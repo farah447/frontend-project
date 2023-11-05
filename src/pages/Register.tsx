@@ -57,8 +57,6 @@ export const Register = () => {
         }
         dispatch(fetchUsers()).then(() => {
             dispatch(addUser(newUser));
-            console.log("User added:", newUser);
-            console.log("Registered user:", newUser);
         });
         navigate('/login');
     };

@@ -14,7 +14,6 @@ const Navbar = () => {
     const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
 
     const { cartItems } = useSelector((state: RootState) => state.cartReducer)
-    console.log(cartItems)
 
     const dispatch: AppDispatch = useDispatch()
 
