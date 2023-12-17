@@ -1,21 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import api from '../../api/index'
+import axios from 'axios'
+import { baseURL } from '../../services/userService'
+
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    const respons = await api.get('/mock/e-commerce/users.json')
-    return respons.data
-}
-)
+    const respons = await axios.get(`${baseURL}/users`)
+    console.log(respons)
+    return respons.data.payload.users
+})
 
 export type Users = {
-    id: number
-    firstName: string
-    lastName: string
+    id: string
+    userName: string
     email: string
     password: string
-    role: string
-    ban: boolean
+    image: string
+    isAdmin: boolean
+    isBanned: boolean
 }
 
 export type UsersState = {
@@ -64,17 +66,6 @@ export const usersSlice = createSlice({
         searchUser: (state, action) => {
             state.searchTerm = action.payload
         },
-        deleteUser: (state, action) => {
-            const filterUsers = state.users.filter((user) => user.id !== action.payload)
-            state.users = filterUsers
-        },
-        banUser: (state, action) => {
-            const id = action.payload
-            const foundUser = state.users.find((user) => user.id === id)
-            if (foundUser) {
-                foundUser.ban = !foundUser.ban
-            }
-        },
         addUser: (state, action) => {
             state.users.push(action.payload);
         },
@@ -82,8 +73,7 @@ export const usersSlice = createSlice({
             const { id, firstName, lastName } = action.payload
             const foundUser = state.users.find((user) => user.id === id)
             if (foundUser) {
-                foundUser.firstName = firstName
-                foundUser.lastName = lastName
+                foundUser.userName = firstName
                 state.userData = foundUser
                 localStorage.setItem('loginData', JSON.stringify({
                     isLoggedIn: state.isLoggedIn,
@@ -109,5 +99,5 @@ export const usersSlice = createSlice({
     }
 })
 
-export const { login, logout, searchUser, deleteUser, banUser, addUser, updateUser } = usersSlice.actions
+export const { login, logout, searchUser, addUser, updateUser } = usersSlice.actions
 export default usersSlice.reducer

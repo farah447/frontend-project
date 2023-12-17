@@ -154,7 +154,7 @@ const Home = () => {
             </div>
             <div className="home-content">
               <div className="search-sort">
-                <Stack direction="row" spacing={60} sx={{ width: 100 }}>
+                <Stack direction="row" sx={{ width: 100 }}>
                   <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
                   <SortProducts />
                 </Stack>
