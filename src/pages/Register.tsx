@@ -2,12 +2,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch } from 'react-redux'
-import { addUser, fetchUsers } from '../redux/users/usersSlice'
+import { addUser, createUser, fetchUsers } from '../redux/users/usersSlice'
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
 import themes from '../Theme/Themes';
-import { createUser } from '../services/userService'
 
 export const Register = () => {
 
@@ -90,10 +89,11 @@ export const Register = () => {
             setuserNameError('user name must be atleast 3 characters')
             return
         }
-        //dispatch(fetchUsers()).then(() => {
-        //dispatch(addUser(newUser));
-        //});
+        /*dispatch(fetchUsers()).then(() => {
+            dispatch(createUser(newUser));
+        });*/
         navigate('/login');
+
     };
 
     return (

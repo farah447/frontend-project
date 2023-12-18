@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { activateUserAccount } from '../services/userService'
+import { activateUserAccount } from '../redux/users/usersSlice'
 
 const ActivatePage = () => {
     const { token } = useParams()
@@ -21,7 +21,7 @@ const ActivatePage = () => {
     return (
         <div className='container'>
             <div>
-                <h2>Hello {decoded.name}! Click the button for activating your account</h2>
+                <h2>Hello {decoded.userName}! Click the button for activating your account</h2>
                 <button onClick={handleActivate}>Activate user account</button>
             </div>
         </div>

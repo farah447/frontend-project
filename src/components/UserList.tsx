@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { fetchUsers, searchUser } from "../redux/users/usersSlice";
+import { banUnbanUsers, baseURL, deleteUsers, fetchUsers, searchUser } from "../redux/users/usersSlice";
 import { Button, Stack } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -10,7 +10,6 @@ import SearchInput from "./SearchInput";
 import useUserState from "../hooks/useUserState";
 import DeleteIcon from '@mui/icons-material/Delete';
 import themes from '../Theme/Themes';
-import { banUnbanUsers, baseURL, deleteUser } from "../services/userService";
 
 const UserList = () => {
   const { users, isLoading, error, searchTerm } = useUserState();
@@ -19,14 +18,14 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(fetchUsers())
-  }, [])
+  }, [dispatch])
 
-  if (isLoading) {
+  /*if (isLoading) {
     return <p>Loading...</p>
   }
   if (error) {
     return <p>{error}</p>
-  }
+  }*/
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchUser(event.target.value))
@@ -36,8 +35,8 @@ const UserList = () => {
 
   const handleDelete = async (userName: string) => {
     try {
-      const response = await deleteUser(userName)
-      dispatch(fetchUsers())
+      dispatch(deleteUsers(userName))
+
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
     }
@@ -45,8 +44,7 @@ const UserList = () => {
 
   const handleBanUnban = async (userName: string, isBanned: boolean) => {
     try {
-      const response = isBanned ? await banUnbanUsers(userName) : banUnbanUsers(userName)
-      dispatch(fetchUsers())
+      const response = isBanned ? dispatch(banUnbanUsers(userName)) : dispatch(banUnbanUsers(userName))
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
     }

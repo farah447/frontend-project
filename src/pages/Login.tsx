@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
 import { fetchUsers, login } from "../redux/users/usersSlice"
 import { ThemeProvider } from '@mui/material/styles';
@@ -44,13 +44,13 @@ export const Login = ({ pathName }: { pathName: string }) => {
         return
       }
 
-      if (foundUser.ban) {
+      if (foundUser.isBanned) {
         console.log("user account is banned!")
         return
       }
 
       dispatch(login(foundUser))
-      navigate(pathName ? pathName : `/dashboard/${foundUser.role}`)
+      navigate(pathName ? pathName : `/dashboard/${foundUser.isAdmin}`)
     } catch (error) {
       console.log(error)
     }
@@ -83,6 +83,7 @@ export const Login = ({ pathName }: { pathName: string }) => {
                 color="secondary"
                 size="small">
                 Login</Button>
+              <Link to='/forget-password'> Forget Password?</Link>
             </div>
           </form>
         </div>

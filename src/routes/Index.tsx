@@ -23,6 +23,8 @@ import Cart from "../pages/Cart";
 import { ThemeProvider } from "@mui/material";
 import themes from "../Theme/Themes";
 import ActivatePage from "../pages/ActivatePage";
+import ForgetPassword from "../pages/ForgetPassword";
+import ResetPassword from "../pages/ResetPassword";
 
 
 const Index = () => {
@@ -38,6 +40,8 @@ const Index = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login pathName="/" />} />
           <Route path="/logout" element={<Home />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products" element={<ProductsDetailes />} />
           <Route path="/user/activate/:token" element={<ActivatePage />} />

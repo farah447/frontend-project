@@ -15,8 +15,7 @@ const UserProfile = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const [user, setUser] = useState({
-    firstName: userData?.firstName || '',
-    lastName: userData?.lastName || '',
+    userName: userData?.userName || '',
   });
 
   useEffect(() => {
@@ -38,7 +37,8 @@ const UserProfile = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const updateUserData = { id: userData?.id, ...user };
+
+    const updateUserData = { userName: userData?.userName, ...user };
     dispatch(updateUser(updateUserData));
   };
 
@@ -52,9 +52,9 @@ const UserProfile = () => {
             <div>
               <div className="user-profile-data">
                 <p>Id: {userData.id}</p>
-                <p>Name: {`${user.firstName} ${user.lastName}`}</p>
-                <p>Email: {userData.email}</p>
-                <p>Role: {userData.role}</p>
+                <p>Name: {`${user?.userName}`}</p>
+                <p>Email: {userData?.email}</p>
+                <p>Role: {userData.isAdmin ? 'Admin' : 'User'}</p>
                 <Button
                   className="btn"
                   variant="outlined"
@@ -71,13 +71,7 @@ const UserProfile = () => {
                     <input
                       type="text"
                       name="firstName"
-                      value={user.firstName}
-                      onChange={handleChange}
-                    />
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={user.lastName}
+                      value={user.userName}
                       onChange={handleChange}
                     />
                     <Button
