@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Users } from '../redux/users/usersSlice'
+import { baseURL } from './userService'
 
-export const baseURL = 'http://localhost:3003'
 
 
 
@@ -29,25 +29,4 @@ export const banUnbanUsers = async (userName: string) => {
 export const updateUser = async (userData: Users) => {
     await axios.put(`${baseURL}/users/${userData.userName}`, userData)
     return userData;
-}
-
-export const loginUser = async (user: object) => {
-    const respons = await axios.post(`${baseURL}/auth/login`, user)
-    return respons.data
-}
-
-export const logoutUser = async () => {
-    const respons = await axios.post(`${baseURL}/auth/logout`)
-    return respons.data
-}
-
-
-export const forgetPassword = async (email: string) => {
-    const respons = await axios.put(`${baseURL}/users/forget-Password`, { email })
-    return respons.data
-}
-
-export const resetPassword = async (data: { password: string, token: string }) => {
-    const respons = await axios.put(`${baseURL}/users/reset-Password`, { password: data.password, token: data.token })
-    return respons.data
 }

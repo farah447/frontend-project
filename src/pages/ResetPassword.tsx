@@ -2,8 +2,8 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button } from '@mui/material'
 import { AppDispatch } from '../redux/store'
 import { useDispatch } from 'react-redux'
-import { resetPassword } from '../redux/users/usersSlice'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { resetPassword } from '../services/userService'
 
 const ResetPassword = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -17,7 +17,8 @@ const ResetPassword = () => {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
-        dispatch(resetPassword({ password, token }))
+
+        await (resetPassword({ password, token }))
         console.log('Password was reset')
         navigate('/login')
     }

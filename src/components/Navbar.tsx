@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { logout } from '../redux/users/usersSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { useSelector } from 'react-redux'
 import { ThemeProvider } from '@mui/material/styles';
@@ -8,6 +7,7 @@ import { Button, IconButton } from '@mui/material'
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import themes from '../Theme/Themes';
+import { logoutUser } from '../services/userService'
 
 const Navbar = () => {
 
@@ -15,12 +15,12 @@ const Navbar = () => {
 
     const { cartItems } = useSelector((state: RootState) => state.cartReducer)
 
-    const dispatch: AppDispatch = useDispatch()
+    //const dispatch: AppDispatch = useDispatch()
 
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        dispatch(logout())
+    const handleLogout = async () => {
+        await (logoutUser())
         navigate('/login')
     }
 
@@ -45,7 +45,7 @@ const Navbar = () => {
                                 </li>
 
                                 <li>
-                                    <Link to={`/dashboard/${userData?.role}`}> {userData?.role} Dashboared</Link>
+                                    <Link to={`/dashboard/${userData && userData.isAdmin ? 'admin' : 'user'}`}> {userData && userData?.isAdmin} Dashboared</Link>
                                 </li>
                             </>
                         )

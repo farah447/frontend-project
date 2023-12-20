@@ -37,7 +37,7 @@ const Home = () => {
   }
 
 
-  const filerProducts = products.filter((product) => {
+  const filerProducts = products.filter((product: any) => {
     const categoryMatch = checkedCategories.length > 0 ? checkedCategories.some((id) => product.categories.includes(Number(id))) : product
 
     const pricehMatch = priceRange.length > 0 ? product.price >= priceRange[0] && product.price <= priceRange[1] : product

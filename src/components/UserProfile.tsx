@@ -1,13 +1,14 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import { fetchUsers, updateUser } from '../redux/users/usersSlice';
+import { fetchUsers } from '../redux/users/usersSlice';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
 
 import themes from '../Theme/Themes';
 import UserSidebar from './UserSidebar';
 import useUserState from '../hooks/useUserState';
+import { updateUser } from '../services/userService';
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -35,11 +36,11 @@ const UserProfile = () => {
     }));
   };
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const updateUserData = { userName: userData?.userName, ...user };
-    dispatch(updateUser(updateUserData));
+    const updateUserData = { id: userData?._id, ...user };
+    await updateUser(updateUserData);
   };
 
   return (
@@ -51,7 +52,7 @@ const UserProfile = () => {
           {userData && (
             <div>
               <div className="user-profile-data">
-                <p>Id: {userData.id}</p>
+                <p>Id: {userData._id}</p>
                 <p>Name: {`${user?.userName}`}</p>
                 <p>Email: {userData?.email}</p>
                 <p>Role: {userData.isAdmin ? 'Admin' : 'User'}</p>

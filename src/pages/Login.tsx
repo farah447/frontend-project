@@ -2,23 +2,25 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
-import { fetchUsers, login } from "../redux/users/usersSlice"
+import { fetchUsers } from "../redux/users/usersSlice"
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
 import themes from '../Theme/Themes';
+import { loginUser } from "../services/userService"
 
 export const Login = ({ pathName }: { pathName: string }) => {
 
 
   const { users } = useSelector((state: RootState) => state.usersReducer)
+  const { userData } = useSelector((state: RootState) => state.usersReducer)
 
   const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate()
   const [user, setUser] = useState({
     email: '',
-    password: ''
+    password: '',
   })
 
 
@@ -27,6 +29,18 @@ export const Login = ({ pathName }: { pathName: string }) => {
       return { ...prevState, [event.target.name]: event.target.value }
     })
   }
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    if (userData) {
+      navigate(
+        pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : ' user'}`
+      )
+    }
+  }, [userData, navigate, pathName])
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -49,15 +63,15 @@ export const Login = ({ pathName }: { pathName: string }) => {
         return
       }
 
-      dispatch(login(foundUser))
-      navigate(pathName ? pathName : `/dashboard/${foundUser.isAdmin}`)
+      await loginUser(user)
+      //navigate(pathName ? pathName : `/dashboard/${foundUser.isAdmin}`)
     } catch (error) {
       console.log(error)
     }
-    setUser({
+    /*setUser({
       email: '',
-      password: ''
-    })
+      password: '',
+    })*/
   }
 
   return (

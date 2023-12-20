@@ -2,24 +2,25 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch } from 'react-redux'
-import { addUser, createUser, fetchUsers } from '../redux/users/usersSlice'
+import { addUser, fetchUsers } from '../redux/users/usersSlice'
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
 import themes from '../Theme/Themes';
+import { createUser } from '../services/userService'
 
 export const Register = () => {
 
     const navigate = useNavigate()
     const dispatch: AppDispatch = useDispatch()
     const [user, setUser] = useState({
+        _id: 0,
         firstName: '',
         lastName: '',
         userName: '',
         email: '',
         password: '',
         image: '',
-        address: ''
     })
 
     const [firstNameError, setfirstNameError] = useState('')
@@ -56,14 +57,14 @@ export const Register = () => {
         formData.append('email', user.email)
         formData.append('password', user.password)
         formData.append('image', user.image)
-        formData.append('address', user.address)
 
         try {
             for (var key of formData.entries()) {
                 console.log(key[0] + ',' + key[1])
             }
             const response = await createUser(formData)
-            console.log(response)
+            //dispatch(fetchUsers()).then(() => {
+            //dispatch(createUser(formData));
         } catch (error) {
             console.log(error.response.data.message)
         }
@@ -89,9 +90,6 @@ export const Register = () => {
             setuserNameError('user name must be atleast 3 characters')
             return
         }
-        /*dispatch(fetchUsers()).then(() => {
-            dispatch(createUser(newUser));
-        });*/
         navigate('/login');
 
     };
@@ -127,10 +125,6 @@ export const Register = () => {
                             <label htmlFor='userName'>User name: </label>
                             <input type='text' name='userName' value={user.userName} onChange={handleChange} required />
                             <p>{userNameError}</p>
-                        </div>
-                        <div className='form-field'>
-                            <label htmlFor='address'>Address: </label>
-                            <textarea name='address' value={user.address} onChange={handleChange} required />
                         </div>
                         <div className='form-field'>
                             <label htmlFor='image'>Image: </label>

@@ -17,8 +17,8 @@ import UserOrders from "../components/UserOrders";
 import Navbar from "../components/Navbar";
 import UserList from "../components/UserList";
 
-//import ProtectRouting from "./ProtectRouting";
-//import AdminRoute from "./AdminRoute";
+import ProtectRouting from "./ProtectRouting";
+import AdminRoute from "./AdminRoute";
 import Cart from "../pages/Cart";
 import { ThemeProvider } from "@mui/material";
 import themes from "../Theme/Themes";
@@ -44,21 +44,21 @@ const Index = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products" element={<ProductsDetailes />} />
-          <Route path="/user/activate/:token" element={<ActivatePage />} />
+          <Route path="/users/activate/:token" element={<ActivatePage />} />
 
-          {/* <Route path="/dashboard" element={<ProtectRouting />}> */}
-          <Route path="/dashboard/User" element={<UserDashboared />} />
-          <Route path="/dashboard/User/profile" element={<UserProfile />} />
-          <Route path="/dashboard/User/orders" element={<UserOrders />} />
-          {/*</Route>*/}
+          <Route path="/dashboard" element={<ProtectRouting />}>
+            <Route path="/dashboard/User" element={<UserDashboared />} />
+            <Route path="/dashboard/User/profile" element={<UserProfile />} />
+            <Route path="/dashboard/User/orders" element={<UserOrders />} />
+          </Route>
 
-          {/*<Route path="/dashboard" element={<AdminRoute />}>*/}
-          <Route path="/dashboard/Admin" element={<AdminDashboared />} />
-          <Route path="/dashboard/Admin/category" element={<Category />} />
-          <Route path="/dashboard/Admin/products" element={<Products />} />
-          <Route path="/dashboard/Admin/users" element={<UserList />} />
-          <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />
-          {/*</Route>*/}
+          <Route path="/dashboard" element={<AdminRoute />}>
+            <Route path="/dashboard/Admin" element={<AdminDashboared />} />
+            <Route path="/dashboard/Admin/category" element={<Category />} />
+            <Route path="/dashboard/Admin/products" element={<Products />} />
+            <Route path="/dashboard/Admin/users" element={<UserList />} />
+            <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />
+          </Route>
 
           <Route path="*" element={<Error />} />
         </Routes>

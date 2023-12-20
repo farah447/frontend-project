@@ -1,7 +1,9 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { activateUserAccount } from '../redux/users/usersSlice'
+import { activateUserAccount } from '../services/userService'
+import { AppDispatch } from '../redux/store'
+import { useDispatch } from 'react-redux'
 
 const ActivatePage = () => {
     const { token } = useParams()
@@ -9,8 +11,11 @@ const ActivatePage = () => {
     const navigate = useNavigate()
 
     const handleActivate = async () => {
+        //const dispatch: AppDispatch = useDispatch();
+
         try {
-            const response = await activateUserAccount(String(token))
+            const response = await activateUserAccount(token)
+            //dispatch(activateUserAccount(token))
             console.log(response)
             navigate('/login')
 

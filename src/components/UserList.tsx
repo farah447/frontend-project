@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { banUnbanUsers, baseURL, deleteUsers, fetchUsers, searchUser } from "../redux/users/usersSlice";
+import { fetchUsers, searchUser } from "../redux/users/usersSlice";
 import { Button, Stack } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -10,6 +10,7 @@ import SearchInput from "./SearchInput";
 import useUserState from "../hooks/useUserState";
 import DeleteIcon from '@mui/icons-material/Delete';
 import themes from '../Theme/Themes';
+import { banUnbanUsers, baseURL, deleteUsers } from "../services/userService";
 
 const UserList = () => {
   const { users, isLoading, error, searchTerm } = useUserState();
@@ -35,7 +36,7 @@ const UserList = () => {
 
   const handleDelete = async (userName: string) => {
     try {
-      dispatch(deleteUsers(userName))
+      await deleteUsers(userName)
 
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
@@ -44,7 +45,7 @@ const UserList = () => {
 
   const handleBanUnban = async (userName: string, isBanned: boolean) => {
     try {
-      const response = isBanned ? dispatch(banUnbanUsers(userName)) : dispatch(banUnbanUsers(userName))
+      const response = isBanned ? await banUnbanUsers(userName) : await banUnbanUsers(userName)
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
     }
@@ -62,7 +63,7 @@ const UserList = () => {
               searchUsers.map((user) => {
                 if (String(user.isAdmin) !== 'Admin') {
                   return (
-                    <article key={user.id} className='user'>
+                    <article key={user._id} className='user'>
                       <img src={`${baseURL}/${user.image}`} alt={user.image}></img>
                       <h2>{`${user.userName}`}</h2>
                       <h2>{user.email}</h2>
