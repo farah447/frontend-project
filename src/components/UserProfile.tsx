@@ -1,14 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import { fetchUsers } from '../redux/users/usersSlice';
+import { fetchUsers, updateUser } from '../redux/users/usersSlice';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
 
 import themes from '../Theme/Themes';
 import UserSidebar from './UserSidebar';
 import useUserState from '../hooks/useUserState';
-import { updateUser } from '../services/userService';
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -40,7 +39,7 @@ const UserProfile = () => {
     event.preventDefault();
 
     const updateUserData = { id: userData?._id, ...user };
-    await updateUser(updateUserData);
+    dispatch(updateUser(updateUserData));
   };
 
   return (

@@ -4,7 +4,7 @@ import themes from '../Theme/Themes'
 import { Button } from '@mui/material'
 import { AppDispatch } from '../redux/store'
 import { useDispatch } from 'react-redux'
-import { forgetPassword } from '../services/userService'
+import { forgetPassword } from '../redux/users/usersSlice'
 
 const ForgetPassword = () => {
 
@@ -17,7 +17,7 @@ const ForgetPassword = () => {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        await forgetPassword(email)
+        dispatch(forgetPassword(email))
         console.log('email has been sent')
     }
 

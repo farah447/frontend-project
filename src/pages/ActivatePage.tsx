@@ -1,23 +1,28 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { activateUserAccount } from '../services/userService'
 import { AppDispatch } from '../redux/store'
 import { useDispatch } from 'react-redux'
+import { activateUserAccount } from '../redux/users/usersSlice'
 
 const ActivatePage = () => {
-    const { token } = useParams()
-    const decoded = jwtDecode(String(token))
-    const navigate = useNavigate()
+    const { token } = useParams();
+    const decoded = jwtDecode(String(token));
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleActivate = async () => {
-        //const dispatch: AppDispatch = useDispatch();
+        const dispatch: AppDispatch = useDispatch();
 
         try {
-            const response = await activateUserAccount(token)
-            //dispatch(activateUserAccount(token))
+            const response = await dispatch(activateUserAccount(String(token)))
+            //await dispatch(activateUserAccount(String(token)))
+            /*if (response.status === 200) {
+                // If the activation was successful, navigate to the login route
+                navigate('/login');
+            }*/
             console.log(response)
-            navigate('/login')
+            navigate('/login');
 
         } catch (error) {
             console.log(error)

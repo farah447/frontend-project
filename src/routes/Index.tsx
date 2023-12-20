@@ -54,7 +54,7 @@ const Index = () => {
 
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="/dashboard/Admin" element={<AdminDashboared />} />
-            <Route path="/dashboard/Admin/category" element={<Category />} />
+            <Route path="/dashboard/Admin/categories" element={<Category />} />
             <Route path="/dashboard/Admin/products" element={<Products />} />
             <Route path="/dashboard/Admin/users" element={<UserList />} />
             <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />

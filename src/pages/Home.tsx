@@ -53,7 +53,7 @@ const Home = () => {
     return <p>{error}</p>
   }
 
-  const handleCheckedCategory = (CategoryId: number) => {
+  const handleCheckedCategory = (CategoryId: string) => {
     if (checkedCategories.includes(CategoryId)) {
       const filteredCategory = checkedCategories.filter((c) => c !== CategoryId)
       setCheckedCategories(filteredCategory)
@@ -141,10 +141,10 @@ const Home = () => {
                   {categories.length > 0 &&
                     categories.map((category) => {
                       return (
-                        <div key={category.id}>
+                        <div key={category._id}>
                           <label htmlFor="category" >
-                            <input type="checkbox" name="category" value={category.name} onChange={() => { handleCheckedCategory(category.id) }} />
-                            {category.name}
+                            <input type="checkbox" name="category" value={category.title} onChange={() => { handleCheckedCategory(category._id) }} />
+                            {category.title}
                           </label>
                         </div>
                       )

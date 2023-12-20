@@ -1,13 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { AppDispatch } from '../redux/store';
 import { useDispatch } from 'react-redux';
-import { addCategory, deleteCategory, fetchCategory, updateCategory } from '../redux/categories/categorySlice';
+import { fetchCategory } from '../redux/categories/categorySlice';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, Stack, FormControl, TextField } from "@mui/material";
 
 import themes from '../Theme/Themes';
 import AdminSidebar from './AdminSidebar'
 import useCategoryState from '../hooks/useCategoryState';
+import { createCategory, deleteCategory, updateCategory } from '../redux/categories/categorySlice';
 
 const Category = () => {
 
@@ -15,42 +16,45 @@ const Category = () => {
   const { categories, isLoading, error } = useCategoryState()
   const [categoryName, setCategoryName] = useState('')
   const [isEdit, setIsEdit] = useState(false)
-  const [categoryId, setCategoryId] = useState(0)
+  const [categoryId, setCategoryId] = useState('')
 
 
   const dispatch: AppDispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(fetchCategory());
+  }, [dispatch]);
 
-  if (isLoading) {
+  /*if (isLoading) {
     return <p>Loading...</p>
   }
   if (error) {
     return <p>{error}</p>
-  }
+  }*/
 
-  const handleEdit = (id: number, name: string) => {
-    setCategoryId(id)
+  const handleEdit = (_id: string, title: string) => {
+    setCategoryId(_id)
     setIsEdit(!isEdit)
-    setCategoryName(name)
+    setCategoryName(title)
   }
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteCategory(id))
+  const handleDelete = async (_id: string) => {
+    dispatch(deleteCategory(_id))
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCategoryName(event.target.value)
   }
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
     if (!isEdit) {
-      const newCategory = { id: new Date().getTime(), name: categoryName }
-      dispatch(addCategory(newCategory))
+      //const newCategory = { _id: new Date().getTime(), title: categoryName }
+      dispatch(createCategory(categoryName))
     } else {
-      const updateCategoryData = { id: categoryId, name: categoryName }
-      dispatch(updateCategory(updateCategoryData))
+      //const updateCategoryData = { _id: categoryId, title: categoryName }
+      dispatch(updateCategory({ _id: categoryId, title: categoryName }))
     }
     setCategoryName('')
   }
@@ -79,15 +83,15 @@ const Category = () => {
           {categories &&
             categories.map((category) => {
               return (
-                <article key={category.id} className='product'>
-                  <h2>{category.name}</h2>
+                <article key={category._id} className='product'>
+                  <h2>{category.title}</h2>
                   <Stack direction="row" spacing={2}>
                     <Button
                       className="Update"
                       variant="outlined"
                       color="secondary"
                       size='small'
-                      onClick={() => { handleEdit(category.id, category.name) }}>
+                      onClick={() => { handleEdit(category._id, category.title) }}>
                       Edit </Button>
                     <Button
                       className="Delete"
@@ -95,7 +99,7 @@ const Category = () => {
                       color="secondary"
                       size='small'
                       onClick={() => {
-                        handleDelete(category.id)
+                        handleDelete(category._id)
                       }}>
                       Delete </Button>
                   </Stack>

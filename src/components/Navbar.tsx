@@ -7,7 +7,7 @@ import { Button, IconButton } from '@mui/material'
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import themes from '../Theme/Themes';
-import { logoutUser } from '../services/userService'
+import { logoutUser } from '../redux/users/usersSlice';
 
 const Navbar = () => {
 
@@ -15,12 +15,12 @@ const Navbar = () => {
 
     const { cartItems } = useSelector((state: RootState) => state.cartReducer)
 
-    //const dispatch: AppDispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch()
 
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        await (logoutUser())
+        dispatch(logoutUser())
         navigate('/login')
     }
 

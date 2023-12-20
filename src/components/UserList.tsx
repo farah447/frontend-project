@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { fetchUsers, searchUser } from "../redux/users/usersSlice";
+import { API_BASE_URL, banUnbanUsers, deleteUsers, fetchUsers, searchUser } from "../redux/users/usersSlice";
 import { Button, Stack } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -10,7 +10,6 @@ import SearchInput from "./SearchInput";
 import useUserState from "../hooks/useUserState";
 import DeleteIcon from '@mui/icons-material/Delete';
 import themes from '../Theme/Themes';
-import { banUnbanUsers, baseURL, deleteUsers } from "../services/userService";
 
 const UserList = () => {
   const { users, isLoading, error, searchTerm } = useUserState();
@@ -64,7 +63,7 @@ const UserList = () => {
                 if (String(user.isAdmin) !== 'Admin') {
                   return (
                     <article key={user._id} className='user'>
-                      <img src={`${baseURL}/${user.image}`} alt={user.image}></img>
+                      <img src={`${API_BASE_URL}/${user.image}`} alt={user.image}></img>
                       <h2>{`${user.userName}`}</h2>
                       <h2>{user.email}</h2>
                       <div className='main-content-user-btn'>

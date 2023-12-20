@@ -2,12 +2,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
-import { fetchUsers } from "../redux/users/usersSlice"
+import { fetchUsers, loginUser } from "../redux/users/usersSlice"
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
 import themes from '../Theme/Themes';
-import { loginUser } from "../services/userService"
 
 export const Login = ({ pathName }: { pathName: string }) => {
 
@@ -34,21 +33,31 @@ export const Login = ({ pathName }: { pathName: string }) => {
   }, [dispatch]);
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (userData) {
       navigate(
         pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : ' user'}`
       )
     }
-  }, [userData, navigate, pathName])
+  }, [userData, navigate, pathName])*/
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     console.log("Users in Redux store:", users);
     try {
-      const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
+      //const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
+      dispatch(loginUser(user));
 
-      if (!foundUser) {
+      /*if (loggedInUser) {
+        navigate(`/dashboard/${loggedInUser.isAdmin ? 'admin' : 'user'}`);
+      }
+      if (loggedInUser.isAdmin === 'admin') {
+        navigate('admin/dashboard')
+      } else {
+        navigate('user/dashboard')
+      }*/
+
+      /*if (!foundUser) {
         console.log("user not found with this email!")
         return
       }
@@ -61,10 +70,9 @@ export const Login = ({ pathName }: { pathName: string }) => {
       if (foundUser.isBanned) {
         console.log("user account is banned!")
         return
-      }
+      }*/
 
-      await loginUser(user)
-      //navigate(pathName ? pathName : `/dashboard/${foundUser.isAdmin}`)
+      navigate(pathName ? pathName : `/dashboard/${userData?.isAdmin}`)
     } catch (error) {
       console.log(error)
     }

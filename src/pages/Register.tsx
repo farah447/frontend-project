@@ -2,12 +2,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch } from 'react-redux'
-import { addUser, fetchUsers } from '../redux/users/usersSlice'
+import { createUser, fetchUsers } from '../redux/users/usersSlice'
 import { ThemeProvider } from '@mui/material/styles';
 import { Button } from "@mui/material";
 
 import themes from '../Theme/Themes';
-import { createUser } from '../services/userService'
 
 export const Register = () => {
 
@@ -62,9 +61,9 @@ export const Register = () => {
             for (var key of formData.entries()) {
                 console.log(key[0] + ',' + key[1])
             }
-            const response = await createUser(formData)
+            //const response = await createUser(formData)
             //dispatch(fetchUsers()).then(() => {
-            //dispatch(createUser(formData));
+            dispatch(createUser(formData));
         } catch (error) {
             console.log(error.response.data.message)
         }

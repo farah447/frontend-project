@@ -2,18 +2,65 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-import { baseURL } from '../../services/userService'
+export const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL
 
-
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    const respons = await axios.get(`${baseURL}/users`)
-    console.log(respons)
+export const fetchUsers = createAsyncThunk('users/fetchUser', async () => {
+    const respons = await axios.get(`${API_BASE_URL}/users`)
+    console.log(respons.data.payload)
     return respons.data
+})
+
+export const createUser = createAsyncThunk('users/createUser', async (newUser: FormData) => {
+    const response = await axios.post(`${API_BASE_URL}/users/process-register`, newUser)
+    console.log(response.data)
+    return response.data
+})
+
+export const activateUserAccount = createAsyncThunk('users/activate', async (token: string) => {
+    const response = await axios.post(`${API_BASE_URL}/users/activate`, { token })
+    return response.data
+})
+
+export const deleteUsers = createAsyncThunk('users/deleteUser', async (userName: string) => {
+    await axios.delete<Users[]>(`${API_BASE_URL}/users/${userName}`)
+    return userName
+})
+
+export const banUnbanUsers = createAsyncThunk('users/banUnban', async (userName: string) => {
+    await axios.put(`${API_BASE_URL}/users/updateBan/${userName}`)
+    return userName
+})
+
+export const updateUser = createAsyncThunk('users/updateUsers', async (userData: Partial<Users>) => {
+    await axios.put(`${API_BASE_URL}/users/${userData.userName}`, userData)
+    return userData;
+})
+
+export const loginUser = createAsyncThunk('users/login', async (user: object) => {
+    const response = await axios.post(`${API_BASE_URL}/auth/login`, user)
+    return response.data.payload.payload
+})
+
+export const logoutUser = createAsyncThunk('users/logout', async () => {
+    const response = await axios.post(`${API_BASE_URL}/auth/logout`)
+    return response.data
+})
+
+
+export const forgetPassword = createAsyncThunk('users/forgetPassword', async (email: string) => {
+    console.log(email); // Check if the email is correctly received
+    const response = await axios.put(`${API_BASE_URL}/users/forget-password`, { email })
+    return response.data.payload
+})
+
+export const resetPassword = createAsyncThunk('users/resetPassword', async (data: { password: string, token: string }) => {
+    const response = await axios.put(`${API_BASE_URL}/users/reset-Password`, { password: data.password, token: data.token })
+    return response.data
 })
 
 
 export type Users = {
-    _id: number
+    _id: string
     firstName: string
     lastName: string
     userName: string
@@ -70,12 +117,12 @@ export const usersSlice = createSlice({
         searchUser: (state, action) => {
             state.searchTerm = action.payload
         },
-        addUser: (state, action) => {
+        /*addUser: (state, action) => {
             state.users.push(action.payload);
         },
         deleteSingleUser: (state, action) => {
             state.users.push(action.payload);
-        },
+        },*/
         /*updateUser: (state, action) => {
             const { id, firstName, lastName } = action.payload
             const foundUser = state.users.find((user) => user.id === id)
@@ -92,12 +139,8 @@ export const usersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            //state.users = action.payload.payload.users
-            console.log(action.payload.payload.users)
-            state.isLoading = false
-        })
-        /*builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.users = action.payload.payload.users
+            console.log(action.payload.payload.users)
             state.isLoading = false
         })
 
@@ -114,15 +157,56 @@ export const usersSlice = createSlice({
         })
 
         builder.addCase(updateUser.fulfilled, (state, action) => {
-            if (state.userData !== null) {
-                state.userData.userName = action.payload.userName;
-
+            const { _id, firstName, lastName } = action.payload
+            const foundUser = state.users.find((user) => user._id === _id)
+            if (foundUser) {
+                foundUser.firstName = firstName
+                foundUser.lastName = lastName
+                state.userData = foundUser
                 localStorage.setItem('loginData', JSON.stringify({
                     isLoggedIn: state.isLoggedIn,
                     userData: state.userData
-                }));
+                })
+                )
             }
-        })*/
+        })
+        /*builder.addCase(updateUser.fulfilled, (state, action) => {
+            const { _id, firstName, lastName } = action.payload;
+
+            const foundIndex = state.users.findIndex((user) => user._id === _id);
+            if (foundIndex !== -1) {
+                const updatedUser = { ...state.users[foundIndex], firstName, lastName };
+                state.users[foundIndex] = updatedUser;
+
+                // Update userData if it matches the updated user
+                if (state.userData?._id === _id) {
+                    state.userData = { ...updatedUser };
+                    localStorage.setItem('loginData', JSON.stringify({
+                        isLoggedIn: state.isLoggedIn,
+                        userData: state.userData
+                    }));
+                }
+            }
+        });*/
+
+
+        builder.addCase(loginUser.fulfilled, (state, action) => {
+            state.isLoggedIn = true
+            state.userData = action.payload
+            localStorage.setItem('loginData', JSON.stringify({
+                isLoggedIn: state.isLoggedIn,
+                userData: state.userData
+            }))
+        })
+
+        builder.addCase(logoutUser.fulfilled, (state) => {
+            state.isLoggedIn = false
+            state.userData = null
+            localStorage.setItem('loginData', JSON.stringify({
+                isLoggedIn: state.isLoggedIn,
+                userData: state.userData
+            }))
+        })
 
         builder.addMatcher(
             (action) => action.type.endsWith('/pending'),
@@ -143,5 +227,5 @@ export const usersSlice = createSlice({
     }
 })
 
-export const { searchUser, addUser } = usersSlice.actions
+export const { searchUser } = usersSlice.actions
 export default usersSlice.reducer
