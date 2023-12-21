@@ -15,10 +15,10 @@ const AdminSidebar = () => {
                     </div>
 
                     <ul className='horizontal-nav'>
-                        <li> <Link to="/dashboard/Admin/categories">Category</Link></li>
-                        <li>  <Link to="/dashboard/Admin/products">Products</Link></li>
-                        <li>  <Link to="/dashboard/Admin/users">Users</Link></li>
-                        <li>  <Link to="/dashboard/Admin/Orders">Orders</Link></li>
+                        <li> <Link to="/dashboard/admin/categories">Category</Link></li>
+                        <li>  <Link to="/dashboard/admin/products">Products</Link></li>
+                        <li>  <Link to="/dashboard/admin/users">Users</Link></li>
+                        <li>  <Link to="/dashboard/admin/orders">Orders</Link></li>
 
                     </ul>
                 </aside>

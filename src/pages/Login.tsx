@@ -28,18 +28,19 @@ export const Login = ({ pathName }: { pathName: string }) => {
       return { ...prevState, [event.target.name]: event.target.value }
     })
   }
+
+  // useEffect(() => {
+  //   dispatch(fetchUsers());
+  // }, [dispatch]);
+
+
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-
-
-  /*useEffect(() => {
     if (userData) {
       navigate(
         pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : ' user'}`
       )
     }
-  }, [userData, navigate, pathName])*/
+  }, [userData, navigate, pathName])
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -47,6 +48,7 @@ export const Login = ({ pathName }: { pathName: string }) => {
     try {
       //const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
       dispatch(loginUser(user));
+      navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`);
 
       /*if (loggedInUser) {
         navigate(`/dashboard/${loggedInUser.isAdmin ? 'admin' : 'user'}`);
@@ -72,7 +74,8 @@ export const Login = ({ pathName }: { pathName: string }) => {
         return
       }*/
 
-      navigate(pathName ? pathName : `/dashboard/${userData?.isAdmin}`)
+      //navigate(pathName ? pathName : `/dashboard/${userData?.isAdmin}`)
+
     } catch (error) {
       console.log(error)
     }

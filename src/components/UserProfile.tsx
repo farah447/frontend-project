@@ -18,9 +18,9 @@ const UserProfile = () => {
     userName: userData?.userName || '',
   });
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchUsers());
+  // }, []);
 
   const handleFormOpen = () => {
     setIsFormOpen(!isFormOpen);

@@ -47,17 +47,17 @@ const Index = () => {
           <Route path="/users/activate/:token" element={<ActivatePage />} />
 
           <Route path="/dashboard" element={<ProtectRouting />}>
-            <Route path="/dashboard/User" element={<UserDashboared />} />
-            <Route path="/dashboard/User/profile" element={<UserProfile />} />
-            <Route path="/dashboard/User/orders" element={<UserOrders />} />
+            <Route path="user" element={<UserDashboared />} />
+            <Route path="user/profile" element={<UserProfile />} />
+            <Route path="user/orders" element={<UserOrders />} />
           </Route>
 
           <Route path="/dashboard" element={<AdminRoute />}>
-            <Route path="/dashboard/Admin" element={<AdminDashboared />} />
-            <Route path="/dashboard/Admin/categories" element={<Category />} />
-            <Route path="/dashboard/Admin/products" element={<Products />} />
-            <Route path="/dashboard/Admin/users" element={<UserList />} />
-            <Route path="/dashboard/Admin/Orders" element={<UserOrders />} />
+            <Route path="admin" element={<AdminDashboared />} />
+            <Route path="admin/categories" element={<Category />} />
+            <Route path="admin/products" element={<Products />} />
+            <Route path="admin/users" element={<UserList />} />
+            <Route path="admin/orders" element={<UserOrders />} />
           </Route>
 
           <Route path="*" element={<Error />} />

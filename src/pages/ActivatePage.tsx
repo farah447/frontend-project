@@ -9,19 +9,19 @@ const ActivatePage = () => {
     const { token } = useParams();
     const decoded = jwtDecode(String(token));
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
+
 
     const handleActivate = async () => {
-        const dispatch: AppDispatch = useDispatch();
 
         try {
-            const response = await dispatch(activateUserAccount(String(token)))
+            const response = dispatch(activateUserAccount(String(token)))
             //await dispatch(activateUserAccount(String(token)))
-            /*if (response.status === 200) {
-                // If the activation was successful, navigate to the login route
+            /*if (response.payload === 200) {
                 navigate('/login');
             }*/
-            console.log(response)
+            //console.log(response)
             navigate('/login');
 
         } catch (error) {

@@ -41,12 +41,12 @@ const UserOrders = () => {
         setOrderPurchasedAt('')
     }
 
-    if (isLoading) {
-        return <p>Loading...</p>
-    }
-    if (error) {
-        return <p>{error}</p>
-    }
+    // if (isLoading) {
+    //     return <p>Loading...</p>
+    // }
+    // if (error) {
+    //     return <p>{error}</p>
+    // }
 
     return (
         <ThemeProvider theme={themes} >

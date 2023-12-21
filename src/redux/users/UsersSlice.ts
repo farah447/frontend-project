@@ -4,10 +4,10 @@ axios.defaults.withCredentials = true
 
 export const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL
 
-export const fetchUsers = createAsyncThunk('users/fetchUser', async () => {
+export const fetchUsers = createAsyncThunk('UserProfile/fetchUsers', async () => {
     const respons = await axios.get(`${API_BASE_URL}/users`)
     console.log(respons.data.payload)
-    return respons.data
+    return respons.data.payload.users
 })
 
 export const createUser = createAsyncThunk('users/createUser', async (newUser: FormData) => {
@@ -38,7 +38,7 @@ export const updateUser = createAsyncThunk('users/updateUsers', async (userData:
 
 export const loginUser = createAsyncThunk('users/login', async (user: object) => {
     const response = await axios.post(`${API_BASE_URL}/auth/login`, user)
-    return response.data.payload.payload
+    return response.data
 })
 
 export const logoutUser = createAsyncThunk('users/logout', async () => {
@@ -61,8 +61,8 @@ export const resetPassword = createAsyncThunk('users/resetPassword', async (data
 
 export type Users = {
     _id: string
-    firstName: string
-    lastName: string
+    firstName: string | undefined
+    lastName: string | undefined
     userName: string
     email: string
     password: string
@@ -139,8 +139,8 @@ export const usersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            state.users = action.payload.payload.users
-            console.log(action.payload.payload.users)
+            state.users = action.payload
+            console.log(action.payload)
             state.isLoading = false
         })
 

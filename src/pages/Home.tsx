@@ -170,9 +170,9 @@ const Home = () => {
                 currentItems.map((product: Product) => {
                   return (
                     <div className="product-card">
-                      <article key={product.id} className='product'>
-                        <img src={product.image} alt={product.name} />
-                        <h2 className="product-name">{product.name}</h2>
+                      <article key={product._id} className='product'>
+                        <img src={product.image} alt={product.title} />
+                        <h2 className="product-name">{product.title}</h2>
                         <h2>{product.description}</h2>
                         <h2>{product.price} EUR</h2>
                         <Stack direction="row" spacing={1}>
@@ -186,7 +186,7 @@ const Home = () => {
                                 <AddShoppingCartIcon />
                               </IconButton>
                               Add To Cart</Button>
-                            <Link to={`/products/${product.id}`}>
+                            <Link to={`/products/${product._id}`}>
                               <Button
                                 className="show-btn"
                                 variant="outlined"

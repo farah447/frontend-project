@@ -4,15 +4,19 @@ import { useDispatch } from 'react-redux'
 import { ProductForm } from './ProductForm'
 import { addProduct, Product } from '../redux/slices/products/productSlice'
 import { AppDispatch } from '../redux/store'
+import Category from './Category'
 
 const initialProductState: Product = {
-  id: 0,
-  name: '',
+  _id: '',
+  title: '',
+  slug: '',
+  price: 0,
   image: '',
   description: '',
-  categories: [],
-  variants: [],
-  sizes: []
+  quantity: 0,
+  category: [],
+  sold: 0,
+  shipping: 0,
 }
 
 export function NewProductWrapper() {
@@ -42,7 +46,7 @@ export function NewProductWrapper() {
     // Send the product data to your backend or in this case send it to Redux
     console.log('New product data:', product)
     // let's add Id property to the object (usually IDs are generated automatically on the backend)
-    product.id = +new Date()
+    product._id = +new Date()
     console.log('product:', product)
 
     dispatch(addProduct({ product }))
