@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import { sortProducts } from '../redux/slices/products/productSlice';
+// import { sortProducts } from '../redux/slices/products/productSlice';
 import { ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
@@ -10,7 +10,7 @@ const SortProducts = () => {
     const dispatch: AppDispatch = useDispatch();
 
     const handleOptiononChange = (event: SelectChangeEvent<string>) => {
-        dispatch(sortProducts(event.target.value))
+        // dispatch(sortProducts(event.target.value))
     };
 
     return (

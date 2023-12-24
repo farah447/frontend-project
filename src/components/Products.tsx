@@ -1,74 +1,100 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
-import { ChangeEvent, FormEvent } from 'react';
-import { addProduct, deleteProduct, fetchProducts, updateProduct } from '../redux/slices/products/productSlice';
+import { createProducts, deleteProducts, fetchProducts, updateProduct } from '../redux/slices/products/productSlice';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, FormControl, Stack, TextField } from '@mui/material';
+import { Select, MenuItem } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import themes from '../Theme/Themes';
 import AdminSidebar from './AdminSidebar';
-import useProductState from '../hooks/useProductState';
+import { fetchCategory } from '../redux/categories/categorySlice';
+
+const initialProductData = {
+  _id: '',
+  title: '',
+  price: '0',
+  image: null,
+  description: '',
+  quantity: '0',
+  category: '',
+  shipping: '0'
+};
 
 const Products = () => {
-  const { products, isLoading, error, singleProduct } = useProductState();
-
-  const [productData, setProductData] = useState({
-    id: 0,
-    name: '',
-    description: '',
-    image: '',
-  });
-
+  const { products, isLoading, error } = useSelector((state: RootState) => state.productReducer);
+  const { categories } = useSelector((state: RootState) => state.categoriesReducer);
   const [isEdit, setIsEdit] = useState(false);
-
+  const [productData, setProductData] = useState({ ...initialProductData });
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(fetchProducts({ page: 1, limit: 10 }));
+    dispatch(fetchCategory());
+  }, [dispatch]);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>{error}</p>;
-  }
+  useEffect(() => {
+    if (categories.length > 0) {
+      setProductData((prevProduct) => {
+        return { ...prevProduct, category: categories[0]._id };
+      });
+    }
+  }, [categories]);
 
-  const handleEdit = (id: number, name: string, description: string, image: string) => {
-    setProductData({ id, name, description, image });
-    setIsEdit(true);
+  const handleDelete = (_id: string) => {
+    dispatch(deleteProducts(_id));
   };
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteProduct(id));
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setProductData({
-      ...productData,
-      [event.target.name]: event.target.value,
-    });
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = event.target;
+    if (type === 'file') {
+      const fileInput = event.target as HTMLInputElement;
+      setProductData((prevProduct) => {
+        return { ...prevProduct, [name]: fileInput.files?.[0] };
+      });
+    } else {
+      setProductData((prevProduct) => {
+        return { ...prevProduct, [name]: value };
+      });
+    }
   };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-
-    if (!isEdit) {
-      dispatch(addProduct(productData));
-    } else {
-      dispatch(updateProduct(productData));
+    const formData = new FormData();
+    formData.append('title', productData.title);
+    formData.append('price', productData.price);
+    formData.append('description', productData.description);
+    if (productData.image) {
+      formData.append('image', productData.image);
     }
+    formData.append('category', productData.category);
+    formData.append('shipping', productData.shipping);
+    formData.append('quantity', productData.quantity);
 
-    setProductData({
-      id: 0,
-      name: '',
-      description: '',
-      image: '',
+    dispatch(createProducts(formData))
+  }
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const { name, value } = event.target;
+    setProductData((prevProduct) => {
+      return { ...prevProduct, [name]: value };
     });
-
-    setIsEdit(false);
   };
+
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+  // if (error) {
+  //   return <p>{error}</p>;
+  // }
+
+
+  // const handleEdit = (_id: string, title: string, description: string, image: string, category: string, quantity: number) => {
+  //   setProductData({ _id, title, description, image, category, quantity });
+  //   setIsEdit(true);
+  // };
+
 
   return (
     <ThemeProvider theme={themes}>
@@ -82,16 +108,16 @@ const Products = () => {
                 <TextField
                   label="ID"
                   type="number"
-                  name="id"
-                  value={productData.id}
+                  name="_id"
+                  value={productData._id}
                   placeholder="Enter product ID"
                   onChange={handleChange}
                 />
                 <TextField
                   label="Name"
                   type="text"
-                  name="name"
-                  value={productData.name}
+                  name="title"
+                  value={productData.title}
                   placeholder="Enter product name"
                   onChange={handleChange}
                 />
@@ -104,11 +130,27 @@ const Products = () => {
                   onChange={handleChange}
                 />
                 <TextField
-                  label="Image"
+                  type="file"
+                  inputProps={{ accept: "image/*" }}
+                  onChange={handleChange}
+                />
+                <label htmlFor='category'>Categories</label>
+                <Select
+                  name="category"
+                  id="category"
+                  value={productData.category}
+                  onChange={handleSelectChange}
+                >
+                  {categories.map((category) => {
+                    return <MenuItem key={category._id} value={category._id}>{category.title}</MenuItem>
+                  })}
+                </Select>
+                <TextField
+                  label="quantity"
                   type="text"
-                  name="image"
-                  value={productData.image}
-                  placeholder="Enter product image URL"
+                  name="quantity"
+                  value={productData.quantity}
+                  placeholder="Enter product quantity"
                   onChange={handleChange}
                 />
                 <Button
@@ -127,16 +169,17 @@ const Products = () => {
           <section className="products-listing">
             {products.length > 0 &&
               products.map((product) => (
-                <div className="product-card" key={product.id}>
+                <div className="product-card" key={product._id}>
                   <article className="product">
-                    <img src={product.image} alt={product.name} />
-                    <h2>Name: {product.name}</h2>
+                    <img src={product.image} alt={product.title} />
+                    <h2>Name: {product.title}</h2>
                     <p>Description: {product.description}</p>
+                    <p>Price: {product.price}</p>
                     <Button
                       className="btn"
                       variant="outlined"
                       color="secondary"
-                      onClick={() => handleEdit(product.id, product.name, product.description, product.image)}
+                    //onClick={() => handleEdit(product._id, product.title, product.description, product.image, product.category, product.quantity)}
                     >
                       Edit
                     </Button>
@@ -144,7 +187,7 @@ const Products = () => {
                       className="btn"
                       variant="outlined"
                       color="secondary"
-                      onClick={() => handleDelete(product.id)}
+                      onClick={() => handleDelete(product.slug)}
                     >
                       Delete
                     </Button>

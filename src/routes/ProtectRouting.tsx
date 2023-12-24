@@ -5,7 +5,7 @@ import { Login } from '../pages/Login'
 
 const ProtectRouting = () => {
 
-  const location = useLocation()
+  //const location = useLocation()
 
   const { isLoggedIn } = useSelector((state: RootState) => state.usersReducer)
 

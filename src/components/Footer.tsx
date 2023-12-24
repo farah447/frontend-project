@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
+import { Box, Typography, Link, TextField, Button } from '@mui/material';
 
 import themes from '../Theme/Themes';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -8,49 +9,49 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 const Footer = () => {
     return (
         <ThemeProvider theme={themes} >
-            <footer className="footer">
-                <div className="footer-content">
-                    <div className="footer-section">
-                        <h3>Quick Links</h3>
+            <Box component="footer" className="footer">
+                <Box className="footer-content">
+                    <Box className="footer-section">
+                        <Typography variant="h6">Quick Links</Typography>
                         <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/contact">Contact Us</a></li>
+                            <li><Link href="/">Home</Link></li>
+                            <li><Link href="/contact">Contact Us</Link></li>
                         </ul>
-                    </div>
-                    <div className='footer-section'>
+                    </Box>
+                    <Box className='footer-section'>
                         <section className="newsletter">
-                            <h3>Subscribe to Our Newsletter</h3>
+                            <Typography variant="h6">Subscribe to Our Newsletter</Typography>
                             <form className="post">
-                                <div className="news-container">
-                                    <p>Enter your email to receive the offers!</p><br /><br />
-                                    <input type="email" id="email" name="email" placeholder="Enter your email address" required />
-                                    <button type="submit">Subscribe</button>
-                                </div>
+                                <Box className="news-container">
+                                    <Typography>Enter your email to receive the offers!</Typography><br /><br />
+                                    <TextField type="email" id="email" name="email" placeholder="Enter your email address" required />
+                                    <Button type="submit">Subscribe</Button>
+                                </Box>
                             </form>
                         </section>
-                    </div>
-                    <div className="footer-section">
-                        <h3>Contact Information</h3>
+                    </Box>
+                    <Box className="footer-section">
+                        <Typography variant="h6">Contact Information</Typography>
                         <address>
                             123 Main Street<br />
                             City, Country<br />
                             Phone: (123) 456-7890<br />
                             Email: FutureTech@gmail.com
                         </address>
-                    </div>
-                    <div className="footer-section">
-                        <h3>Follow Us</h3>
+                    </Box>
+                    <Box className="footer-section">
+                        <Typography variant="h6">Follow Us</Typography>
                         <ul>
-                            <li><a href="https://twitter.com"><TwitterIcon /></a></li>
-                            <li><a href="https://facebook.com"><FacebookIcon /></a></li>
-                            <li><a href="https://youtube.com"><YouTubeIcon /></a></li>
+                            <li><Link href="https://twitter.com"><TwitterIcon /></Link></li>
+                            <li><Link href="https://facebook.com"><FacebookIcon /></Link></li>
+                            <li><Link href="https://youtube.com"><YouTubeIcon /></Link></li>
                         </ul>
-                    </div>
-                </div>
-                <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} Future Tech. All rights reserved.</p>
-                </div>
-            </footer>
+                    </Box>
+                </Box>
+                <Box className="footer-bottom">
+                    <Typography>&copy; {new Date().getFullYear()} Future Tech. All rights reserved.</Typography>
+                </Box>
+            </Box>
         </ThemeProvider>
     );
 }

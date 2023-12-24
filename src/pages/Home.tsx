@@ -1,20 +1,16 @@
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-import { useDispatch } from "react-redux";
-import { ChangeEvent, useState } from "react";
-import { Product, searchProduct } from "../redux/slices/products/productSlice";
-import { Link } from "react-router-dom";
-import { ThemeProvider } from '@mui/material/styles';
-import { Button, IconButton, Stack } from "@mui/material";
-import { prices } from "../price";
-import { addToCart } from "../redux/cart/cartSlice";
-
-import themes from '../Theme/Themes';
+import React, { useEffect, useState, ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchProducts, searchProduct, Product } from '../redux/slices/products/productSlice';
+import { addToCart } from '../redux/cart/cartSlice';
+import { AppDispatch, RootState } from '../redux/store';
+import useCategoryState from '../hooks/useCategoryState';
+import { prices } from '../price';
+import { ThemeProvider, Button, IconButton, Stack, Typography, Container, Grid, Card, CardMedia, CardContent, CardActions, Pagination, Select, MenuItem, FormControl, InputLabel, Box, SelectChangeEvent } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import useCategoryState from "../hooks/useCategoryState";
-
-import SortProducts from "../components/SortProducts";
-import SearchInput from "../components/SearchInput";
+import themes from '../Theme/Themes';
+import SortProducts from '../components/SortProducts';
+import SearchInput from '../components/SearchInput';
 
 
 const Home = () => {
@@ -32,6 +28,10 @@ const Home = () => {
   const [itemsPerPage, setitemsPerPage] = useState(4);
   const [selectedPrice, setSelectedPrice] = useState<string>('');
 
+  useEffect(() => {
+    dispatch(fetchProducts({ page: 1, limit: 10 }));
+  }, [dispatch]);
+
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchProduct(event.target.value))
   }
@@ -46,30 +46,30 @@ const Home = () => {
     return categoryMatch && searchMatch && pricehMatch
   })
 
-  if (isLoading) {
-    return <p>Loading...</p>
-  }
-  if (error) {
-    return <p>{error}</p>
-  }
+  // if (isLoading) {
+  //   return <p>Loading...</p>
+  // }
+  // if (error) {
+  //   return <p>{error}</p>
+  // }
 
-  const handleCheckedCategory = (CategoryId: string) => {
-    if (checkedCategories.includes(CategoryId)) {
-      const filteredCategory = checkedCategories.filter((c) => c !== CategoryId)
-      setCheckedCategories(filteredCategory)
-    } else {
-      setCheckedCategories((prevState) => {
-        return [...prevState, CategoryId]
-      })
-    }
-  }
+  // const handleCheckedCategory = (CategoryId: number) => {
+  //   if (checkedCategories.includes(Number(CategoryId))) {
+  //     const filteredCategory = checkedCategories.filter((c) => c !== CategoryId)
+  //     setCheckedCategories(filteredCategory)
+  //   } else {
+  //     setCheckedCategories((prevState) => {
+  //       return [...prevState, CategoryId]
+  //     })
+  //   }
+  // }
 
-  const handlePriceChange = (priceId: number) => {
-    const selectPriceObj = prices.find((price) => price.id === priceId);
-    if (selectPriceObj) {
-      setPriceRange(selectPriceObj.range)
-    }
-  }
+  // const handlePriceChange = (priceId: number) => {
+  //   const selectPriceObj = prices.find((price) => price.id === priceId);
+  //   if (selectPriceObj) {
+  //     setPriceRange(selectPriceObj.range)
+  //   }
+  // }
 
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product))
@@ -92,125 +92,139 @@ const Home = () => {
     setCurrentPage(currentPage - 1)
   }
 
-  let buttonElements = [];
-  for (let i = 2; i <= totalPages - 1; i++) {
-    buttonElements.push(<button onClick={() => { handlePageCange(i) }}>{i}</button>)
+  const handlePriceChange = (event: SelectChangeEvent<string>) => {
+    const priceId = Number(event.target.value);
+    const selectPriceObj = prices.find((price) => price.id === priceId);
+    if (selectPriceObj) {
+      setPriceRange(selectPriceObj.range);
+    }
+  };
+
+  const handleCheckedCategory = (event: SelectChangeEvent<number[]>) => {
+    const CategoryId = Number(event.target.value);
+    if (checkedCategories.includes(CategoryId)) {
+      const filteredCategory = checkedCategories.filter((c) => c !== CategoryId);
+      setCheckedCategories(filteredCategory);
+    } else {
+      setCheckedCategories((prevState) => {
+        return [...prevState, CategoryId];
+      });
+    }
   }
+  // let buttonElements = [];
+  // for (let i = 2; i <= totalPages - 1; i++) {
+  //   buttonElements.push(<button onClick={() => { handlePageCange(i) }}>{i}</button>)
+  // }
 
   return (
     <ThemeProvider theme={themes}>
-      <div className="all-main-content">
-        <div className="Home-container">
-          <div className="hero-container">
-            <section className="hero">
-              <div>
-                <h1> Future Tech </h1>
-                <p>A day full of Excellence! <br />
-                  Discover amazing products at great prices.</p>
-                <Link to={"./products/11"}>
-                  <Button
-                    className="Shop-button"
-                    variant="outlined"
-                    size="large"
-                    color="primary">
-                    Shop Now</Button>
-                </Link>
-              </div>
-              <div className="Hero-logo">
-                <img src="./src/Headphones-hero.png" height="50%" width="50%" alt="Future Tech Logo" />
-              </div>
-            </section>
-          </div>
-          <div className="content-container-filter" >
-            <div className="sidebar">
-              <nav aria-label="main mailbox folders">
-                <div>
-                  <h2>Filter price:</h2><br />
-                  {prices.length > 0 && prices.map((price) => {
-                    return (
-                      <div key={price.id}>
-                        <label htmlFor="price" >
-                          <input type="radio" name="price" value={price.id} onChange={() => { handlePriceChange(price.id) }} />
-                          {price.name}
-                        </label>
-                      </div>)
-                  })}
-                </div>
-                <div>
-                  <br /> <h2>Filter category:</h2><br />
-                  {categories.length > 0 &&
-                    categories.map((category) => {
-                      return (
-                        <div key={category._id}>
-                          <label htmlFor="category" >
-                            <input type="checkbox" name="category" value={category.title} onChange={() => { handleCheckedCategory(category._id) }} />
-                            {category.title}
-                          </label>
-                        </div>
-                      )
-                    })}
-                </div>
-              </nav>
-            </div>
-            <div className="home-content">
-              <div className="search-sort">
-                <Stack direction="row" sx={{ width: 100 }}>
-                  <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
-                  <SortProducts />
-                </Stack>
-              </div>
-              <div>
-              </div>
-            </div>
-            <div className="products-h2">
-              <h2>Shop Products</h2>
-            </div>
-            <section className="products-list" style={{ height: '100vh', overflow: 'auto' }}>
-              {currentItems.length > 0 &&
-                currentItems.map((product: Product) => {
-                  return (
-                    <div className="product-card">
-                      <article key={product._id} className='product'>
-                        <img src={product.image} alt={product.title} />
-                        <h2 className="product-name">{product.title}</h2>
-                        <h2>{product.description}</h2>
-                        <h2>{product.price} EUR</h2>
-                        <Stack direction="row" spacing={1}>
-                          <div className="product-card-btn">
-                            <Button
-                              className="Add-btn"
-                              variant="outlined"
-                              size="small"
-                              onClick={() => { handleAddToCart(product) }}>
-                              <IconButton color="primary" aria-label="add to shopping cart" size="small">
-                                <AddShoppingCartIcon />
-                              </IconButton>
-                              Add To Cart</Button>
-                            <Link to={`/products/${product._id}`}>
-                              <Button
-                                className="show-btn"
-                                variant="outlined"
-                                size="small">
-                                Show Details</Button>
-                            </Link>
-                          </div>
-                        </Stack>
-                      </article>
-                    </div>
-                  )
-                })}
-            </section>
-            <div className="pagination">
-              <button onClick={handlePrevPage} disabled={currentPage === 1}>previous</button>
+      <Container>
+        {/* Hero Section */}
+        <Box sx={{ my: 15 }}>
+          {/* <Grid container spacing={2}> */}
+          <Grid item xs={6} md={6}>
+            <Typography variant="h2" component="h1" gutterBottom>
+              Future Tech
+            </Typography>
+            <Typography variant="h5" component="p" gutterBottom>
+              A day full of Excellence! Discover amazing products at great prices.
+            </Typography>
+            <Button variant="contained" color="primary" component={Link} to="./products/11">
+              Shop Now
+            </Button>
+          </Grid>
+          {/* <Grid item xs={6} md={6}>
+              <img src={'./src/Headphones-hero.png'} alt="Hero" style={{ width: '50%', height: 'auto' }} />
+            </Grid> */}
+          {/* </Grid> */}
+        </Box>
 
-              <button>{buttonElements}</button>
+        {/* Sidebar for Filtering */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={3}>
+            <Box sx={{ borderRight: 1, borderColor: 'divider' }}>
+              {/* Filter by Price */}
+              <FormControl fullWidth>
+                <InputLabel>Price</InputLabel>
+                <Select
+                  value={selectedPrice}
+                  onChange={handlePriceChange}
+                >
+                  {prices.map((price) => (
+                    <MenuItem key={price.id} value={price.id}>
+                      {price.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-              <button onClick={handleNextPage} disabled={currentPage === totalPages}>next</button>
-            </div>
-          </div >
-        </div >
-      </div>
-    </ThemeProvider >
+              {/* Filter by Category */}
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  multiple
+                  value={checkedCategories}
+                  onChange={handleCheckedCategory}
+                >
+                  {categories.map((category) => (
+                    <MenuItem key={category._id} value={category._id}>
+                      {category.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
+
+          {/* Product List */}
+          <Grid item xs={12} md={9}>
+            <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+              <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
+              <SortProducts />
+            </Stack>
+            <Grid container spacing={2}>
+              {currentItems.map((product) => (
+                <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={product.image}
+                      alt={product.title}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {product.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {product.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <IconButton aria-label="add to cart" onClick={() => handleAddToCart(product)}>
+                        <AddShoppingCartIcon />
+                      </IconButton>
+                      <Button size="small" component={Link} to={`/products/${product._id}`}>
+                        Show Details
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/* Pagination */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => setCurrentPage(page)}
+          />
+        </Box>
+      </Container>
+    </ThemeProvider>
   )
 }
 

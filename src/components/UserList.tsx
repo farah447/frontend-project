@@ -19,7 +19,7 @@ const UserList = () => {
   useEffect(() => {
     dispatch(fetchUsers())
   }, [dispatch])
-
+  console.log(users)
   /*if (isLoading) {
     return <p>Loading...</p>
   }
@@ -35,7 +35,7 @@ const UserList = () => {
 
   const handleDelete = async (userName: string) => {
     try {
-      await deleteUsers(userName)
+      dispatch(deleteUsers(userName))
 
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
@@ -44,7 +44,8 @@ const UserList = () => {
 
   const handleBanUnban = async (userName: string, isBanned: boolean) => {
     try {
-      const response = isBanned ? await banUnbanUsers(userName) : await banUnbanUsers(userName)
+      const response = isBanned ? dispatch(banUnbanUsers(userName)) : dispatch(banUnbanUsers(userName))
+      console.log(response)
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
     }

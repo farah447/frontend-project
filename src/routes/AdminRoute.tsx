@@ -4,13 +4,10 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Login } from '../pages/Login'
 
 const AdminRoute = () => {
+    const location = useLocation();
+    const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer);
 
-    const location = useLocation()
-
-
-    const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
-
-    return isLoggedIn && userData?.isAdmin ? <Outlet /> : <Login pathName={location.pathname} />
-}
+    return isLoggedIn && userData?.isAdmin ? <Outlet /> : <Login pathName={location.pathname} />;
+};
 
 export default AdminRoute

@@ -2,16 +2,28 @@ import { Link } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles';
 
 import themes from '../Theme/Themes';
+import { fetchUsers } from '../redux/users/usersSlice';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
+import useUserState from '../hooks/useUserState';
 
 const AdminSidebar = () => {
+    const { userData } = useUserState();
+
+    const dispatch: AppDispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
     return (
         <ThemeProvider theme={themes} >
             <div className='Admin-container'>
                 <aside className='sidebar'>
                     <div className="admin-profile">
                         <h2>Admin Profile</h2>
-                        <p>farah alharbi</p>
-                        <p>farah@gmail.com</p>
+                        <p>{`${userData?.firstName} ${userData?.lastName}`}</p>
+                        <p>{`${userData?.email}`}</p>
                     </div>
 
                     <ul className='horizontal-nav'>

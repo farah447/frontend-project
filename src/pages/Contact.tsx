@@ -1,42 +1,59 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, TextField, Container, Card, CardContent, CardActions } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-
 import themes from '../Theme/Themes';
 
 const Contact = () => {
     return (
         <ThemeProvider theme={themes} >
-            <div className="contact-container">
-                <h2>Contact Us</h2>
-                <p>If you have any questions or inquiries, please feel free to get in touch with us.</p>
-                <div className="contact-details">
-                    <div className="contact-form">
-                        <form>
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <input type="text" id="name" name="name" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input type="email" id="email" name="email" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="message">Message</label>
-                                <textarea id="message" name="message" rows={4}></textarea>
-                            </div>
-                            <Stack>
-                                <Button
-                                    className="send-btn"
-                                    variant="outlined"
-                                    type="submit"
-                                    color="secondary"
-                                    size="small">
-                                    Send Message</Button>
-                            </Stack>
+            <Container maxWidth="sm">
+                <Card>
+                    <CardContent>
+                        <Typography variant="h4" component="h2" gutterBottom>
+                            Contact Us
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                            If you have any questions or inquiries, please feel free to get in touch with us.
+                        </Typography>
+                        <form noValidate autoComplete="off">
+                            <TextField
+                                id="name"
+                                label="Name"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="email"
+                                label="Email"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="message"
+                                label="Message"
+                                variant="outlined"
+                                fullWidth
+                                multiline
+                                rows={4}
+                                margin="normal"
+                            />
                         </form>
-                    </div>
-                </div>
-            </div>
+                    </CardContent>
+                    <CardActions>
+                        <Stack>
+                            <Button
+                                className="send-btn"
+                                variant="outlined"
+                                type="submit"
+                                color="secondary"
+                                size="small">
+                                Send Message
+                            </Button>
+                        </Stack>
+                    </CardActions>
+                </Card>
+            </Container>
         </ThemeProvider>
     );
 }

@@ -22,13 +22,13 @@ export const createCategory = createAsyncThunk('categories/createCategories', as
   }
 })
 
-export const deleteCategory = createAsyncThunk('categories/deleteCategories', async (_id: string) => {
-  await axios.delete(`${API_BASE_URL}/categories/${_id}`)
-  return _id
+export const deleteCategory = createAsyncThunk('categories/deleteCategories', async (slug: string) => {
+  await axios.delete(`${API_BASE_URL}/categories/${slug}`)
+  return slug
 })
 
 export const updateCategory = createAsyncThunk('categories/updateCategories', async (category: Partial<Category>) => {
-  await axios.put(`${API_BASE_URL}/categories/${category._id}`, { title: category.title })
+  await axios.put(`${API_BASE_URL}/categories/${category.slug}`, { title: category.title })
   return category
 })
 
@@ -89,7 +89,7 @@ export const CategorySlice = createSlice({
       state.isLoading = false
     })
     builder.addCase(createCategory.fulfilled, (state, action) => {
-      state.categories.push(action.payload.payload);
+      state.categories.push(action.payload);
     })
     builder.addCase(updateCategory.fulfilled, (state, action) => {
       const { _id, title } = action.payload

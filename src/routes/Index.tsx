@@ -38,19 +38,13 @@ const Index = () => {
 
           <Route path="/Contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login pathName="/" />} />
+          <Route path="/login" element={<Login pathName={''} />} />
           <Route path="/logout" element={<Home />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products" element={<ProductsDetailes />} />
           <Route path="/users/activate/:token" element={<ActivatePage />} />
-
-          <Route path="/dashboard" element={<ProtectRouting />}>
-            <Route path="user" element={<UserDashboared />} />
-            <Route path="user/profile" element={<UserProfile />} />
-            <Route path="user/orders" element={<UserOrders />} />
-          </Route>
 
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboared />} />
@@ -60,11 +54,17 @@ const Index = () => {
             <Route path="admin/orders" element={<UserOrders />} />
           </Route>
 
+          <Route path="/dashboard" element={<ProtectRouting />}>
+            <Route path="user" element={<UserDashboared />} />
+            <Route path="user/profile" element={<UserProfile />} />
+            <Route path="user/orders" element={<UserOrders />} />
+          </Route>
+
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
       </BrowserRouter>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 

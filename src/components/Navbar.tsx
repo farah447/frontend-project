@@ -1,80 +1,105 @@
-import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { AppDispatch, RootState } from '../redux/store'
-import { useSelector } from 'react-redux'
-import { ThemeProvider } from '@mui/material/styles';
-import { Button, IconButton } from '@mui/material'
-
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import themes from '../Theme/Themes';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppDispatch, RootState } from '../redux/store';
 import { logoutUser } from '../redux/users/usersSlice';
+import { AppBar, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Badge } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import themes from '../Theme/Themes';
+import { ThemeProvider } from '@mui/material/styles';
 
 const Navbar = () => {
-
-    const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
-
-    const { cartItems } = useSelector((state: RootState) => state.cartReducer)
-
-    const dispatch: AppDispatch = useDispatch()
-
+    const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer);
+    const { cartItems } = useSelector((state: RootState) => state.cartReducer);
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const handleLogout = async () => {
-        dispatch(logoutUser())
-        navigate('/login')
-    }
+        dispatch(logoutUser());
+        navigate('/login');
+    };
 
     return (
-        <ThemeProvider theme={themes} >
-            <div className="navbar">
-                <div className="nav-logo">
-                    <img src="./src/Tech-logo-nav.png" height="100%" width="100%" alt="Future Tech Logo" />
-                </div>
-                <nav>
-                    <ul className="horizontal-nav">
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/contact">Contact</Link>
-                        </li>
-                        {isLoggedIn && (
+        <ThemeProvider theme={themes}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        onClick={handleMenu}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <MenuItem component={Link} to="/" onClick={handleClose}>Home</MenuItem>
+                        <MenuItem component={Link} to="/contact" onClick={handleClose}>Contact</MenuItem>
+                        {isLoggedIn ? (
                             <>
-                                <li>
-                                    <Link to="/logout" onClick={handleLogout}>Logout</Link>
-                                </li>
-
-                                <li>
-                                    <Link to={`/dashboard/${userData && userData.isAdmin ? 'admin' : 'user'}`}> {userData && userData?.isAdmin} Dashboared</Link>
-                                </li>
+                                <MenuItem component={Link} to="/logout" onClick={handleLogout}>Logout</MenuItem>
                             </>
-                        )
-                        }
-                        {!isLoggedIn && (
+                        ) : (
                             <>
-                                <li>
-                                    <Link to="/register">Register</Link>
-                                </li>
-                                <li>
-                                    <Link to="/login">Login</Link>
-                                </li>
+                                <MenuItem component={Link} to="/register" onClick={handleClose}>Register</MenuItem>
+                                <MenuItem component={Link} to="/login" onClick={handleClose}>Login</MenuItem>
                             </>
                         )}
-                        <li>
-                            <Link to="/cart">
-                                <Button
-                                    className="Add-btn"
-                                    size="small"
-                                    value={cartItems.length > 0 ? cartItems.length : 0}>
-                                    <IconButton color="primary" aria-label="add to shopping cart" size="small">
-                                        <AddShoppingCartIcon />
-                                    </IconButton>
-                                </Button>
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+                    </Menu>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Future Tech
+                    </Typography>
+                    <IconButton
+                        size="large"
+                        aria-label="show cart items"
+                        color="inherit"
+                        component={Link}
+                        to="/cart"
+                    >
+                        <Badge badgeContent={cartItems.length} color="secondary">
+                            <ShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+                    {isLoggedIn && (
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            color="inherit"
+                        >
+                            <MenuItem component={Link} to={`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`} onClick={handleClose}>
+                                <AccountCircle />
+                            </MenuItem>
+                        </IconButton>
+                    )}
+                </Toolbar>
+            </AppBar>
         </ThemeProvider>
     )
 }

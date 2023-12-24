@@ -32,14 +32,14 @@ const Category = () => {
     return <p>{error}</p>
   }*/
 
-  const handleEdit = (_id: string, title: string) => {
-    setCategoryId(_id)
+  const handleEdit = (slug: string, title: string) => {
+    setCategoryId(slug)
     setIsEdit(!isEdit)
     setCategoryName(title)
   }
 
-  const handleDelete = async (_id: string) => {
-    dispatch(deleteCategory(_id))
+  const handleDelete = async (slug: string) => {
+    dispatch(deleteCategory(slug))
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ const Category = () => {
       dispatch(createCategory(categoryName))
     } else {
       //const updateCategoryData = { _id: categoryId, title: categoryName }
-      dispatch(updateCategory({ _id: categoryId, title: categoryName }))
+      dispatch(updateCategory({ slug: categoryId, title: categoryName }))
     }
     setCategoryName('')
   }
@@ -91,7 +91,7 @@ const Category = () => {
                       variant="outlined"
                       color="secondary"
                       size='small'
-                      onClick={() => { handleEdit(category._id, category.title) }}>
+                      onClick={() => { handleEdit(category.slug, category.title) }}>
                       Edit </Button>
                     <Button
                       className="Delete"
@@ -99,7 +99,7 @@ const Category = () => {
                       color="secondary"
                       size='small'
                       onClick={() => {
-                        handleDelete(category._id)
+                        handleDelete(category.slug)
                       }}>
                       Delete </Button>
                   </Stack>

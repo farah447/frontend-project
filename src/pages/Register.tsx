@@ -1,19 +1,17 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AppDispatch, RootState } from '../redux/store'
-import { useDispatch } from 'react-redux'
-import { createUser, fetchUsers } from '../redux/users/usersSlice'
-import { ThemeProvider } from '@mui/material/styles';
-import { Button } from "@mui/material";
-
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { createUser, fetchUsers } from '../redux/users/usersSlice';
+import { ThemeProvider, Card, CardContent, TextField, Button, Typography, Box, Container } from '@mui/material';
 import themes from '../Theme/Themes';
+import { AppDispatch } from '../redux/store';
 
 export const Register = () => {
 
     const navigate = useNavigate()
     const dispatch: AppDispatch = useDispatch()
     const [user, setUser] = useState({
-        _id: 0,
+        _id: '',
         firstName: '',
         lastName: '',
         userName: '',
@@ -37,7 +35,7 @@ export const Register = () => {
             console.log('file selected')
             const fileInput = (event.target as HTMLInputElement) || ''
             setUser((prevUser) => {
-                return { ...prevUser, [event.target.name]: fileInput.files?.[0].name }
+                return { ...prevUser, [event.target.name]: fileInput.files?.[0] }
             })
         } else {
             setUser((prevUser) => {
@@ -94,51 +92,98 @@ export const Register = () => {
     };
 
     return (
-        <ThemeProvider theme={themes} >
-            <div className='Register-container'>
-                <div className="Register-card">
-
-                    <h2>User Registeration</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className='form-field'>
-                            <label htmlFor='firstName'>First name: </label>
-                            <input type='text' name='firstName' value={user.firstName} onChange={handleChange} required />
-                            <p>{firstNameError}</p>
-                        </div>
-                        <div className='form-field'>
-                            <label htmlFor='lastName'>Last name: </label>
-                            <input type='text' name='lastName' value={user.lastName} onChange={handleChange} required />
-                            <p>{lastNameError}</p>
-                        </div>
-                        <div className='form-field'>
-                            <label htmlFor='email'>Email: </label>
-                            <input type='text' name='email' value={user.email} onChange={handleChange} required />
-                            <p>{emailError}</p>
-                        </div>
-                        <div className='form-field'>
-                            <label htmlFor='password'>Password: </label>
-                            <input type='text' name='password' value={user.password} onChange={handleChange} required />
-                            <p>{passwordError}</p>
-                        </div>
-                        <div className='form-field'>
-                            <label htmlFor='userName'>User name: </label>
-                            <input type='text' name='userName' value={user.userName} onChange={handleChange} required />
-                            <p>{userNameError}</p>
-                        </div>
-                        <div className='form-field'>
-                            <label htmlFor='image'>Image: </label>
-                            <input type='file' name='image' accept='image/*' onChange={handleChange} required />
-                        </div>
-                        <Button
-                            className="show-btn"
-                            variant="outlined"
-                            type='submit'
-                            color="secondary"
-                            size="small">
-                            Register</Button>
-                    </form>
-                </div>
-            </div>
+        <ThemeProvider theme={themes}>
+            <Container component="main" maxWidth="xs">
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Card>
+                        <CardContent>
+                            <Typography component="h1" variant="h5">
+                                User Registration
+                            </Typography>
+                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="firstName"
+                                    label="First Name"
+                                    name="firstName"
+                                    autoComplete="fname"
+                                    autoFocus
+                                    value={user.firstName}
+                                    onChange={handleChange}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="lastName"
+                                    label="Last Name"
+                                    name="lastName"
+                                    autoComplete="lname"
+                                    value={user.lastName}
+                                    onChange={handleChange}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="userName"
+                                    label="User name"
+                                    type="text"
+                                    name="userName"
+                                    value={user.userName}
+                                    onChange={handleChange}
+                                    error={Boolean(userNameError)}
+                                    helperText={userNameError}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    value={user.email}
+                                    onChange={handleChange}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    value={user.password}
+                                    onChange={handleChange}
+                                />
+                                <div className='form-field'>
+                                    <label htmlFor='image'>Image: </label>
+                                    <input type='file' name='image' accept='image/*' onChange={handleChange} required />
+                                </div>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Register
+                                </Button>
+                            </Box>
+                        </CardContent>
+                    </Card>
+                </Box>
+            </Container>
         </ThemeProvider>
     )
 }

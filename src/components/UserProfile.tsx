@@ -1,26 +1,37 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../redux/store';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../redux/store';
 import { fetchUsers, updateUser } from '../redux/users/usersSlice';
-import { ThemeProvider } from '@mui/material/styles';
-import { Button } from '@mui/material';
-
+import { ThemeProvider, Card, CardContent, Avatar, TextField, Button, Box, Typography } from '@mui/material';
 import themes from '../Theme/Themes';
 import UserSidebar from './UserSidebar';
-import useUserState from '../hooks/useUserState';
+
+
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { userData } = useUserState();
+  const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const [user, setUser] = useState({
-    userName: userData?.userName || '',
+    firstName: userData?.firstName || '',
+    lastName: userData?.lastName || '',
   });
 
-  // useEffect(() => {
-  //   dispatch(fetchUsers());
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
+
+  // dispatch(fetchUsers()).then((data) => {
+  //   // Once the data is fetched, you can use it to populate the user's profile
+  //   console.log(data); // Replace this with the code to populate the user's profile
+  // });
+
+  console.log(userData?.userName)
+
+
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setlastNameError] = useState('');
 
   const handleFormOpen = () => {
     setIsFormOpen(!isFormOpen);
@@ -38,57 +49,76 @@ const UserProfile = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const updateUserData = { id: userData?._id, ...user };
+    const updateUserData = { userName: userData?.userName, ...user };
     dispatch(updateUser(updateUserData));
   };
 
   return (
     <ThemeProvider theme={themes}>
-      <div className='Profile-container'>
-
+      <Box className='Profile-container' sx={{ display: 'flex' }}>
         <UserSidebar />
-        <div className='profile-main-content'>
+        <Box className='profile-main-content' sx={{ flexGrow: 1 }}>
           {userData && (
-            <div>
-              <div className="user-profile-data">
-                <p>Id: {userData._id}</p>
-                <p>Name: {`${user?.userName}`}</p>
-                <p>Email: {userData?.email}</p>
-                <p>Role: {userData.isAdmin ? 'Admin' : 'User'}</p>
-                <Button
-                  className="btn"
-                  variant="outlined"
-                  onClick={handleFormOpen}
-                  color="secondary"
-                >
-                  Edit profile
-                </Button>
-              </div>
-
-              {isFormOpen && (
-                <div className='user-profile-data-input'>
-                  <form action="" onSubmit={handleSubmit}>
-                    <input
-                      type="text"
+            <Card>
+              <CardContent>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                  <Avatar
+                    src={userData.image}
+                    alt={userData.userName}
+                    sx={{ width: 100, height: 100 }}
+                  />
+                  <Typography variant="h6">User Name: {userData.userName}</Typography>
+                  <Typography variant="body1">Name: {`${user?.firstName} ${user?.lastName}`}</Typography>
+                  <Typography variant="body1">Email: {userData?.email}</Typography>
+                  <Typography variant="body1">Role: {userData.isAdmin ? 'admin' : 'user'}</Typography>
+                  <Button
+                    variant="outlined"
+                    onClick={handleFormOpen}
+                    color="secondary"
+                  >
+                    Edit profile
+                  </Button>
+                </Box>
+                {isFormOpen && (
+                  <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label="First Name"
                       name="firstName"
-                      value={user.userName}
+                      autoComplete="fname"
+                      value={user.firstName}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="lastName"
+                      label="Last Name"
+                      name="lastName"
+                      autoComplete="lname"
+                      value={user.lastName}
                       onChange={handleChange}
                     />
                     <Button
-                      className="btn"
-                      variant="outlined"
                       type="submit"
-                      color="secondary"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      sx={{ mt: 3, mb: 2 }}
                     >
-                      Update the Profile
+                      Update Profile
                     </Button>
-                  </form>
-                </div>
-              )}
-            </div>
+                  </Box>
+                )}
+              </CardContent>
+            </Card>
           )}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 };

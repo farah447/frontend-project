@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { AppDispatch, RootState } from "../redux/store"
 import { fetchUsers, loginUser } from "../redux/users/usersSlice"
 import { ThemeProvider } from '@mui/material/styles';
-import { Button } from "@mui/material";
+import { Button, Card, Typography } from "@mui/material";
+import { CardContent, TextField, Box } from '@mui/material';
 
 import themes from '../Theme/Themes';
 
@@ -12,7 +13,7 @@ export const Login = ({ pathName }: { pathName: string }) => {
 
 
   const { users } = useSelector((state: RootState) => state.usersReducer)
-  const { userData } = useSelector((state: RootState) => state.usersReducer)
+  const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -37,82 +38,105 @@ export const Login = ({ pathName }: { pathName: string }) => {
   useEffect(() => {
     if (userData) {
       navigate(
-        pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : ' user'}`
+        pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : 'user'}`
       )
     }
   }, [userData, navigate, pathName])
 
+  // const handleSubmit = async (event: FormEvent) => {
+  //   event.preventDefault()
+  //   console.log("Users in Redux store:", users);
+  //   try {
+  //     //const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
+  //     dispatch(loginUser(user));
+  //     navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`);
+
+  //     /*if (loggedInUser) {
+  //       navigate(`/dashboard/${loggedInUser.isAdmin ? 'admin' : 'user'}`);
+  //     }
+  //     if (loggedInUser.isAdmin === 'admin') {
+  //       navigate('admin/dashboard')
+  //     } else {
+  //       navigate('user/dashboard')
+  //     }*/
+
+  //     /*if (!foundUser) {
+  //       console.log("user not found with this email!")
+  //       return
+  //     }
+
+  //     if (foundUser.password !== user.password) {
+  //       console.log("user password did not match!")
+  //       return
+  //     }
+
+  //     if (foundUser.isBanned) {
+  //       console.log("user account is banned!")
+  //       return
+  //     }*/
+
+  //     //navigate(pathName ? pathName : `/dashboard/${userData?.isAdmin}`)
+
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  //   /*setUser({
+  //     email: '',
+  //     password: '',
+  //   })*/
+  // }
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     console.log("Users in Redux store:", users);
     try {
-      //const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
       dispatch(loginUser(user));
-      navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`);
-
-      /*if (loggedInUser) {
-        navigate(`/dashboard/${loggedInUser.isAdmin ? 'admin' : 'user'}`);
-      }
-      if (loggedInUser.isAdmin === 'admin') {
-        navigate('admin/dashboard')
-      } else {
-        navigate('user/dashboard')
-      }*/
-
-      /*if (!foundUser) {
-        console.log("user not found with this email!")
-        return
-      }
-
-      if (foundUser.password !== user.password) {
-        console.log("user password did not match!")
-        return
-      }
-
-      if (foundUser.isBanned) {
-        console.log("user account is banned!")
-        return
-      }*/
-
-      //navigate(pathName ? pathName : `/dashboard/${userData?.isAdmin}`)
-
+      //  navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`);
     } catch (error) {
       console.log(error)
     }
-    /*setUser({
-      email: '',
-      password: '',
-    })*/
   }
 
   return (
-    <ThemeProvider theme={themes} >
-      <div className="login-container">
-        <div className="card">
-          <h2>User login</h2>
-          <form className="registeation-form" onSubmit={handleSubmit}>
-            <div className="form-control">
-              <label htmlFor="email">Email: </label>
-              <input type="email" name="email" id="email" value={user.email} onChange={handleInputChange} required />
-            </div>
-            <div className="form-control">
-              <label htmlFor="password">Password: </label>
-              <input type="password" name="password" id="password" placeholder="password" value={user.password} onChange={handleInputChange} required />
-            </div>
-
-            <div className="form-control">
-              <Button
-                className="btn-login"
+    <ThemeProvider theme={themes}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Card>
+          <CardContent>
+            <Typography variant="h4" component="h2" gutterBottom>
+              Login
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                name="email"
+                label="Email"
                 variant="outlined"
-                type='submit'
-                color="secondary"
-                size="small">
-                Login</Button>
-              <Link to='/forget-password'> Forget Password?</Link>
-            </div>
-          </form>
-        </div>
-      </div>
+                value={user.email}
+                onChange={handleInputChange}
+                style={{ marginBottom: '20px', width: '100%' }}
+              />
+              <TextField
+                name="password"
+                label="Password"
+                type="password"
+                variant="outlined"
+                value={user.password}
+                onChange={handleInputChange}
+                style={{ marginBottom: '20px', width: '100%' }}
+              />
+              <Button variant="contained" color="primary" type="submit">
+                Login
+              </Button>
+            </form>
+            <Link to='/forget-password' style={{ display: 'block', marginTop: '20px' }}>
+              Forgot Password?
+            </Link>
+          </CardContent>
+        </Card>
+      </Box>
     </ThemeProvider>
   )
 }

@@ -5,17 +5,24 @@ axios.defaults.withCredentials = true
 export const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL
 
 export const fetchUsers = createAsyncThunk('UserProfile/fetchUsers', async () => {
-    const respons = await axios.get(`${API_BASE_URL}/users`)
-    console.log(respons.data.payload)
-    return respons.data.payload.users
+    const response = await axios.get(`${API_BASE_URL}/users`)
+    console.log('Fetched data:', response.data);
+    return response.data.payload.users
 })
 
-export const createUser = createAsyncThunk('users/createUser', async (newUser: FormData) => {
-    const response = await axios.post(`${API_BASE_URL}/users/process-register`, newUser)
-    console.log(response.data)
-    return response.data
-})
-
+export const createUser = createAsyncThunk(
+    'users/createUser',
+    async (newUser: FormData, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/users/process-register`, newUser)
+            console.log(response.data)
+            return response.data
+        } catch (error) {
+            console.error(error.response.data)
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
 export const activateUserAccount = createAsyncThunk('users/activate', async (token: string) => {
     const response = await axios.post(`${API_BASE_URL}/users/activate`, { token })
     return response.data
@@ -32,14 +39,26 @@ export const banUnbanUsers = createAsyncThunk('users/banUnban', async (userName:
 })
 
 export const updateUser = createAsyncThunk('users/updateUsers', async (userData: Partial<Users>) => {
-    await axios.put(`${API_BASE_URL}/users/${userData.userName}`, userData)
+    const response = await axios.put(`${API_BASE_URL}/users/${userData.userName}`, userData)
+    //console.log(response)
     return userData;
 })
 
-export const loginUser = createAsyncThunk('users/login', async (user: object) => {
-    const response = await axios.post(`${API_BASE_URL}/auth/login`, user)
-    return response.data
-})
+// export const loginUser = createAsyncThunk('users/login', async (user: object) => {
+//     const response = await axios.post(`${API_BASE_URL}/auth/login`, user)
+//     return response.data
+// })
+export const loginUser = createAsyncThunk(
+    'users/login',
+    async (user: object, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/auth/login`, user);
+            return response.data.payload;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
 export const logoutUser = createAsyncThunk('users/logout', async () => {
     const response = await axios.post(`${API_BASE_URL}/auth/logout`)
@@ -48,7 +67,7 @@ export const logoutUser = createAsyncThunk('users/logout', async () => {
 
 
 export const forgetPassword = createAsyncThunk('users/forgetPassword', async (email: string) => {
-    console.log(email); // Check if the email is correctly received
+    console.log(email);
     const response = await axios.put(`${API_BASE_URL}/users/forget-password`, { email })
     return response.data.payload
 })
@@ -157,11 +176,15 @@ export const usersSlice = createSlice({
         })
 
         builder.addCase(updateUser.fulfilled, (state, action) => {
-            const { _id, firstName, lastName } = action.payload
-            const foundUser = state.users.find((user) => user._id === _id)
+            const { userName,
+                firstName,
+                //lastName 
+            } = action.payload
+            const foundUser = state.users.find((user) => user.userName === userName)
             if (foundUser) {
+                //console.log(foundUser)
                 foundUser.firstName = firstName
-                foundUser.lastName = lastName
+                //foundUser.lastName = lastName
                 state.userData = foundUser
                 localStorage.setItem('loginData', JSON.stringify({
                     isLoggedIn: state.isLoggedIn,
@@ -193,6 +216,7 @@ export const usersSlice = createSlice({
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.isLoggedIn = true
             state.userData = action.payload
+            console.log(action.payload.message)
             localStorage.setItem('loginData', JSON.stringify({
                 isLoggedIn: state.isLoggedIn,
                 userData: state.userData
