@@ -26,9 +26,9 @@ export const Register = () => {
     const [emailError, setEmailError] = useState('')
     const [passwordError, setpasswordError] = useState('')
 
-    useEffect(() => {
-        dispatch(fetchUsers())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(fetchUsers())
+    // }, [dispatch])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (event.target.type === 'file') {
@@ -53,12 +53,12 @@ export const Register = () => {
         formData.append('userName', user.userName)
         formData.append('email', user.email)
         formData.append('password', user.password)
-        formData.append('image', user.image)
+        formData.append('image', user.image | '')
 
         try {
-            for (var key of formData.entries()) {
-                console.log(key[0] + ',' + key[1])
-            }
+            // for (var key of formData.entries()) {
+            //     console.log(key[0] + ',' + key[1])
+            // }
             //const response = await createUser(formData)
             //dispatch(fetchUsers()).then(() => {
             dispatch(createUser(formData));

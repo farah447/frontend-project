@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { API_BASE_URL, banUnbanUsers, deleteUsers, fetchUsers, searchUser } from "../redux/users/usersSlice";
+import { banUnbanUsers, deleteUsers, fetchUsers, grantRoles, searchUser } from "../redux/users/usersSlice";
 import { Button, Stack } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -51,6 +51,19 @@ const UserList = () => {
     }
   }
 
+  const handleGrantRole = async (userName: string) => {
+    try {
+      if (userName) {
+        dispatch(grantRoles(userName))
+      }
+      // const response = isBanned ? dispatch(banUnbanUsers(userName)) : dispatch(banUnbanUsers(userName))
+      // console.log(response)
+    } catch (error) {
+      console.log(error.response?.data?.message || 'An error occurred while deleting the user')
+    }
+  }
+
+
   return (
     <ThemeProvider theme={themes} >
       <div className='container-user'>
@@ -61,10 +74,10 @@ const UserList = () => {
           <section className="users">
             {searchUsers.length > 0 &&
               searchUsers.map((user) => {
-                if (String(user.isAdmin) !== 'Admin') {
+                if (!user.isAdmin) {
                   return (
                     <article key={user._id} className='user'>
-                      <img src={`${API_BASE_URL}/${user.image}`} alt={user.image}></img>
+                      <img src={user.image} alt={user.userName}></img>
                       <h2>{`${user.userName}`}</h2>
                       <h2>{user.email}</h2>
                       <div className='main-content-user-btn'>
@@ -80,6 +93,13 @@ const UserList = () => {
                             variant="outlined"
                             onClick={() => { handleBanUnban(user.userName, user.isBanned) }}
                             color="secondary">{user.isBanned ? 'unban' : 'ban'}
+                          </Button>
+                          <Button
+                            className="ban-btn"
+                            variant="outlined"
+                            onClick={() => { handleGrantRole(user.userName) }}
+                            color="secondary">
+                            change the role as admin
                           </Button>
                         </Stack>
                       </div>

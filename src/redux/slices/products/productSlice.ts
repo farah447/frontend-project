@@ -7,9 +7,9 @@ import { Category } from '../../categories/categorySlice'
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async ({ page, limit }: { page: number; limit: number }, { rejectWithValue }) => {
+  async (data: { page: number; limit: number }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/products?page=${page}&limit=${limit}`);
+      const response = await axios.get(`${API_BASE_URL}/products?page=${data.page}?&limit=${data.limit}`);
       //console.log(response.data); 
       return response.data;
     } catch (error) {
@@ -24,7 +24,7 @@ export const fetchSingleProduct = createAsyncThunk(
     try {
       const response = await axios.get(`${API_BASE_URL}/products/${slug}`);
       console.log(response.data.payload)
-      return response.data;
+      return response.data.payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -49,8 +49,19 @@ export const deleteProducts = createAsyncThunk('products/deleteProduct', async (
 })
 
 export const createProducts = createAsyncThunk('products/createProduct', async (formData: FormData) => {
-  const respons = await axios.post(`${API_BASE_URL}/products/`, formData)
-  return respons.data
+  try {
+    const respons = await axios.post(`${API_BASE_URL}/products`, formData
+      , {
+        headers: {
+          'content-Type': 'multipart/form-data'
+        }
+      }
+    )
+    return respons.data
+
+  } catch (error) {
+    console.log(error);
+  }
 })
 
 export type Product = {
@@ -106,18 +117,18 @@ export const productSlice = createSlice({
     //     state.singleProduct = foundProduct
     //   }
     // },
-    // sortProducts: (state, action) => {
-    //   const sortCriteria = action.payload;
-    //   if (sortCriteria === 'title') {
-    //     state.products.sort((a, b) => a.title.localeCompare(b.title))
-    //   }
-    //   else if (sortCriteria === 'Low to hight price') {
-    //     state.products.sort((a, b) => a.price - b.price)
+    sortProducts: (state, action) => {
+      const sortCriteria = action.payload;
+      if (sortCriteria === 'title') {
+        state.products.sort((a, b) => a.title.localeCompare(b.title))
+      }
+      else if (sortCriteria === 'Low to hight price') {
+        state.products.sort((a, b) => Number(a.price) - Number(b.price))
 
-    //   } else if (sortCriteria === 'hight to Low price') {
-    //     state.products.sort((a, b) => b.price - a.price)
-    //   }
-    // },
+      } else if (sortCriteria === 'hight to Low price') {
+        state.products.sort((a, b) => b.price - a.price)
+      }
+    },
     // deleteProduct: (state, action) => {
     //   const filterProducts = state.products.filter((product) => product._id !== action.payload)
     //   state.products = filterProducts
@@ -161,10 +172,17 @@ export const productSlice = createSlice({
     });
 
     builder.addCase(updateProduct.fulfilled, (state, action) => {
-      const index = state.products.findIndex((product) => product.slug === action.payload.slug);
-      if (index !== -1) {
-        state.products[index] = action.payload;
-      }
+      // const index = state.products.findIndex((product) => product.slug === action.payload.slug);
+      // if (index !== -1) {
+      //   state.products[index] = action.payload;
+      // }
+      const updateedProduct = action.payload.payload
+      state.products = state.products.map((product) => {
+        if (product.slug === updateProduct.slug) {
+          return { ...product, ...updateProduct }
+        }
+        return product
+      })
       state.isLoading = false;
     });
 
@@ -176,6 +194,7 @@ export const productSlice = createSlice({
 
     builder.addCase(createProducts.fulfilled, (state, action) => {
       state.products.push(action.payload.payload)
+      console.log(action.payload)
       state.isLoading = false
     })
 
@@ -197,5 +216,5 @@ export const productSlice = createSlice({
   }
 })
 
-export const { searchProduct } = productSlice.actions
+export const { searchProduct, sortProducts } = productSlice.actions
 export default productSlice.reducer

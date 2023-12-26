@@ -10,6 +10,12 @@ import AdminSidebar from './AdminSidebar'
 import useCategoryState from '../hooks/useCategoryState';
 import { createCategory, deleteCategory, updateCategory } from '../redux/categories/categorySlice';
 
+interface Category {
+  _id: string;
+  title: string;
+  slug: string;
+}
+
 const Category = () => {
 
 
@@ -23,7 +29,7 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(fetchCategory());
-  }, [dispatch]);
+  }, []);
 
   /*if (isLoading) {
     return <p>Loading...</p>
@@ -83,7 +89,7 @@ const Category = () => {
           {categories &&
             categories.map((category) => {
               return (
-                <article key={category._id} className='product'>
+                <article key={category.slug} className='product'>
                   <h2>{category.title}</h2>
                   <Stack direction="row" spacing={2}>
                     <Button

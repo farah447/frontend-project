@@ -16,6 +16,7 @@ const UserProfile = () => {
   const [user, setUser] = useState({
     firstName: userData?.firstName || '',
     lastName: userData?.lastName || '',
+    Image: userData?.image || ''
   });
 
   useEffect(() => {

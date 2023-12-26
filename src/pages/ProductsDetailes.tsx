@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom"
-import { AppDispatch, RootState } from "../redux/store";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Product, fetchProducts, fetchSingleProduct } from "../redux/slices/products/productSlice";
+import { fetchSingleProduct } from "../redux/slices/products/productSlice";
 import { fetchCategory } from "../redux/categories/categorySlice";
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, Stack } from "@mui/material";
@@ -13,79 +12,79 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import themes from '../Theme/Themes';
 import useProductState from "../hooks/useProductState";
+import { AppDispatch, RootState } from "../redux/store";
+
+interface Category {
+  _id: string
+  title: string
+  slug: string
+}
 
 const ProductsDetailes = () => {
   const { slug } = useParams();
-
   const navigate = useNavigate();
-
   const { singleProduct, isLoading, error } = useProductState();
-
   const { categories } = useSelector((state: RootState) => state.categoriesReducer);
-
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     if (slug) {
       dispatch(fetchSingleProduct(slug));
+      dispatch(fetchCategory());
     }
   }, [dispatch, slug]);
 
-  // if (isLoading) {
-  //   return <p>Loading...</p>
-  // }
-  // if (error) {
-  //   return <p>{error}</p>
-  // }
+  const getCategoryNameById = (_id: string) => {
+    const category = categories.find((category) => category._id === _id);
+    return category ? category.title : 'Category not found';
+  };
 
-  const getCategoryNameBySlug = (CategorySlug: string) => {
-
-    const category = categories.find((category) => category.slug === CategorySlug)
-    return category ? category.title + ", " : 'Category not found!'
-  }
-
-  const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product))
-  }
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
 
   return (
-    <ThemeProvider theme={themes} >
+    <ThemeProvider theme={themes}>
       <div className="product-details">
-        <h2> Product Details </h2>
-        {singleProduct && <>
-          <img src={singleProduct.image} alt={singleProduct.title} />
-          <h3>title: {singleProduct.title}</h3>
-          <p>Description: {singleProduct.description}</p>
-          <p>Price: {singleProduct.price} EUR</p>
-          <p>Categories: {singleProduct.category}</p>
-          <p>Quantity: {singleProduct.quantity}</p>
-          <p>Shipping: {singleProduct.shipping}</p>
-          <div className="details-btn">
-            <Stack direction="row" spacing={2}>
-              <Button
-                className="btn-back"
-                variant="outlined"
-                onClick={() => {
-                  navigate("/")
-                }}
-                color="secondary"
-                size="small">
-                Back To Home</Button>
-              <Button
-                className="Add-btn"
-                variant="outlined"
-                size="small"
-                onClick={() => { handleAddToCart(singleProduct) }}>
-                <IconButton color="primary" aria-label="add to shopping cart" size="small">
-                  <AddShoppingCartIcon />
-                </IconButton>
-                Add To Cart</Button>
-            </Stack>
-          </div>
-        </>}
-      </div >
-    </ThemeProvider >
-  )
-}
+        <h2>Product Details</h2>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {singleProduct && (
+          <>
+            <img src={singleProduct.image || 'default-image-path'} alt={singleProduct.title} />
+            <h3>Title: {singleProduct.title}</h3>
+            <p>Description: {singleProduct.description}</p>
+            <p>Price: {singleProduct.price} EUR</p>
+            <p>Category: {getCategoryNameById(singleProduct.category._id)}</p>
+            <p>Quantity: {singleProduct.quantity}</p>
+            <p>Shipping: {singleProduct.shipping}</p>
+            <div className="details-btn">
+              <Stack direction="row" spacing={2}>
+                <Button
+                  className="btn-back"
+                  variant="outlined"
+                  onClick={() => navigate("/")}
+                  color="secondary"
+                  size="small">
+                  Back To Home
+                </Button>
+                <Button
+                  className="Add-btn"
+                  variant="outlined"
+                  size="small"
+                  onClick={() => handleAddToCart(singleProduct)}>
+                  <IconButton color="primary" aria-label="add to shopping cart" size="small">
+                    <AddShoppingCartIcon />
+                  </IconButton>
+                  Add To Cart
+                </Button>
+              </Stack>
+            </div>
+          </>
+        )}
+      </div>
+    </ThemeProvider>
+  );
+};
 
-export default ProductsDetailes
+export default ProductsDetailes;

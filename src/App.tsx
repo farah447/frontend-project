@@ -15,7 +15,7 @@ function App() {
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchProducts())
+    dispatch(fetchProducts({ page: 1, limit: 10 }))
     dispatch(fetchUsers())
     dispatch(fetchCategory())
     dispatch(fetchOrders())

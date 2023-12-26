@@ -17,7 +17,7 @@ export const createCategory = createAsyncThunk('categories/createCategories', as
     console.log(response.data.payload)
     return response.data.payload
   } catch (error) {
-    console.error('Error creating category:', error.response.data);
+    console.error('Error creating category:', error.response.data.payload);
     throw error; // Rethrow the error to be caught by the rejected handler
   }
 })
@@ -84,19 +84,21 @@ export const CategorySlice = createSlice({
       state.isLoading = false
     })
     builder.addCase(deleteCategory.fulfilled, (state, action) => {
-      const filterCategories = state.categories.filter((category) => category._id !== action.payload)
-      state.categories = filterCategories
+      state.categories = state.categories.filter(category => category.slug !== action.payload);
       state.isLoading = false
     })
     builder.addCase(createCategory.fulfilled, (state, action) => {
       state.categories.push(action.payload);
+      // console.log(action.payload)
+      state.isLoading = false
     })
     builder.addCase(updateCategory.fulfilled, (state, action) => {
-      const { _id, title } = action.payload
-      const foundCategory = state.categories.find((category) => category._id === _id)
+      const { slug, title } = action.payload
+      const foundCategory = state.categories.find((category) => category.slug === slug)
       if (foundCategory && title) {
         foundCategory.title = title
       }
+      state.isLoading = false
     })
     builder.addMatcher(
       (action) => action.type.endsWith('/pending'),

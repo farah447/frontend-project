@@ -23,6 +23,7 @@ export const createUser = createAsyncThunk(
         }
     }
 )
+
 export const activateUserAccount = createAsyncThunk('users/activate', async (token: string) => {
     const response = await axios.post(`${API_BASE_URL}/users/activate`, { token })
     return response.data
@@ -72,9 +73,14 @@ export const forgetPassword = createAsyncThunk('users/forgetPassword', async (em
     return response.data.payload
 })
 
-export const resetPassword = createAsyncThunk('users/resetPassword', async (data: { password: string, token: string }) => {
+export const resetPassword = createAsyncThunk('users/reset-Password', async (data: { password: string, token: string }) => {
     const response = await axios.put(`${API_BASE_URL}/users/reset-Password`, { password: data.password, token: data.token })
     return response.data
+})
+
+export const grantRoles = createAsyncThunk('users/updateRoles', async (userName: string) => {
+    await axios.put(`${API_BASE_URL}/users/role/${userName}`)
+    return userName
 })
 
 
@@ -164,7 +170,7 @@ export const usersSlice = createSlice({
         })
 
         builder.addCase(deleteUsers.fulfilled, (state, action) => {
-            state.users = state.users.filter((user) => user.userName === action.payload)
+            state.users = state.users.filter((user) => user.userName !== action.payload)
             state.isLoading = false
         })
 

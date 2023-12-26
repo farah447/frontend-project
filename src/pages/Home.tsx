@@ -16,7 +16,7 @@ import SearchInput from '../components/SearchInput';
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { products, isLoading, error, searchTerm } = useSelector((state: RootState) => state.productReducer);
+  const { products, isLoading, error, searchTerm, pagination } = useSelector((state: RootState) => state.productReducer);
 
   const { categories } = useCategoryState()
 
@@ -25,12 +25,16 @@ const Home = () => {
   const [priceRange, setPriceRange] = useState<number[]>([])
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setitemsPerPage] = useState(4);
+  const [itemsPerPage, setitemsPerPage] = useState(2);
   const [selectedPrice, setSelectedPrice] = useState<string>('');
 
+  const formData = async () => {
+    dispatch(fetchProducts({ page: currentPage, limit: totalPages }));
+  }
+
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, limit: 10 }));
-  }, [dispatch]);
+    formData()
+  }, [currentPage, itemsPerPage]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchProduct(event.target.value))
@@ -53,23 +57,23 @@ const Home = () => {
   //   return <p>{error}</p>
   // }
 
-  // const handleCheckedCategory = (CategoryId: number) => {
-  //   if (checkedCategories.includes(Number(CategoryId))) {
-  //     const filteredCategory = checkedCategories.filter((c) => c !== CategoryId)
-  //     setCheckedCategories(filteredCategory)
-  //   } else {
-  //     setCheckedCategories((prevState) => {
-  //       return [...prevState, CategoryId]
-  //     })
-  //   }
-  // }
+  const handleCheckedCategory = (categoryId: number) => {
+    if (checkedCategories.includes(Number(categoryId))) {
+      const filteredCategory = checkedCategories.filter((c) => c !== categoryId)
+      setCheckedCategories(filteredCategory)
+    } else {
+      setCheckedCategories((prevState) => {
+        return [...prevState, categoryId]
+      })
+    }
+  }
 
-  // const handlePriceChange = (priceId: number) => {
-  //   const selectPriceObj = prices.find((price) => price.id === priceId);
-  //   if (selectPriceObj) {
-  //     setPriceRange(selectPriceObj.range)
-  //   }
-  // }
+  const handlePriceChange = (priceId: number) => {
+    const selectPriceObj = prices.find((price) => price.id === priceId);
+    if (selectPriceObj) {
+      setPriceRange(selectPriceObj.range)
+    }
+  }
 
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product))
@@ -80,37 +84,42 @@ const Home = () => {
   const currentItems = filerProducts.slice(indexOfFirstItem, indexOfLastItem)
   const totalPages = Math.ceil(filerProducts.length / itemsPerPage)
 
-  const handlePageCange = (page: number) => {
-    setCurrentPage(page)
-  }
+  // const handlePageCange = (page: number) => {
+  //   setCurrentPage(page)
+  // }
 
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1)
-  }
+  // const handleNextPage = () => {
+  //   setCurrentPage(currentPage + 1)
+  // }
 
-  const handlePrevPage = () => {
-    setCurrentPage(currentPage - 1)
-  }
+  // const handlePrevPage = () => {
+  //   setCurrentPage(currentPage - 1)
+  // }
 
-  const handlePriceChange = (event: SelectChangeEvent<string>) => {
-    const priceId = Number(event.target.value);
-    const selectPriceObj = prices.find((price) => price.id === priceId);
-    if (selectPriceObj) {
-      setPriceRange(selectPriceObj.range);
-    }
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
   };
 
-  const handleCheckedCategory = (event: SelectChangeEvent<number[]>) => {
-    const CategoryId = Number(event.target.value);
-    if (checkedCategories.includes(CategoryId)) {
-      const filteredCategory = checkedCategories.filter((c) => c !== CategoryId);
-      setCheckedCategories(filteredCategory);
-    } else {
-      setCheckedCategories((prevState) => {
-        return [...prevState, CategoryId];
-      });
-    }
-  }
+
+  // const handlePriceChange = (event: SelectChangeEvent<string>) => {
+  //   const priceId = Number(event.target.value);
+  //   const selectPriceObj = prices.find((price) => price.id === priceId);
+  //   if (selectPriceObj) {
+  //     setPriceRange(selectPriceObj.range);
+  //   }
+  // };
+
+  // const handleCheckedCategory = (event: SelectChangeEvent<number[]>) => {
+  //   const CategoryId = Number(event.target.value);
+  //   if (checkedCategories.includes(CategoryId)) {
+  //     const filteredCategory = checkedCategories.filter((c) => c !== CategoryId);
+  //     setCheckedCategories(filteredCategory);
+  //   } else {
+  //     setCheckedCategories((prevState) => {
+  //       return [...prevState, CategoryId];
+  //     });
+  //   }
+  // }
   // let buttonElements = [];
   // for (let i = 2; i <= totalPages - 1; i++) {
   //   buttonElements.push(<button onClick={() => { handlePageCange(i) }}>{i}</button>)
@@ -199,6 +208,9 @@ const Home = () => {
                       <Typography variant="body2" color="text.secondary">
                         {product.description}
                       </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {product.price}
+                      </Typography>
                     </CardContent>
                     <CardActions>
                       <IconButton aria-label="add to cart" onClick={() => handleAddToCart(product)}>
@@ -217,11 +229,9 @@ const Home = () => {
 
         {/* Pagination */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={(event, page) => setCurrentPage(page)}
-          />
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} />
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>
