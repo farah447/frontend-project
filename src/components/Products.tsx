@@ -27,10 +27,12 @@ const initialProductData = {
 const Products = () => {
   const { products, isLoading, error } = useSelector((state: RootState) => state.productReducer);
   const { categories } = useSelector((state: RootState) => state.categoriesReducer);
+
   const [isEdit, setIsEdit] = useState(false);
   const [productDatas, setProductData] = useState({ ...initialProductData });
   const [showForm, setShowForm] = useState(false);
 
+  console.log(products)
   const dispatch: AppDispatch = useDispatch();
 
   const toggleForm = () => {
@@ -56,7 +58,7 @@ const Products = () => {
   };
 
   const handleDelete = async (slug: string) => {
-    await dispatch(deleteProducts(slug)).unwrap;
+    dispatch(deleteProducts(slug)).unwrap;
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -75,35 +77,27 @@ const Products = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-
+    console.log(productDatas)
     const formData = new FormData();
     formData.append('title', productDatas.title);
     formData.append('price', productDatas.price);
     formData.append('slug', productDatas.slug);
     formData.append('description', productDatas.description);
-    if (productDatas.image && productDatas.image.length > 0) {
+    if (productDatas.image) {
       formData.append('image', productDatas.image);
     }
     formData.append('category', productDatas.category);
     formData.append('shipping', productDatas.shipping);
     formData.append('quantity', productDatas.quantity);
     formData.append('sold', productDatas.sold);
+    console.log(formData)
 
-    // if (productDatas.slug) {
-    //   // dispatch(updateProduct(productDatas))
-
-    // } else {
-    //   setProductData({
-    //     ...productDatas,
-    //     slug: products[products.length - 1].slug + 1
-    //   })
-
-    //   dispatch(createProducts(formData))
-    //   dispatch(fetchProducts({ page: 1, limit: 10 }))
-    // }
     if (!isEdit) {
       dispatch(createProducts(formData))
+      dispatch(fetchProducts({ page: 1, limit: 10 }));
     } else {
+      dispatch(updateProduct(productDatas))
+      dispatch(fetchProducts({ page: 1, limit: 10 }));
       console.log("not Edited")
     }
   }
@@ -113,14 +107,6 @@ const Products = () => {
       return { ...prevProduct, [name]: value };
     });
   };
-
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-  // if (error) {
-  //   return <p>{error}</p>;
-  // }
-
 
   return (
     <ThemeProvider theme={themes}>
@@ -135,7 +121,7 @@ const Products = () => {
               <h2>Create a product: </h2>
               <form action="" onSubmit={handleSubmit}>
                 <FormControl sx={{ m: 1, minWidth: 100 }}>
-                  <Stack direction="row" spacing={2}>
+                  <Stack direction="column" spacing={2}>
                     <TextField
                       label="price"
                       type="number"
@@ -170,6 +156,7 @@ const Products = () => {
                     />
                     <TextField
                       type="file"
+                      name="image"
                       inputProps={{ accept: "image/*" }}
                       onChange={handleChange}
                     />
@@ -228,7 +215,7 @@ const Products = () => {
               products.map((product) => (
                 <div className="product-card" key={product.slug}>
                   <article className="product">
-                    <img src={product.image} alt={product.title} />
+                    <img src={product?.image} alt={product?.title} />
                     <h2>Name: {product.title}</h2>
                     <p>Description: {product.description}</p>
                     <p>Price: {product.price}</p>
@@ -236,7 +223,7 @@ const Products = () => {
                       className="btn"
                       variant="outlined"
                       color="secondary"
-                      onClick={() => handleEdit(product._id, String(product.price), product.title, product.slug, product.description, product.image, product.category, String(product.quantity), String(product.shipping), String(product.sold))}
+                      onClick={() => handleEdit(product._id, String(product.price), product.title, product.slug, product.description, product.image, String(product.category), String(product.quantity), String(product.shipping), String(product.sold))}
                     >
                       Edit
                     </Button>

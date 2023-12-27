@@ -1,17 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import api from '../../../api/index'
 import axios from 'axios'
 import { API_BASE_URL } from '../../users/usersSlice'
-import { Category } from '../../categories/categorySlice'
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (data: { page: number; limit: number }, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/products?page=${data.page}?&limit=${data.limit}`);
-      //console.log(response.data); 
-      return response.data;
+      console.log(response.data.payload.products);
+      return response.data.payload.products
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -20,7 +18,7 @@ export const fetchProducts = createAsyncThunk(
 
 export const fetchSingleProduct = createAsyncThunk(
   'products/fetchSingleProduct',
-  async (slug: string, { rejectWithValue }) => {
+  async (slug: string | undefined, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/products/${slug}`);
       console.log(response.data.payload)
@@ -33,9 +31,11 @@ export const fetchSingleProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   'products/updateProduct',
-  async ({ slug, productData }: { slug: string; productData: Partial<Product> }, { rejectWithValue }) => {
+  async (productData: Partial<Product>, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/products/${slug}`, productData);
+      const response = await axios.put(`${API_BASE_URL}/products/${productData.slug}`, productData);
+      console.log(response.data)
+      console.log(productData)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -43,12 +43,14 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
-export const deleteProducts = createAsyncThunk('products/deleteProduct', async (slug: string) => {
+export const deleteProducts = createAsyncThunk('product/deleteProduct', async (slug: string) => {
   const respons = await axios.delete(`${API_BASE_URL}/products/${slug}`)
+  console.log('products is deleted', slug)
   return slug
 })
 
-export const createProducts = createAsyncThunk('products/createProduct', async (formData: FormData) => {
+export const createProducts = createAsyncThunk('product/createProduct', async (formData: FormData) => {
+  console.log(formData)
   try {
     const respons = await axios.post(`${API_BASE_URL}/products`, formData
       , {
@@ -57,12 +59,14 @@ export const createProducts = createAsyncThunk('products/createProduct', async (
         }
       }
     )
-    return respons.data
-
+    console.log("create product")
+    console.log(respons.data.payload)
+    return respons.data.payload
   } catch (error) {
     console.log(error);
   }
 })
+
 
 export type Product = {
   _id: string
@@ -72,7 +76,7 @@ export type Product = {
   image: string
   description: string
   quantity: number
-  category: Category[]
+  category: string[];
   sold: number
   shipping: number
 }
@@ -161,14 +165,16 @@ export const productSlice = createSlice({
       //   totalPages: totalPages,
       //   totalProducts: totalProducts
       // },
-      state.products = action.payload.payload.products
+      console.log(action.payload.products)
+      state.products = action.payload
       state.isLoading = false
     })
 
     builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
-      state.singleProduct = action.payload;
-      console.log(action.payload.payload)
-      state.isLoading = false;
+      console.log(action.payload)
+      state.singleProduct = action.payload
+      // console.log(action.payload.payload)
+      // state.isLoading = false;
     });
 
     builder.addCase(updateProduct.fulfilled, (state, action) => {
@@ -176,27 +182,41 @@ export const productSlice = createSlice({
       // if (index !== -1) {
       //   state.products[index] = action.payload;
       // }
-      const updateedProduct = action.payload.payload
-      state.products = state.products.map((product) => {
-        if (product.slug === updateProduct.slug) {
-          return { ...product, ...updateProduct }
-        }
-        return product
-      })
-      state.isLoading = false;
+      // const updateedProduct = action.payload.payload
+      // state.products = state.products.map((product) => {
+      //   if (product.slug === updateProduct.slug) {
+      //     return { ...product, ...updateProduct }
+      //   }
+      //   return product
+      // })
+      // state.isLoading = false;
+      console.log(action.payload.payload)
+      const { slug, title, price } = action.payload
+      const foundCategory = state.products.find((product) => product.slug === slug)
+      if (foundCategory) {
+        foundCategory.title = title
+        foundCategory.price = price
+      }
     });
 
     builder.addCase(deleteProducts.fulfilled, (state, action) => {
       const filterProducts = state.products.filter((product) => product.slug !== action.payload)
       state.products = filterProducts
+      // state.products = [...state.products, action.payload]
       state.isLoading = false
     })
 
+    // builder.addCase(createProducts.fulfilled, (state, action) => {
+    //   console.log(action.payload.payload)
+    //   state.products.push(action.payload.payload)
+    //   // state.products = [...state.products, action.payload.payload]
+    //   // state.isLoading = false
+    // })
     builder.addCase(createProducts.fulfilled, (state, action) => {
-      state.products.push(action.payload.payload)
-      console.log(action.payload)
-      state.isLoading = false
-    })
+      state.products.push(action.payload.payload);
+      state.products = [...state.products, action.payload.payload]
+      state.isLoading = false;
+    });
 
     builder.addMatcher(
       (action) => action.type.endsWith('/pending'),

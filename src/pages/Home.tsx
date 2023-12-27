@@ -25,11 +25,11 @@ const Home = () => {
   const [priceRange, setPriceRange] = useState<number[]>([])
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setitemsPerPage] = useState(2);
+  const [itemsPerPage, setitemsPerPage] = useState(3);
   const [selectedPrice, setSelectedPrice] = useState<string>('');
 
   const formData = async () => {
-    dispatch(fetchProducts({ page: currentPage, limit: totalPages }));
+    dispatch(fetchProducts({ page: currentPage, limit: itemsPerPage }));
   }
 
   useEffect(() => {
@@ -193,7 +193,7 @@ const Home = () => {
             </Stack>
             <Grid container spacing={2}>
               {currentItems.map((product) => (
-                <Grid item key={product._id} xs={12} sm={6} md={4} lg={3}>
+                <Grid item key={product.slug} xs={12} sm={6} md={4} lg={3}>
                   <Card>
                     <CardMedia
                       component="img"
@@ -216,7 +216,7 @@ const Home = () => {
                       <IconButton aria-label="add to cart" onClick={() => handleAddToCart(product)}>
                         <AddShoppingCartIcon />
                       </IconButton>
-                      <Button size="small" component={Link} to={`/products/${product._id}`}>
+                      <Button size="small" component={Link} to={`/products/${product.slug}`}>
                         Show Details
                       </Button>
                     </CardActions>

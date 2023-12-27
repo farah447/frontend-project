@@ -30,9 +30,9 @@ const UserSidebar = () => {
                         <li>
                             <Link to="/dashboard/user/profile">Profile</Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to="/dashboard/user/orders">Orders</Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </aside>

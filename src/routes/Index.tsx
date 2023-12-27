@@ -34,7 +34,7 @@ const Index = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products/:id" element={<ProductsDetailes />} />
+          <Route path="/products/:slug" element={<ProductsDetailes />} />
 
           <Route path="/Contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />

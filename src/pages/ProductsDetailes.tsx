@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchSingleProduct } from "../redux/slices/products/productSlice";
+import { fetchProducts, fetchSingleProduct } from "../redux/slices/products/productSlice";
 import { fetchCategory } from "../redux/categories/categorySlice";
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, Stack } from "@mui/material";
@@ -28,19 +28,18 @@ const ProductsDetailes = () => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    if (slug) {
-      dispatch(fetchSingleProduct(slug));
-      dispatch(fetchCategory());
-    }
-  }, [dispatch, slug]);
+    dispatch(fetchSingleProduct(slug));
+    // dispatch(fetchCategory());
+    dispatch(fetchProducts({ page: 1, limit: 10 }));
+  }, []);
 
   const getCategoryNameById = (_id: string) => {
     const category = categories.find((category) => category._id === _id);
     return category ? category.title : 'Category not found';
   };
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+  const handleAddToCart = (singleProduct: any) => {
+    dispatch(addToCart(singleProduct));
   };
 
   return (
@@ -55,7 +54,7 @@ const ProductsDetailes = () => {
             <h3>Title: {singleProduct.title}</h3>
             <p>Description: {singleProduct.description}</p>
             <p>Price: {singleProduct.price} EUR</p>
-            <p>Category: {getCategoryNameById(singleProduct.category._id)}</p>
+            <p>Category: {getCategoryNameById(singleProduct.category)}</p>
             <p>Quantity: {singleProduct.quantity}</p>
             <p>Shipping: {singleProduct.shipping}</p>
             <div className="details-btn">
@@ -72,7 +71,8 @@ const ProductsDetailes = () => {
                   className="Add-btn"
                   variant="outlined"
                   size="small"
-                  onClick={() => handleAddToCart(singleProduct)}>
+                  onClick={() => handleAddToCart(singleProduct)}
+                >
                   <IconButton color="primary" aria-label="add to shopping cart" size="small">
                     <AddShoppingCartIcon />
                   </IconButton>

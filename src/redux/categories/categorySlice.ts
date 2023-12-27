@@ -14,7 +14,7 @@ export const createCategory = createAsyncThunk('categories/createCategories', as
   return response.data.payload*/
   try {
     const response = await axios.post(`${API_BASE_URL}/categories/`, { title: title })
-    console.log(response.data.payload)
+    console.log(response)
     return response.data.payload
   } catch (error) {
     console.error('Error creating category:', error.response.data.payload);
@@ -88,8 +88,8 @@ export const CategorySlice = createSlice({
       state.isLoading = false
     })
     builder.addCase(createCategory.fulfilled, (state, action) => {
-      state.categories.push(action.payload);
       // console.log(action.payload)
+      state.categories.push(action.payload.payload);
       state.isLoading = false
     })
     builder.addCase(updateCategory.fulfilled, (state, action) => {
