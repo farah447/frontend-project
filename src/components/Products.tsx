@@ -95,7 +95,7 @@ const Products = () => {
       dispatch(fetchProducts({ page: 1, limit: 10 }));
     } else {
       dispatch(updateProduct(productDatas))
-      dispatch(fetchProducts({ page: 1, limit: 10 }));
+      // dispatch(fetchProducts({ page: 1, limit: 10 }));
       console.log("not Edited")
     }
   }

@@ -36,7 +36,7 @@ export const updateProduct = createAsyncThunk(
       const response = await api.put(`${API_BASE_URL}/products/${productData.slug}`, productData);
       console.log(response.data)
       console.log(productData)
-      return response.data;
+      return productData;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -139,8 +139,8 @@ export const productSlice = createSlice({
     });
 
     builder.addCase(updateProduct.fulfilled, (state, action) => {
-      console.log(action.payload.payload)
-      const { slug, title, price } = action.payload.payload
+      console.log(action.payload)
+      const { slug, title, price } = action.payload
       const foundCategory = state.products.find((product) => product.slug === slug)
       if (foundCategory) {
         foundCategory.title = title
