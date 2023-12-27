@@ -9,7 +9,6 @@ const ActivatePage = () => {
     const { token } = useParams();
     const decoded = jwtDecode(String(token));
     const navigate = useNavigate();
-    //const dispatch = useDispatch();
     const dispatch: AppDispatch = useDispatch();
 
 
@@ -17,11 +16,6 @@ const ActivatePage = () => {
 
         try {
             const response = dispatch(activateUserAccount(String(token)))
-            //await dispatch(activateUserAccount(String(token)))
-            /*if (response.status === 200) {
-                navigate('/login');
-            }*/
-            // console.log(response)
             navigate('/login');
 
         } catch (error) {

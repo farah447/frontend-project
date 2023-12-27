@@ -30,11 +30,6 @@ export const Login = ({ pathName }: { pathName: string }) => {
     })
   }
 
-  // useEffect(() => {
-  //   dispatch(fetchUsers());
-  // }, [dispatch]);
-
-
   useEffect(() => {
     if (userData) {
       navigate(
@@ -43,54 +38,11 @@ export const Login = ({ pathName }: { pathName: string }) => {
     }
   }, [userData, navigate, pathName])
 
-  // const handleSubmit = async (event: FormEvent) => {
-  //   event.preventDefault()
-  //   console.log("Users in Redux store:", users);
-  //   try {
-  //     //const foundUser = users.find((userData) => userData.email.toLowerCase() === user.email.toLowerCase())
-  //     dispatch(loginUser(user));
-  //     navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`);
-
-  //     /*if (loggedInUser) {
-  //       navigate(`/dashboard/${loggedInUser.isAdmin ? 'admin' : 'user'}`);
-  //     }
-  //     if (loggedInUser.isAdmin === 'admin') {
-  //       navigate('admin/dashboard')
-  //     } else {
-  //       navigate('user/dashboard')
-  //     }*/
-
-  //     /*if (!foundUser) {
-  //       console.log("user not found with this email!")
-  //       return
-  //     }
-
-  //     if (foundUser.password !== user.password) {
-  //       console.log("user password did not match!")
-  //       return
-  //     }
-
-  //     if (foundUser.isBanned) {
-  //       console.log("user account is banned!")
-  //       return
-  //     }*/
-
-  //     //navigate(pathName ? pathName : `/dashboard/${userData?.isAdmin}`)
-
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  //   /*setUser({
-  //     email: '',
-  //     password: '',
-  //   })*/
-  // }
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     console.log("Users in Redux store:", users);
     try {
       dispatch(loginUser(user));
-      //  navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`);
     } catch (error) {
       console.log(error)
     }

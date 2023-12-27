@@ -9,16 +9,13 @@ export const fetchCategory = createAsyncThunk('categories/fetchCategory', async 
 });
 
 export const createCategory = createAsyncThunk('categories/createCategories', async (title: string) => {
-  /*const response = await axios.post(`${API_BASE_URL}/categories/`, { title: title })
-  console.log(response.data.payload)
-  return response.data.payload*/
   try {
     const response = await axios.post(`${API_BASE_URL}/categories/`, { title: title })
     console.log(response)
     return response.data.payload
   } catch (error) {
     console.error('Error creating category:', error.response.data.payload);
-    throw error; // Rethrow the error to be caught by the rejected handler
+    throw error;
   }
 })
 
@@ -55,30 +52,8 @@ export const CategorySlice = createSlice({
   name: 'Categories',
   initialState,
   reducers: {
-    /*deleteCategory: (state, action) => {
-      const filterCategories = state.categories.filter((category) => category._id !== action.payload)
-      state.categories = filterCategories
-    },
-    addCategory: (state, action) => {
-      state.categories.push(action.payload);
-    },
-    updateCategory: (state, action) => {
-      const { id, name } = action.payload
-      const foundCategory = state.categories.find((category) => category._id === id)
-      if (foundCategory) {
-        foundCategory.title = name
-      }
-    }*/
   },
   extraReducers: (builder) => {
-    /*builder.addCase(fetchCategory.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })*/
-    /*builder.addCase(fetchCategory.rejected, (state, action) => {
-      state.error = action.error.message || 'An error occurred while fetching categories.'
-      state.isLoading = false
-    })*/
     builder.addCase(fetchCategory.fulfilled, (state, action) => {
       state.categories = action.payload.payload
       state.isLoading = false
@@ -88,7 +63,6 @@ export const CategorySlice = createSlice({
       state.isLoading = false
     })
     builder.addCase(createCategory.fulfilled, (state, action) => {
-      // console.log(action.payload)
       state.categories.push(action.payload.payload);
       state.isLoading = false
     })

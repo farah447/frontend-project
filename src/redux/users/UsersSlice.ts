@@ -41,14 +41,9 @@ export const banUnbanUsers = createAsyncThunk('users/banUnban', async (userName:
 
 export const updateUser = createAsyncThunk('users/updateUsers', async (userData: Partial<Users>) => {
     const response = await axios.put(`${API_BASE_URL}/users/${userData.userName}`, userData)
-    //console.log(response)
     return userData;
 })
 
-// export const loginUser = createAsyncThunk('users/login', async (user: object) => {
-//     const response = await axios.post(`${API_BASE_URL}/auth/login`, user)
-//     return response.data
-// })
 export const loginUser = createAsyncThunk(
     'users/login',
     async (user: object, { rejectWithValue }) => {
@@ -123,44 +118,9 @@ export const usersSlice = createSlice({
     name: 'Users',
     initialState,
     reducers: {
-        /*login: (state, action) => {
-            state.isLoggedIn = true
-            state.userData = action.payload
-            localStorage.setItem('loginData', JSON.stringify({
-                isLoggedIn: state.isLoggedIn,
-                userData: state.userData
-            }))
-        },
-        logout: (state) => {
-            state.isLoggedIn = false
-            state.userData = null
-            localStorage.setItem('loginData', JSON.stringify({
-                isLoggedIn: state.isLoggedIn,
-                userData: state.userData
-            }))
-        },*/
         searchUser: (state, action) => {
             state.searchTerm = action.payload
         },
-        /*addUser: (state, action) => {
-            state.users.push(action.payload);
-        },
-        deleteSingleUser: (state, action) => {
-            state.users.push(action.payload);
-        },*/
-        /*updateUser: (state, action) => {
-            const { id, firstName, lastName } = action.payload
-            const foundUser = state.users.find((user) => user.id === id)
-            if (foundUser) {
-                foundUser.userName = firstName
-                state.userData = foundUser
-                localStorage.setItem('loginData', JSON.stringify({
-                    isLoggedIn: state.isLoggedIn,
-                    userData: state.userData
-                })
-                )
-            }
-        }*/
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
@@ -188,7 +148,6 @@ export const usersSlice = createSlice({
             } = action.payload
             const foundUser = state.users.find((user) => user.userName === userName)
             if (foundUser) {
-                //console.log(foundUser)
                 foundUser.firstName = firstName
                 //foundUser.lastName = lastName
                 state.userData = foundUser
@@ -199,25 +158,6 @@ export const usersSlice = createSlice({
                 )
             }
         })
-        /*builder.addCase(updateUser.fulfilled, (state, action) => {
-            const { _id, firstName, lastName } = action.payload;
-
-            const foundIndex = state.users.findIndex((user) => user._id === _id);
-            if (foundIndex !== -1) {
-                const updatedUser = { ...state.users[foundIndex], firstName, lastName };
-                state.users[foundIndex] = updatedUser;
-
-                // Update userData if it matches the updated user
-                if (state.userData?._id === _id) {
-                    state.userData = { ...updatedUser };
-                    localStorage.setItem('loginData', JSON.stringify({
-                        isLoggedIn: state.isLoggedIn,
-                        userData: state.userData
-                    }));
-                }
-            }
-        });*/
-
 
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.isLoggedIn = true

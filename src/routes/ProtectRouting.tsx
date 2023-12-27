@@ -5,8 +5,6 @@ import { Login } from '../pages/Login'
 
 const ProtectRouting = () => {
 
-  //const location = useLocation()
-
   const { isLoggedIn } = useSelector((state: RootState) => state.usersReducer)
 
   return isLoggedIn ? <Outlet /> : <Login pathName={location.pathname} />

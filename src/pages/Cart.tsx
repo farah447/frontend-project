@@ -25,9 +25,6 @@ const Cart = () => {
         cartItems.length > 0 && cartItems.map((cartItem) => (totalAmount = totalAmount + cartItem.price))
         return totalAmount
     }
-    // const cartTotal = () => {
-    //     return cartItems.reduce((totalAmount, cartItem) => totalAmount + cartItem.price, 0);
-    // }
     return (
         <ThemeProvider theme={themes}>
             <div className="cart-container">

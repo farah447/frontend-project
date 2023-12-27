@@ -23,11 +23,6 @@ const UserProfile = () => {
     dispatch(fetchUsers());
   }, []);
 
-  // dispatch(fetchUsers()).then((data) => {
-  //   // Once the data is fetched, you can use it to populate the user's profile
-  //   console.log(data); // Replace this with the code to populate the user's profile
-  // });
-
   console.log(userData?.userName)
 
 

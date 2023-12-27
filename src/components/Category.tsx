@@ -31,13 +31,6 @@ const Category = () => {
     dispatch(fetchCategory());
   }, []);
 
-  /*if (isLoading) {
-    return <p>Loading...</p>
-  }
-  if (error) {
-    return <p>{error}</p>
-  }*/
-
   const handleEdit = (slug: string, title: string) => {
     setCategoryId(slug)
     setIsEdit(!isEdit)
@@ -56,10 +49,8 @@ const Category = () => {
     event.preventDefault()
 
     if (!isEdit) {
-      //const newCategory = { _id: new Date().getTime(), title: categoryName }
       dispatch(createCategory(categoryName))
     } else {
-      //const updateCategoryData = { _id: categoryId, title: categoryName }
       dispatch(updateCategory({ slug: categoryId, title: categoryName }))
     }
     setCategoryName('')

@@ -8,7 +8,6 @@ export const fetchProducts = createAsyncThunk(
   async (data: { page: number; limit: number }, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/products?page=${data.page}?&limit=${data.limit}`);
-      //console.log(response.data); 
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -114,13 +113,6 @@ export const productSlice = createSlice({
     searchProduct: (state, action) => {
       state.searchTerm = action.payload
     },
-    // findProductById: (state, action) => {
-    //   const _id = action.payload
-    //   const foundProduct = state.products.find((product) => product._id === _id);
-    //   if (foundProduct) {
-    //     state.singleProduct = foundProduct
-    //   }
-    // },
     sortProducts: (state, action) => {
       const sortCriteria = action.payload;
       if (sortCriteria === 'title') {
@@ -133,41 +125,9 @@ export const productSlice = createSlice({
         state.products.sort((a, b) => b.price - a.price)
       }
     },
-    // deleteProduct: (state, action) => {
-    //   const filterProducts = state.products.filter((product) => product._id !== action.payload)
-    //   state.products = filterProducts
-    // },
-    // addProduct: (state, action) => {
-    //   state.products.push(action.payload);
-    // },
-    // updateProduct: (state, action) => {
-    //   const { _id, title } = action.payload
-    //   const foundProduct = state.products.find((product) => product._id === _id)
-    //   if (foundProduct) {
-    //     foundProduct.title = title
-    //   }
-    // }
   },
   extraReducers: (builder) => {
-    /*builder.addCase(fetchProducts.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    builder.addCase(fetchProducts.rejected, (state, action) => {
-      state.error = action.error.message || 'an error occuered'
-      state.isLoading = false
-    })*/
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      // console.log(action.payload.pagination)
-      // const { totalPages, currentPage, totalProducts } = action.payload.pagination;
-      // state.pagination = {
-      //   currentPage: currentPage,
-      //   totalPages: totalPages,
-      //   totalProducts: totalProducts
-      // },
-      // console.log(action.payload.products)
-      // state.products = action.payload.payload.products
-      // state.isLoading = false
       state.products = action.payload.payload.products
       state.isLoading = false
     })
@@ -175,23 +135,9 @@ export const productSlice = createSlice({
     builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       console.log(action.payload)
       state.singleProduct = action.payload
-      // console.log(action.payload.payload)
-      // state.isLoading = false;
     });
 
     builder.addCase(updateProduct.fulfilled, (state, action) => {
-      // const index = state.products.findIndex((product) => product.slug === action.payload.slug);
-      // if (index !== -1) {
-      //   state.products[index] = action.payload;
-      // }
-      // const updateedProduct = action.payload.payload
-      // state.products = state.products.map((product) => {
-      //   if (product.slug === updateProduct.slug) {
-      //     return { ...product, ...updateProduct }
-      //   }
-      //   return product
-      // })
-      // state.isLoading = false;
       console.log(action.payload.payload)
       const { slug, title, price } = action.payload
       const foundCategory = state.products.find((product) => product.slug === slug)
@@ -208,12 +154,6 @@ export const productSlice = createSlice({
       state.isLoading = false
     })
 
-    // builder.addCase(createProducts.fulfilled, (state, action) => {
-    //   console.log(action.payload.payload)
-    //   state.products.push(action.payload.payload)
-    //   // state.products = [...state.products, action.payload.payload]
-    //   // state.isLoading = false
-    // })
     builder.addCase(createProducts.fulfilled, (state, action) => {
       state.products.push(action.payload.payload);
       // state.products = [...state.products, action.payload.payload]

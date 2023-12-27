@@ -20,12 +20,6 @@ const UserList = () => {
     dispatch(fetchUsers())
   }, [dispatch])
   console.log(users)
-  /*if (isLoading) {
-    return <p>Loading...</p>
-  }
-  if (error) {
-    return <p>{error}</p>
-  }*/
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchUser(event.target.value))
@@ -56,8 +50,6 @@ const UserList = () => {
       if (userName) {
         dispatch(grantRoles(userName))
       }
-      // const response = isBanned ? dispatch(banUnbanUsers(userName)) : dispatch(banUnbanUsers(userName))
-      // console.log(response)
     } catch (error) {
       console.log(error.response?.data?.message || 'An error occurred while deleting the user')
     }

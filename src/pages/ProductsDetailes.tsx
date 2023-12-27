@@ -29,7 +29,7 @@ const ProductsDetailes = () => {
 
   useEffect(() => {
     dispatch(fetchSingleProduct(slug));
-    // dispatch(fetchCategory());
+    dispatch(fetchCategory());
     dispatch(fetchProducts({ page: 1, limit: 10 }));
   }, []);
 

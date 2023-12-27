@@ -50,13 +50,6 @@ const Home = () => {
     return categoryMatch && searchMatch && pricehMatch
   })
 
-  // if (isLoading) {
-  //   return <p>Loading...</p>
-  // }
-  // if (error) {
-  //   return <p>{error}</p>
-  // }
-
   const handleCheckedCategory = (categoryId: number) => {
     if (checkedCategories.includes(Number(categoryId))) {
       const filteredCategory = checkedCategories.filter((c) => c !== categoryId)
@@ -84,53 +77,14 @@ const Home = () => {
   const currentItems = filerProducts.slice(indexOfFirstItem, indexOfLastItem)
   const totalPages = Math.ceil(filerProducts.length / itemsPerPage)
 
-  // const handlePageCange = (page: number) => {
-  //   setCurrentPage(page)
-  // }
-
-  // const handleNextPage = () => {
-  //   setCurrentPage(currentPage + 1)
-  // }
-
-  // const handlePrevPage = () => {
-  //   setCurrentPage(currentPage - 1)
-  // }
-
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 
-
-  // const handlePriceChange = (event: SelectChangeEvent<string>) => {
-  //   const priceId = Number(event.target.value);
-  //   const selectPriceObj = prices.find((price) => price.id === priceId);
-  //   if (selectPriceObj) {
-  //     setPriceRange(selectPriceObj.range);
-  //   }
-  // };
-
-  // const handleCheckedCategory = (event: SelectChangeEvent<number[]>) => {
-  //   const CategoryId = Number(event.target.value);
-  //   if (checkedCategories.includes(CategoryId)) {
-  //     const filteredCategory = checkedCategories.filter((c) => c !== CategoryId);
-  //     setCheckedCategories(filteredCategory);
-  //   } else {
-  //     setCheckedCategories((prevState) => {
-  //       return [...prevState, CategoryId];
-  //     });
-  //   }
-  // }
-  // let buttonElements = [];
-  // for (let i = 2; i <= totalPages - 1; i++) {
-  //   buttonElements.push(<button onClick={() => { handlePageCange(i) }}>{i}</button>)
-  // }
-
   return (
     <ThemeProvider theme={themes}>
       <Container>
-        {/* Hero Section */}
         <Box sx={{ my: 15 }}>
-          {/* <Grid container spacing={2}> */}
           <Grid item xs={6} md={6}>
             <Typography variant="h2" component="h1" gutterBottom>
               Future Tech
@@ -142,17 +96,11 @@ const Home = () => {
               Shop Now
             </Button>
           </Grid>
-          {/* <Grid item xs={6} md={6}>
-              <img src={'./src/Headphones-hero.png'} alt="Hero" style={{ width: '50%', height: 'auto' }} />
-            </Grid> */}
-          {/* </Grid> */}
         </Box>
 
-        {/* Sidebar for Filtering */}
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <Box sx={{ borderRight: 1, borderColor: 'divider' }}>
-              {/* Filter by Price */}
               <FormControl fullWidth>
                 <InputLabel>Price</InputLabel>
                 <Select
@@ -167,7 +115,6 @@ const Home = () => {
                 </Select>
               </FormControl>
 
-              {/* Filter by Category */}
               <FormControl fullWidth>
                 <InputLabel>Category</InputLabel>
                 <Select
@@ -185,7 +132,6 @@ const Home = () => {
             </Box>
           </Grid>
 
-          {/* Product List */}
           <Grid item xs={12} md={9}>
             <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
               <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
@@ -227,7 +173,6 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        {/* Pagination */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
             <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} />
