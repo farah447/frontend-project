@@ -122,7 +122,7 @@ const Products = () => {
                   <Stack direction="column" spacing={2}>
                     <TextField
                       label="price"
-                      type="number"
+                      type="price"
                       name="price"
                       value={productDatas.price}
                       placeholder="Enter product price"
@@ -132,7 +132,7 @@ const Products = () => {
                       label="title"
                       type="title"
                       name="title"
-                      value={productDatas.title}
+                      value={productDatas?.title}
                       placeholder="Enter product title"
                       onChange={handleChange}
                     />
@@ -148,7 +148,7 @@ const Products = () => {
                       label="description"
                       type="description"
                       name="description"
-                      value={productDatas.description}
+                      value={productDatas?.description}
                       placeholder="Enter product description"
                       onChange={handleChange}
                     />
@@ -214,7 +214,7 @@ const Products = () => {
                 <div className="product-card" key={product.slug}>
                   <article className="product">
                     <img src={product?.image} alt={product?.title} />
-                    <h2>Name: {product.title}</h2>
+                    <h2>Name: {product?.title}</h2>
                     <p>Description: {product.description}</p>
                     <p>Price: {product.price}</p>
                     <Button

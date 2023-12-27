@@ -25,7 +25,7 @@ const Home = () => {
   const [priceRange, setPriceRange] = useState<number[]>([])
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setitemsPerPage] = useState(3);
+  const [itemsPerPage, setitemsPerPage] = useState(6);
   const [selectedPrice, setSelectedPrice] = useState<string>('');
 
   const formData = async () => {

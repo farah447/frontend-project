@@ -2,12 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import axios from 'axios'
 import { API_BASE_URL } from '../../users/usersSlice'
+import api from '../../../api';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (data: { page: number; limit: number }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/products?page=${data.page}?&limit=${data.limit}`);
+      const response = await api.get(`${API_BASE_URL}/products?page=${data.page}?&limit=${data.limit}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -19,7 +20,7 @@ export const fetchSingleProduct = createAsyncThunk(
   'products/fetchSingleProduct',
   async (slug: string | undefined, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/products/${slug}`);
+      const response = await api.get(`${API_BASE_URL}/products/${slug}`);
       console.log(response.data.payload)
       return response.data.payload;
     } catch (error) {
@@ -32,7 +33,7 @@ export const updateProduct = createAsyncThunk(
   'products/updateProduct',
   async (productData: Partial<Product>, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/products/${productData.slug}`, productData);
+      const response = await api.put(`${API_BASE_URL}/products/${productData.slug}`, productData);
       console.log(response.data)
       console.log(productData)
       return response.data;
@@ -43,7 +44,7 @@ export const updateProduct = createAsyncThunk(
 );
 
 export const deleteProducts = createAsyncThunk('product/deleteProduct', async (slug: string) => {
-  const respons = await axios.delete(`${API_BASE_URL}/products/${slug}`)
+  const respons = await api.delete(`${API_BASE_URL}/products/${slug}`)
   console.log('products is deleted', slug)
   return slug
 })
@@ -51,7 +52,7 @@ export const deleteProducts = createAsyncThunk('product/deleteProduct', async (s
 export const createProducts = createAsyncThunk('product/createProduct', async (formData: FormData) => {
   console.log(formData)
   try {
-    const respons = await axios.post(`${API_BASE_URL}/products`, formData
+    const respons = await api.post(`${API_BASE_URL}/products`, formData
       , {
         headers: {
           'content-Type': 'multipart/form-data'
@@ -139,7 +140,7 @@ export const productSlice = createSlice({
 
     builder.addCase(updateProduct.fulfilled, (state, action) => {
       console.log(action.payload.payload)
-      const { slug, title, price } = action.payload
+      const { slug, title, price } = action.payload.payload
       const foundCategory = state.products.find((product) => product.slug === slug)
       if (foundCategory) {
         foundCategory.title = title
@@ -155,8 +156,8 @@ export const productSlice = createSlice({
     })
 
     builder.addCase(createProducts.fulfilled, (state, action) => {
-      state.products.push(action.payload.payload);
-      // state.products = [...state.products, action.payload.payload]
+      // state.products.push(action.payload.payload);
+      state.products = [...state.products, action.payload.payload]
       state.isLoading = false;
     });
 
