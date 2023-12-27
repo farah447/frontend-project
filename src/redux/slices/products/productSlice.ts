@@ -8,8 +8,8 @@ export const fetchProducts = createAsyncThunk(
   async (data: { page: number; limit: number }, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/products?page=${data.page}?&limit=${data.limit}`);
-      console.log(response.data.payload.products);
-      return response.data.payload.products
+      //console.log(response.data); 
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -165,8 +165,10 @@ export const productSlice = createSlice({
       //   totalPages: totalPages,
       //   totalProducts: totalProducts
       // },
-      console.log(action.payload.products)
-      state.products = action.payload
+      // console.log(action.payload.products)
+      // state.products = action.payload.payload.products
+      // state.isLoading = false
+      state.products = action.payload.payload.products
       state.isLoading = false
     })
 
@@ -214,7 +216,7 @@ export const productSlice = createSlice({
     // })
     builder.addCase(createProducts.fulfilled, (state, action) => {
       state.products.push(action.payload.payload);
-      state.products = [...state.products, action.payload.payload]
+      // state.products = [...state.products, action.payload.payload]
       state.isLoading = false;
     });
 

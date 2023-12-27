@@ -1,15 +1,14 @@
-import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store';
-import { createProducts, deleteProducts, fetchProducts, updateProduct } from '../redux/slices/products/productSlice';
-import { ThemeProvider } from '@mui/material/styles';
-import { Button, FormControl, Stack, TextField } from '@mui/material';
-import { Select, MenuItem } from '@mui/material';
+import { Button, FormControl, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-
+import { ThemeProvider } from '@mui/material/styles';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import themes from '../Theme/Themes';
-import AdminSidebar from './AdminSidebar';
+
+import { createProducts, deleteProducts, fetchProducts, updateProduct } from '../redux/slices/products/productSlice';
+import { AppDispatch, RootState } from '../redux/store';
 import { fetchCategory } from '../redux/categories/categorySlice';
+import AdminSidebar from './AdminSidebar';
 
 const initialProductData = {
   _id: '',
@@ -31,7 +30,6 @@ const Products = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [productDatas, setProductData] = useState({ ...initialProductData });
   const [showForm, setShowForm] = useState(false);
-
   console.log(products)
   const dispatch: AppDispatch = useDispatch();
 
@@ -44,13 +42,13 @@ const Products = () => {
     dispatch(fetchCategory());
   }, []);
 
-  // useEffect(() => {
-  //   if (categories.length > 0) {
-  //     setProductData((prevProduct) => {
-  //       return { ...prevProduct, category: categories[0]._id };
-  //     });
-  //   }
-  // }, [categories]);
+  useEffect(() => {
+    if (categories.length > 0) {
+      setProductData((prevProduct) => {
+        return { ...prevProduct, category: categories[0]._id };
+      });
+    }
+  }, [categories]);
 
   const handleEdit = (_id: string, price: string, title: string, slug: string, description: string, image: string, category: string, quantity: string, shipping: string, sold: string) => {
     setProductData({ _id, price, title, slug, description, image, category, quantity, shipping, sold });
