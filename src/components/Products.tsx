@@ -90,13 +90,20 @@ const Products = () => {
     formData.append('sold', productDatas.sold);
     console.log(formData)
 
-    if (!isEdit) {
+    // if (!isEdit) {
+    //   dispatch(createProducts(formData))
+    //   dispatch(fetchProducts({ page: 1, limit: 10 }));
+    // } else {
+    //   dispatch(updateProduct(productDatas))
+    //   // dispatch(fetchProducts({ page: 1, limit: 10 }));
+    //   console.log("not Edited")
+    // }
+    if (productDatas.slug) {
+      dispatch(updateProduct(productDatas))
+
+    } else {
       dispatch(createProducts(formData))
       dispatch(fetchProducts({ page: 1, limit: 10 }));
-    } else {
-      dispatch(updateProduct(productDatas))
-      // dispatch(fetchProducts({ page: 1, limit: 10 }));
-      console.log("not Edited")
     }
   }
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
